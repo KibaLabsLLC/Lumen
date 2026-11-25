@@ -1,0 +1,21 @@
+// Copyright 2026 The Chromium Authors
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "third_party/blink/renderer/core/html/html_camera_element.h"
+
+#include "third_party/blink/renderer/core/dom/document.h"
+
+namespace blink {
+
+using mojom::blink::PermissionName;
+
+HTMLCameraElement::HTMLCameraElement(Document& document)
+    : HTMLMediaTrackElementBase(document, html_names::kCameraTag) {
+  CHECK(RuntimeEnabledFeatures::CameraAndMicrophoneElementsEnabled(
+      document.GetExecutionContext()));
+  permission_descriptors_.push_back(
+      CreatePermissionDescriptor(PermissionName::VIDEO_CAPTURE));
+}
+
+}  // namespace blink

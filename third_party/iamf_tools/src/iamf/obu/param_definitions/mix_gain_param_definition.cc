@@ -1,0 +1,58 @@
+/*
+ * Copyright (c) 2023, Alliance for Open Media. All rights reserved
+ *
+ * This source code is subject to the terms of the BSD 3-Clause Clear License
+ * and the Alliance for Open Media Patent License 1.0. If the BSD 3-Clause Clear
+ * License was not distributed with this source code in the LICENSE file, you
+ * can obtain it at www.aomedia.org/license/software-license/bsd-3-c-c. If the
+ * Alliance for Open Media Patent License 1.0 was not distributed with this
+ * source code in the PATENTS file, you can obtain it at
+ * www.aomedia.org/license/patent.
+ */
+
+#include <cstdint>
+#include <memory>
+#include <string>
+#include <utility>
+
+
+namespace iamf_tools {
+
+absl::Status MixGainParamDefinition::ValidateAndWrite(
+    WriteBitBuffer& wb) const {
+  // The common part.
+  RETURN_IF_NOT_OK(ParamDefinition::ValidateAndWrite(wb));
+
+  // The sub-class specific part.
+  RETURN_IF_NOT_OK(wb.WriteSigned16(default_mix_gain_.GetQ7_8()));
+  return absl::OkStatus();
+}
+
+absl::Status MixGainParamDefinition::ReadAndValidate(ReadBitBuffer& rb) {
+  // The common part.
+  RETURN_IF_NOT_OK(ParamDefinition::ReadAndValidate(rb));
+
+  // The sub-class specific part.
+  int16_t default_mix_gain_q78;
+  RETURN_IF_NOT_OK(rb.ReadSigned16(default_mix_gain_q78));
+  default_mix_gain_ =
+      QFormatOrFloatingPoint::MakeFromQ7_8(default_mix_gain_q78);
+  return absl::OkStatus();
+}
+
+absl::StatusOr<std::unique_ptr<ParameterData>>
+MixGainParamDefinition::CreateParameterDataFromBuffer(ReadBitBuffer& rb) const {
+  auto parameter_data = MixGainParameterData::CreateFromBuffer(rb);
+  if (!parameter_data.ok()) {
+    return parameter_data.status();
+  }
+  return std::make_unique<MixGainParameterData>(
+      std::move(parameter_data.value()));
+}
+
+std::string MixGainParamDefinition::ToString() const {
+  return absl::StrCat("MixGainParamDefinition:\n", ParamDefinition::ToString(),
+                      "\n  default_mix_gain= ", default_mix_gain_);
+}
+
+}  // namespace iamf_tools

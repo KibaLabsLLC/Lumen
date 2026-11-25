@@ -1,0 +1,8 @@
+
+namespace mediapipe {
+namespace api2 {
+
+Node::~Node() = default;
+
+}  // namespace api2
+}  // namespace mediapipe

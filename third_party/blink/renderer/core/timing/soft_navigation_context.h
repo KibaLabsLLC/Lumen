@@ -1,0 +1,240 @@
+// Copyright 2024 The Chromium Authors
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef THIRD_PARTY_BLINK_RENDERER_CORE_TIMING_SOFT_NAVIGATION_CONTEXT_H_
+#define THIRD_PARTY_BLINK_RENDERER_CORE_TIMING_SOFT_NAVIGATION_CONTEXT_H_
+
+#include "base/time/time.h"
+#include "base/unguessable_token.h"
+#include "third_party/blink/public/common/features.h"
+#include "third_party/blink/public/web/web_performance_metrics_for_reporting.h"
+#include "third_party/blink/renderer/core/core_export.h"
+#include "third_party/blink/renderer/core/paint/timing/largest_contentful_paint_calculator.h"
+#include "third_party/blink/renderer/core/paint/timing/lcp_objects.h"
+#include "third_party/blink/renderer/core/paint/timing/paint_timing_record.h"
+#include "third_party/blink/renderer/core/timing/performance_entry.h"
+#include "third_party/blink/renderer/core/timing/performance_event_timing.h"
+#include "third_party/blink/renderer/core/timing/performance_timeline_entry_id_generator.h"
+#include "third_party/blink/renderer/platform/heap/collection_support/heap_vector.h"
+#include "third_party/blink/renderer/platform/heap/garbage_collected.h"
+#include "third_party/blink/renderer/platform/heap/prefinalizer.h"
+#include "third_party/blink/renderer/platform/wtf/text/wtf_string.h"
+#include "ui/gfx/geometry/rect_f.h"
+
+namespace blink {
+
+struct LargestContentfulPaintDetails;
+class LocalDOMWindow;
+class Node;
+class SoftNavigationHeuristics;
+
+class CORE_EXPORT SoftNavigationContext
+    : public GarbageCollected<SoftNavigationContext>,
+      public LargestContentfulPaintCalculator::Delegate {
+  USING_PRE_FINALIZER(SoftNavigationContext, Dispose);
+
+ public:
+  // Each `SoftNavigationContext` has a strictly increasing numeric ID
+  // (`ContextId()`), which that can be used to determine the order of
+  // interactions. `NextContextId()` is the next ID that will be used, and it
+  // can be used to determine order with respect to a certain point, e.g. to
+  // differentiate new interactions from previous ones.
+  static uint64_t NextContextId() { return last_context_id_ + 1; }
+
+  SoftNavigationContext(LocalDOMWindow& window,
+                        PerformanceEventTiming* initial_event_timing);
+
+  // LargestContentfulPaintCalculator::Delegate:
+  void OnLcpMetricsForReportingChanged() override;
+  bool IsHardNavigation() const override { return false; }
+  void Trace(Visitor* visitor) const override;
+
+  bool IsMostRecentlyCreatedContext() const {
+    return context_id_ == last_context_id_;
+  }
+
+  bool HasNavigationId() const {
+    return navigation_id_ != PerformanceTimelineEntryIdInfo::kNone;
+  }
+  // The navigation id info contains the web-exposed navigationId and the
+  // monotonic ordinal offset.
+  PerformanceTimelineEntryIdInfo NavigationId() const { return navigation_id_; }
+
+  LocalDOMWindow* DomWindow() const { return window_.Get(); }
+  uint64_t InteractionId() const {
+    return initial_event_timing_ ? initial_event_timing_->interactionId() : 0;
+  }
+
+  base::TimeTicks SoftNavigationSlicingTime() const {
+    return soft_navigation_slicing_time_;
+  }
+  void OnSoftNavigationCommit(PerformanceTimelineEntryIdInfo navigation_id,
+                              base::TimeTicks soft_navigation_slicing_time) {
+    navigation_id_ = navigation_id;
+    soft_navigation_slicing_time_ = soft_navigation_slicing_time;
+  }
+
+  // The time origin is used for calculating soft navigation timings, especially
+  // Soft LCP. It is the startTime of the first event timing entry.
+  base::TimeTicks TimeOrigin() const;
+
+  // This is set to the time of the first URL change and is not updated
+  // afterwards.
+  base::TimeTicks UrlChangeTime() const { return url_change_time_; }
+
+  // Sets URL, retaining the first URL only and the first
+  // |same_document_metrics_token|, while also recording the UrlChangeTime() as
+  // base::TimeTicks::Now().
+  void AddUrl(const String& url,
+              V8NavigationType::Enum navigation_type,
+              base::UnguessableToken same_document_metrics_token);
+
+  // Returns the type of the initial same document navigation (first call to
+  // `AddUrl()`). Must not be called before the URL is set.
+  V8NavigationType::Enum NavigationType() const {
+    CHECK(HasUrl());
+    return navigation_type_;
+  }
+
+  base::UnguessableToken SameDocumentMetricsToken() const {
+    return same_document_metrics_token_;
+  }
+
+  // A single interaction / navigation may change URLs multiple times.
+  // For now, we use the initial URL value as the URL to attribute the
+  // performance data to-- but it is reasonable to evaluate using the final URL
+  // as an alternative.
+  const String& AttributionUrl() const { return initial_url_; }
+  bool HasUrl() const { return !initial_url_.empty(); }
+
+  bool HasFirstContentfulPaint() const {
+    return !first_contentful_paint_.is_null();
+  }
+  base::TimeTicks FirstContentfulPaint() const {
+    return first_contentful_paint_;
+  }
+
+  void AddModifiedNode(Node* node);
+  // Returns true if this paint updated the attributed area, and so we should
+  // check for sufficient paints to emit a soft-nav entry.
+  bool HasDomModification() const { return num_modified_dom_nodes_ > 0; }
+
+  PerformanceTimelineEntryIdInfo GetInteractionIdInfo() const;
+
+  uint64_t PaintedArea() const { return painted_area_; }
+  uint64_t ContextId() const { return context_id_; }
+  InteractionContentfulPaint* LargestIcpEntry() const {
+    return largest_icp_entry_.Get();
+  }
+
+  // Called by `SoftNavigationHeuristics` when paint finishes for the current
+  // frame, with the image and text records that were painted for this context.
+  void OnPaintFinished(const HeapVector<Member<ImageRecord>>& image_records,
+                       const HeapVector<Member<TextRecord>>& text_records);
+  void OnInputOrScroll();
+
+  bool SatisfiesSoftNavNonPaintCriteria() const;
+  bool SatisfiesSoftNavPaintCriteria(uint64_t required_paint_area) const;
+
+  // Called by `SoftNavigationHeuristics` with the largest image and text
+  // records that were presented for this context in the last presented frame.
+  void OnFramePresented(LargestContentfulPaintCalculator::LcpCandidates*,
+                        const base::TimeTicks& presentation_timestamp,
+                        const DOMPaintTimingInfo& paint_timing_info,
+                        uint64_t navigation_id);
+
+  const LargestContentfulPaintDetails& LatestLcpDetailsForUkm();
+
+  bool IsRecordingLargestContentfulPaint() const {
+    return first_input_or_scroll_time_.is_null();
+  }
+
+  SoftNavigationHeuristics* GetSoftNavigationHeuristics() const;
+
+  // Emits the soft navigation performance entry. The context must not have been
+  // previously emitted. `WasEmitted()` returns true after this is called.
+  void EmitSoftNavigation();
+  bool WasEmitted() const { return was_emitted_; }
+
+  void WriteIntoTrace(perfetto::TracedValue context) const;
+  const perfetto::NamedTrack& GetTracingTrack() const { return track_; }
+
+  // Called when `SoftNavigationHeuristics` is shut down on frame detach.
+  void Shutdown();
+  bool HasBeenShutdown() const { return !window_; }
+
+  void Dispose();
+
+ private:
+  // Increases `painted_area_` by the `PaintTimingRecord`'s root visual rect's
+  // area (the area of the content's containing rect intersected with the
+  // viewport). Called during paint. `painted_area_last_animation_frame` is the
+  // value of `painted_area_` prior the current animation frame (used for
+  // tracing).
+  void AddPaintedArea(PaintTimingRecord*,
+                      uint64_t painted_area_last_animation_frame);
+
+  // Updates the current ICP and LCP candidate info based on the given
+  // candidates computed for a single paint. Returns a callback to flush the
+  // candidate and metrics at presentation time, or std::nullopt if the
+  // candidate info didn't change.
+  OptionalPaintTimingCallback MaybeUpdateInteractionContentfulPaint(
+      LargestContentfulPaintCalculator::LcpCandidates*);
+
+  // Called when the new ICP entry's presentation time is resolved or metrics
+  // need to be updated. Invokes the `metrics_callback` and emits `icp_entry`
+  // and the corresponding trace data, if non-null.
+  void FlushCandidateAndMetricsOnFramePresented(
+      OptionalPaintTimingCallback metrics_callback,
+      InteractionContentfulPaint* icp_entry,
+      std::unique_ptr<TracedValue> trace_data,
+      const base::TimeTicks& presentation_timestamp,
+      const DOMPaintTimingInfo& paint_timing_info,
+      uint64_t navigation_id);
+
+  void TraceOnPaintFinished(uint64_t new_painted_area);
+
+  // Process the image and text records painted in a given animation frame.
+  // Updates the `painted_area_` for (LCP) eligible records and returns the new
+  // painted area added in this frame.
+  uint64_t UpdatePaintedAreaOnPaintFinished(
+      const HeapVector<Member<ImageRecord>>&,
+      const HeapVector<Member<TextRecord>>&);
+
+  static uint64_t last_context_id_;
+
+  // largest value and can be used to identify the most recent context.
+  const uint64_t context_id_ = ++last_context_id_;
+
+  PerformanceTimelineEntryIdInfo navigation_id_ =
+      PerformanceTimelineEntryIdInfo::kNone;
+  bool was_emitted_ = false;
+
+  base::TimeTicks first_input_or_scroll_time_;
+  base::TimeTicks url_change_time_;
+  base::TimeTicks soft_navigation_slicing_time_;
+
+  base::TimeTicks first_contentful_paint_;
+  DOMPaintTimingInfo first_contentful_paint_timing_info_;
+
+  String initial_url_;
+  base::UnguessableToken same_document_metrics_token_;
+  V8NavigationType::Enum navigation_type_ = V8NavigationType::Enum::kPush;
+
+  Member<LocalDOMWindow> window_;
+  Member<LargestContentfulPaintCalculator> lcp_calculator_;
+  Member<PerformanceEventTiming> initial_event_timing_;
+  Member<InteractionContentfulPaint> largest_icp_entry_;
+
+  size_t num_modified_dom_nodes_ = 0;
+  uint64_t painted_area_ = 0;
+  // The number of modified DOM nodes at the end of the last paint that
+  // increased the `painted_area_`. Used for tracing.
+  size_t previous_paint_modified_dom_nodes_ = 0;
+  const perfetto::NamedTrack track_;
+};
+
+}  // namespace blink
+
+#endif  // THIRD_PARTY_BLINK_RENDERER_CORE_TIMING_SOFT_NAVIGATION_CONTEXT_H_

@@ -1,0 +1,11 @@
+Test the effect of percentages widths on the preferred widths of replaced elements.
+
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
