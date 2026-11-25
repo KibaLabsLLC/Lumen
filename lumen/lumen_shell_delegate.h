@@ -1,116 +1,105 @@
+// Copyright 2025 The Lumen Authors
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 #ifndef LUMEN_LUMEN_SHELL_DELEGATE_H_
 #define LUMEN_LUMEN_SHELL_DELEGATE_H_
 
+#include <memory>
+#include <optional>
+#include <string>
+#include <vector>
+
 #include "ash/shell_delegate.h"
+#include "base/memory/raw_ptr.h"
+#include "mojo/public/cpp/bindings/pending_receiver.h"
+#include "url/gurl.h"
+
+class AccountId;
+class PrefService;
+
+namespace aura {
+class Window;
+}
 
 namespace ash {
 
-// Minimal ShellDelegate. Delegates return nullptr, and other methods
-// return safe defaults. Shell code that dereferences a nullptr delegate
-// will crash at runtime. Replace those first.
+// Lumen's `ShellDelegate`. Every `Create*()` factory returns a minimal
+// implementation so the shell starts without an embedded browser: features
+// degrade gracefully (empty lists, null child delegates, no-op actions)
+// instead of crashing on a null delegate. Browser-backed behavior (tasks,
+// nearby share, capture mode upload, etc.) is intentionally inert until a
+// browser is wired in.
 class LumenShellDelegate : public ShellDelegate {
  public:
-  LumenShellDelegate() = default;
-  ~LumenShellDelegate() override = default;
+  LumenShellDelegate();
 
-  bool CanShowWindowForUser(const aura::Window*) const override { return true; }
+  LumenShellDelegate(const LumenShellDelegate&) = delete;
+  LumenShellDelegate& operator=(const LumenShellDelegate&) = delete;
 
+  ~LumenShellDelegate() override;
+
+  // ShellDelegate:
   std::unique_ptr<CaptureModeDelegate> CreateCaptureModeDelegate(
-      PrefService*) const override {
-    return nullptr;
-  }
+      PrefService* local_state) const override;
   std::unique_ptr<ClipboardHistoryControllerDelegate>
-  CreateClipboardHistoryControllerDelegate() const override {
-    return nullptr;
-  }
-  std::unique_ptr<ClipboardImageModelFactory>
-  CreateClipboardImageModelFactory() const override {
-    return nullptr;
-  }
-  std::unique_ptr<CoralDelegate> CreateCoralDelegate() const override {
-    return nullptr;
-  }
+  CreateClipboardHistoryControllerDelegate() const override;
+  std::unique_ptr<ClipboardImageModelFactory> CreateClipboardImageModelFactory()
+      const override;
+  std::unique_ptr<CoralDelegate> CreateCoralDelegate() const override;
   std::unique_ptr<GameDashboardDelegate> CreateGameDashboardDelegate()
-      const override {
-    return nullptr;
-  }
+      const override;
   std::unique_ptr<AcceleratorPrefsDelegate> CreateAcceleratorPrefsDelegate()
-      const override {
-    return nullptr;
-  }
-  AccessibilityDelegate* CreateAccessibilityDelegate() override {
-    return nullptr;
-  }
+      const override;
+  AccessibilityDelegate* CreateAccessibilityDelegate() override;
   std::unique_ptr<BackGestureContextualNudgeDelegate>
   CreateBackGestureContextualNudgeDelegate(
-      BackGestureContextualNudgeController*) override {
-    return nullptr;
-  }
+      BackGestureContextualNudgeController* controller) override;
   std::unique_ptr<MediaNotificationProvider> CreateMediaNotificationProvider()
-      override {
-    return nullptr;
-  }
+      override;
   std::unique_ptr<NearbyShareDelegate> CreateNearbyShareDelegate(
-      NearbyShareController*) const override {
-    return nullptr;
-  }
-  std::unique_ptr<SavedDeskDelegate> CreateSavedDeskDelegate() const override {
-    return nullptr;
-  }
-  std::unique_ptr<api::TasksDelegate> CreateTasksDelegate() const override {
-    return nullptr;
-  }
-  std::unique_ptr<TabStripDelegate> CreateTabStripDelegate() const override {
-    return nullptr;
-  }
-  std::unique_ptr<FocusModeDelegate> CreateFocusModeDelegate() const override {
-    return nullptr;
-  }
+      NearbyShareController* controller) const override;
+  std::unique_ptr<SavedDeskDelegate> CreateSavedDeskDelegate() const override;
   std::unique_ptr<SystemSoundsDelegate> CreateSystemSoundsDelegate()
-      const override {
-    return nullptr;
-  }
+      const override;
+  std::unique_ptr<api::TasksDelegate> CreateTasksDelegate() const override;
+  std::unique_ptr<TabStripDelegate> CreateTabStripDelegate() const override;
+  std::unique_ptr<FocusModeDelegate> CreateFocusModeDelegate() const override;
   std::unique_ptr<UserEducationDelegate> CreateUserEducationDelegate()
-      const override {
-    return nullptr;
-  }
-  std::unique_ptr<ScannerDelegate> CreateScannerDelegate() const override {
-    return nullptr;
-  }
+      const override;
+  std::unique_ptr<ScannerDelegate> CreateScannerDelegate() const override;
 
   scoped_refptr<network::SharedURLLoaderFactory>
-  GetBrowserProcessUrlLoaderFactory() const override {
-    return nullptr;
-  }
-  bool CanGoBack(gfx::NativeWindow) const override { return false; }
-  void SetTabScrubberEnabled(bool) override {}
-  int GetBrowserWebUITabStripHeight() override { return 0; }
+  GetBrowserProcessUrlLoaderFactory() override;
+  bool CanGoBack(gfx::NativeWindow window) const override;
+  void SetTabScrubberEnabled(bool enabled) override;
 
   void BindMultiDeviceSetup(
-      mojo::PendingReceiver<multidevice_setup::mojom::MultiDeviceSetup>)
-      override {}
+      mojo::PendingReceiver<multidevice_setup::mojom::MultiDeviceSetup>
+          receiver) override;
 
-  bool IsSessionRestoreInProgress() const override { return false; }
-  void SetUpEnvironmentForLockedFullscreen(const WindowState&) override {}
-  bool IsLoggingRedirectDisabled() const override { return false; }
-  base::FilePath GetPrimaryUserDownloadsFolder() const override {
-    return base::FilePath();
-  }
-  void OpenFeedbackDialog(FeedbackSource, const std::string&,
-                          const std::string&) override {}
-  bool SendSpecializedFeatureFeedback(const AccountId&, int, std::string,
-                                      std::optional<std::string>,
-                                      std::optional<std::string>) override {
-    return false;
-  }
-  void OpenProfileManager() override {}
-  version_info::Channel GetChannel() override {
-    return version_info::Channel::UNKNOWN;
-  }
+  bool IsSessionRestoreInProgress() const override;
+  void SetUpEnvironmentForLockedFullscreen(
+      const WindowState& window_state) override;
+  bool IsLoggingRedirectDisabled() const override;
+  base::FilePath GetPrimaryUserDownloadsFolder() const override;
+  base::FilePath CrackFileSystemUrl(const GURL& file_system_url) const override;
+  void OpenFeedbackDialog(FeedbackSource source,
+                          const std::string& description_template,
+                          const std::string& category_tag) override;
+  bool SendSpecializedFeatureFeedback(
+      const AccountId& account_id,
+      int product_id,
+      std::string description,
+      std::optional<std::string> image,
+      std::optional<std::string> image_mime_type) override;
+  void OpenProfileManager() override;
+  version_info::Channel GetChannel() override;
   void ForceSkipWarningUserOnClose(
-      const std::vector<raw_ptr<aura::Window, VectorExperimental>>&) override {}
-  std::string GetVersionString() override { return "0.0.0"; }
-  void OpenMultitaskingSettings() override {}
+      const std::vector<raw_ptr<aura::Window, DanglingUntriaged>>& windows)
+      override;
+  std::string GetVersionString() override;
+  void OpenMultitaskingSettings() override;
 };
 
 }  // namespace ash
