@@ -1,0 +1,19 @@
+# Copyright 2020 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# Tests may include //media/fuchsia/test_support.shard.test-cml in their
+# additional_manifest_fragments to satisfy capability requirements for this
+# target.
+source_set("test_support") {
+  testonly = true
+  public_deps = [
+    "//base",
+    "//testing/gtest",
+    "//ui/gfx/geometry",
+  ]
+  sources = [
+    "fake_fuchsia_camera.cc",
+    "fake_fuchsia_camera.h",
+  ]
+}

@@ -1,0 +1,36 @@
+# Copyright 2017 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/android/rules.gni")
+
+java_library("bytecode_rewriter_java") {
+  visibility = [ ":*" ]
+  jacoco_never_instrument = true
+  sources = [
+    "java/org/chromium/build/location_rewriter/LocationClass.java",
+    "java/org/chromium/build/location_rewriter/LocationRewriter.java",
+    "java/org/chromium/build/location_rewriter/LocationRewriterImpl.java",
+    "java/org/chromium/build/location_rewriter/LocationRewriterTargetMethods.java",
+    "java/org/chromium/build/location_rewriter/VisitableMethod.java",
+    "java/org/chromium/bytecode/ByteCodeRewriter.java",
+    "java/org/chromium/bytecode/BytecodeRewriterMain.java",
+    "java/org/chromium/bytecode/ClassHierarchy.java",
+    "java/org/chromium/bytecode/EmptyOverrideGeneratorClassAdapter.java",
+    "java/org/chromium/bytecode/MethodCheckerClassAdapter.java",
+    "java/org/chromium/bytecode/MethodDescription.java",
+    "java/org/chromium/bytecode/ParentMethodCheckerClassAdapter.java",
+    "java/org/chromium/bytecode/SystemLoadLibraryRemover.java",
+    "java/org/chromium/bytecode/TraceEventAdder.java",
+    "java/org/chromium/bytecode/TraceEventAdderClassAdapter.java",
+    "java/org/chromium/bytecode/TraceEventAdderMethodAdapter.java",
+    "java/org/chromium/bytecode/TypeUtils.java",
+  ]
+  deps = [ "//third_party/android_deps:org_ow2_asm_asm_java" ]
+}
+
+dist_jar("bytecode_rewriter") {
+  output = "$target_out_dir/bytecode_rewriter.jar"
+  supports_android = false
+  deps = [ ":bytecode_rewriter_java" ]
+}

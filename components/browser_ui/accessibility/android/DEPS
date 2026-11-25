@@ -1,0 +1,5 @@
+include_rules = [
+  "+components/web_distiller",
+  "+content/public/test/android",
+  "+ui/accessibility",
+]

@@ -1,0 +1,226 @@
+// Copyright 2013 The Chromium Authors
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "base/android/content_uri_utils.h"
+
+#include <fcntl.h>
+#include <sys/stat.h>
+
+#include "base/android/jni_android.h"
+#include "base/android/jni_array.h"
+#include "base/android/jni_string.h"
+#include "base/files/file.h"
+#include "base/logging.h"
+#include "base/posix/eintr_wrapper.h"
+#include "base/time/time.h"
+
+// Must come after all headers that specialize FromJniType() / ToJniType().
+
+using base::android::ConvertUTF8ToJavaString;
+using base::android::JavaRef;
+using base::android::ScopedJavaLocalRef;
+
+namespace base {
+
+namespace internal {
+
+bool ContentUriExists(const FilePath& content_uri) {
+  JNIEnv* env = android::AttachCurrentThread();
+  return Java_ContentUriUtils_contentUriExists(env, content_uri.value());
+}
+
+std::optional<std::string> TranslateOpenFlagsToJavaMode(uint32_t open_flags) {
+  // The allowable modes from ParcelFileDescriptor#parseMode() are
+  // ("r", "w", "wt", "wa", "rw", "rwt"), we disallow "w" which has been the
+  // source of android security issues.
+  if (open_flags & ~kKnownAndroidFileFlags) {
+    return std::nullopt;
+  }
+  if (open_flags & kUnhandledAndroidFileModifiers) {
+    return std::nullopt;
+  }
+
+  switch (open_flags & kCoreAndroidFileFlags) {
+    case File::FLAG_OPEN | File::FLAG_READ:
+      return "r";
+    case File::FLAG_CREATE_ALWAYS | File::FLAG_WRITE:
+      return "wt";
+    case File::FLAG_CREATE_ALWAYS | File::FLAG_READ | File::FLAG_WRITE:
+      return "rwt";
+    default:
+      return std::nullopt;
+  }
+}
+
+base::expected<ScopedJavaLocalRef<jobject>, File::Error>
+OpenContentUriWithExplicitMode(const FilePath& content_uri,
+                               std::string_view mode) {
+  if (mode != "r" && mode != "rw" && mode != "wt" && mode != "rwt" &&
+      mode != "wa") {
+    return base::unexpected(File::FILE_ERROR_INVALID_OPERATION);
+  }
+  JNIEnv* env = android::AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> result =
+      Java_ContentUriUtils_openContentUriWithStatus(env, content_uri.value(),
+                                                    std::string(mode));
+  if (result.is_null()) {
+    return base::unexpected(File::FILE_ERROR_FAILED);
+  }
+  File::Error error = Java_OpenResult_getStatus(env, result);
+  if (error != File::FILE_OK) {
+    return base::unexpected(error);
+  }
+  ScopedJavaLocalRef<jobject> pfd =
+      Java_OpenResult_getParcelFileDescriptor(env, result);
+  if (pfd.is_null()) {
+    return base::unexpected(File::FILE_ERROR_FAILED);
+  }
+  return pfd;
+}
+
+int ContentUriGetFd(const JavaRef<jobject>& java_parcel_file_descriptor) {
+  if (!java_parcel_file_descriptor) {
+    return -1;
+  }
+  JNIEnv* env = android::AttachCurrentThread();
+  int fd = Java_ContentUriUtils_getFd(env, java_parcel_file_descriptor);
+  if (fd < 0) {
+    return -1;
+  }
+  return HANDLE_EINTR(fcntl(fd, F_DUPFD_CLOEXEC, 0));
+}
+
+void ContentUriClose(const JavaRef<jobject>& java_parcel_file_descriptor) {
+  JNIEnv* env = android::AttachCurrentThread();
+  Java_ContentUriUtils_close(env, java_parcel_file_descriptor);
+}
+
+bool ContentUriGetFileInfo(const FilePath& content_uri,
+                           FileEnumerator::FileInfo* info) {
+  JNIEnv* env = android::AttachCurrentThread();
+  std::vector<FileEnumerator::FileInfo> list;
+  Java_ContentUriUtils_getFileInfo(env, content_uri.value(),
+                                   reinterpret_cast<int64_t>(&list));
+  // Java will call back sync to AddFileInfoToVector(&list).
+  if (list.empty()) {
+    return false;
+  }
+  // Android can return -1 for unknown size, which
+  // we can't deal with, so we will consider that the file wasn't found.
+  if (list[0].GetSize() < 0) {
+    LOG(ERROR) << "Unknown file length for " << content_uri;
+    return false;
+  }
+  *info = std::move(list[0]);
+  return true;
+}
+
+std::vector<FileEnumerator::FileInfo> ListContentUriDirectory(
+    const FilePath& content_uri,
+    int file_type) {
+  JNIEnv* env = android::AttachCurrentThread();
+  std::vector<FileEnumerator::FileInfo> result;
+  Java_ContentUriUtils_listDirectory(env, content_uri.value(), file_type,
+                                     reinterpret_cast<int64_t>(&result));
+  // Java will call back sync to AddFileInfoToVector(&result).
+  return result;
+}
+
+bool DeleteContentUri(const FilePath& content_uri) {
+  DCHECK(content_uri.IsContentUri());
+  JNIEnv* env = android::AttachCurrentThread();
+  return Java_ContentUriUtils_delete(env, content_uri.value());
+}
+
+bool IsDocumentUri(const FilePath& content_uri) {
+  DCHECK(content_uri.IsContentUri());
+  JNIEnv* env = android::AttachCurrentThread();
+  return Java_ContentUriUtils_isDocumentUri(env, content_uri.value());
+}
+
+}  // namespace internal
+
+static void JNI_ContentUriUtils_AddFileInfoToVector(
+    JNIEnv* env,
+    int64_t vector_pointer,
+    const std::string& uri,
+    const std::string& display_name,
+    bool is_directory,
+    int64_t size,
+    int64_t last_modified) {
+  auto* result =
+      reinterpret_cast<std::vector<FileEnumerator::FileInfo>*>(vector_pointer);
+  result->emplace_back(FilePath(uri), FilePath(display_name), is_directory,
+                       size,
+                       Time::FromMillisecondsSinceUnixEpoch(last_modified));
+}
+
+ContentUriOwner ResolveContentUriOwner(const FilePath& content_uri) {
+  JNIEnv* env = android::AttachCurrentThread();
+  return static_cast<ContentUriOwner>(
+      Java_ContentUriUtils_resolveContentUriOwner(env, content_uri.value()));
+}
+
+std::string GetContentUriMimeType(const FilePath& content_uri) {
+  JNIEnv* env = android::AttachCurrentThread();
+  return Java_ContentUriUtils_getMimeType(env, content_uri.value());
+}
+
+bool MaybeGetFileDisplayName(const FilePath& content_uri,
+                             std::u16string* file_display_name) {
+  if (!content_uri.IsContentUri()) {
+    return false;
+  }
+
+  DCHECK(file_display_name);
+
+  JNIEnv* env = android::AttachCurrentThread();
+  ScopedJavaLocalRef<jstring> j_display_name =
+      Java_ContentUriUtils_maybeGetDisplayName(env, content_uri.value());
+
+  if (j_display_name.is_null()) {
+    return false;
+  }
+
+  *file_display_name = android::ConvertJavaStringToUTF16(j_display_name);
+  return true;
+}
+
+FilePath ContentUriBuildDocumentUriUsingTree(
+    const FilePath& tree_uri,
+    const std::string& encoded_document_id) {
+  JNIEnv* env = android::AttachCurrentThread();
+  std::string j_uri = Java_ContentUriUtils_buildDocumentUriUsingTree(
+      env, tree_uri.value(), encoded_document_id);
+  return FilePath(j_uri);
+}
+
+FilePath ContentUriGetChildDocumentOrQuery(const FilePath& parent,
+                                           const std::string& display_name,
+                                           const std::string& mime_type,
+                                           bool is_directory,
+                                           bool create) {
+  JNIEnv* env = android::AttachCurrentThread();
+  std::string j_uri = Java_ContentUriUtils_getChildDocumentOrQuery(
+      env, parent.value(), display_name, mime_type, is_directory, create);
+  return FilePath(j_uri);
+}
+
+bool ContentUriIsCreateChildDocumentQuery(const FilePath& content_uri) {
+  JNIEnv* env = android::AttachCurrentThread();
+  return Java_ContentUriUtils_isCreateChildDocumentQuery(env,
+                                                         content_uri.value());
+}
+
+FilePath ContentUriGetDocumentFromQuery(const FilePath& content_uri,
+                                        bool create) {
+  JNIEnv* env = android::AttachCurrentThread();
+  std::string j_uri = Java_ContentUriUtils_getDocumentFromQuery(
+      env, content_uri.value(), create);
+  return FilePath(j_uri);
+}
+
+}  // namespace base
+
+DEFINE_JNI(ContentUriUtils)

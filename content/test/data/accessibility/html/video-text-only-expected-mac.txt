@@ -1,0 +1,5 @@
+AXWebArea
+++AXGroup
+++++AXGroup AXSubrole=AXEmptyGroup
+++++AXStaticText AXValue=' '
+++++AXGroup AXSubrole=AXEmptyGroup

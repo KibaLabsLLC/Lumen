@@ -1,0 +1,16 @@
+{
+  "entries": [
+    {
+      "path": "agents/shared/skills/cl-description"
+    },
+    {
+      "path": "agents/shared/skills/git-cl-helper"
+    },
+    {
+      "path": "agents/shared/skills/gerrit-cli"
+    },
+    {
+      "path": "agents/shared/skills/utr"
+    }
+  ]
+}

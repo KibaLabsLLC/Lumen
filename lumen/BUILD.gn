@@ -1,0 +1,12 @@
+executable("chrome") {
+  sources = [
+    "main.cc",
+    "lumen_shell_delegate.cc",
+    "lumen_shell_delegate.h",
+  ]
+  deps = [
+    "//ash",
+    "//ui/aura",
+    "//base",
+  ]
+}

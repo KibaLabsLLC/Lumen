@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<!--
+Creates 4 WebGL canvases with the cross-product of anti-aliasing and
+premultiplied alpha. Uses drawingBufferStorage to ensure these canvases are
+floating-point. Draws and reads back the color #800080, with slight
+perturbations to ensure that greater than 8-bit precision is preserved in
+the round-trip.
+-->
+<head>
+<style type="text/css">
+  .nomargin {
+    margin: 0;
+  }
+</style>
+<script>
+function log(msg) {
+  if (window.domAutomationController && window.domAutomationController.log) {
+    window.domAutomationController.log(msg);
+  } else {
+    console.log(msg);
+  }
+}
+
+function sendResult(status, detail) {
+  if (detail) {
+    log(detail);
+  }
+  if (window.domAutomationController) {
+    window.domAutomationController.send(status);
+  } else {
+    console.log(status);
+  }
+}
+
+var g_swapsBeforeAck = 15;
+function waitForFinish() {
+  if (g_swapsBeforeAck == 0) {
+    sendResult("SUCCESS");
+  } else {
+    g_swapsBeforeAck--;
+    window.requestAnimationFrame(waitForFinish);
+  }
+}
+
+function drawQuad(canvasId, contextOptions, color) {
+  let element = document.getElementById(canvasId);
+  let gl = element.getContext('webgl2', contextOptions);
+  if (!gl) {
+    throw new Error(`Failed to create WebGL2 context for ${canvasId}`);
+  }
+  if (gl.isContextLost()) {
+    throw new Error(`WebGL2 context for ${canvasId} is lost on creation`);
+  }
+
+  let ext = gl.getExtension('EXT_color_buffer_half_float');
+  if (!ext) {
+    throw new Error(
+        `EXT_color_buffer_half_float not supported on ${canvasId} ` +
+        `(isContextLost=${gl.isContextLost()})`);
+  }
+
+  gl.drawingBufferStorage(gl.RGBA16F, gl.drawingBufferWidth, gl.drawingBufferHeight);
+
+  // Create the program to draw a point sprite.
+  let program = null;
+  {
+    let compileShader = function(gl, vertCode, fragCode) {
+      let vertShader = gl.createShader(gl.VERTEX_SHADER);
+      gl.shaderSource(vertShader, vertCode);
+      gl.compileShader(vertShader);
+      if (!gl.getShaderParameter(vertShader, gl.COMPILE_STATUS)) {
+        throw new Error(
+            `Vertex shader compile failed on ${canvasId}: ` +
+            gl.getShaderInfoLog(vertShader));
+      }
+
+      let fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+      gl.shaderSource(fragShader, fragCode);
+      gl.compileShader(fragShader);
+      if (!gl.getShaderParameter(fragShader, gl.COMPILE_STATUS)) {
+        throw new Error(
+            `Fragment shader compile failed on ${canvasId}: ` +
+            gl.getShaderInfoLog(fragShader));
+      }
+
+      let shaderProgram = gl.createProgram();
+      gl.attachShader(shaderProgram, vertShader);
+      gl.attachShader(shaderProgram, fragShader);
+      gl.linkProgram(shaderProgram);
+      if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+        throw new Error(
+            `Program link failed on ${canvasId}: ` +
+            gl.getProgramInfoLog(shaderProgram));
+      }
+
+      return shaderProgram;
+    }
+    let vs = `attribute vec2 position;
+              void main() {
+                gl_Position = vec4(position, 0.0, 1.0);
+              }`;
+    let fs = `precision mediump float;
+              uniform vec4 color;
+              void main() {
+                gl_FragColor = color;
+              }`;
+    program = compileShader(gl, vs, fs);
+  }
+  gl.useProgram(program);
+
+  // Draw using that program.
+  {
+    let vertices = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertices);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, 1,1, -1,1]), gl.STATIC_DRAW);
+
+    let indices = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indices);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array([0,1,2, 0,2,3]), gl.STATIC_DRAW);
+
+    let positionLocation = gl.getAttribLocation(program, 'position');
+    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(positionLocation);
+
+    gl.uniform4fv(gl.getUniformLocation(program, 'color'), color);
+    gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+  }
+
+  // Ensure that we can read the values back as FLOAT, and that the output
+  // matches the input with higher precision than we can achieve with 8 bits.
+  let pixels = new Float32Array(4);
+  gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.FLOAT, pixels);
+  const glError = gl.getError();
+  if (glError !== gl.NO_ERROR) {
+    throw new Error(
+        `GL error 0x${glError.toString(16)} on ${canvasId} ` +
+        `(isContextLost=${gl.isContextLost()})`);
+  }
+  for (let c = 0; c < 4; ++c) {
+    const epsilon = (1/255) / 8;
+    if (Math.abs(pixels[c] - color[c]) > epsilon) {
+      throw new Error(
+          `Error reading back pixels as floats on ${canvasId}: ` +
+          `expected [${color}], got [${pixels}] ` +
+          `(isContextLost=${gl.isContextLost()})`);
+    }
+  }
+}
+
+function main() {
+  try {
+    let color = new Float32Array(4);
+
+    color[0] = 1.0;
+    color[1] = 0.0;
+    color[2] = (128 + 1/4) / 255;
+    color[3] = 1.0;
+
+    drawQuad(
+        'canvas-noaa-premul',
+        {premultipliedAlpha: true, antialias: false},
+        color);
+    drawQuad(
+        'canvas-aa-premul',
+        {premultipliedAlpha: true, antialias: true},
+        color);
+    drawQuad(
+        'canvas-noaa-unpremul',
+        {premultipliedAlpha: false, antialias: false},
+        color);
+    drawQuad(
+        'canvas-aa-unpremul',
+        {premultipliedAlpha: false, antialias: true},
+        color);
+
+    waitForFinish();
+  } catch (e) {
+    sendResult("FAILURE", e.stack || String(e));
+  }
+}
+</script>
+</head>
+<body onload='main()'>
+  <p>
+  <canvas id='canvas-aa-premul' width='32' height='32'></canvas>
+  <canvas id='canvas-aa-unpremul' width='32' height='32'></canvas>
+  <canvas id='canvas-noaa-premul' width='32' height='32'></canvas>
+  <canvas id='canvas-noaa-unpremul' width='32' height='32'></canvas>
+  </p>
+</body>
+</html>

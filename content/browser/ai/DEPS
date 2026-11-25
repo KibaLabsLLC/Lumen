@@ -1,0 +1,4 @@
+include_rules = [
+  "+components/language/core/common/locale_util.h",
+  "+services/on_device_ai/public/mojom/download_observer.mojom.h",
+]

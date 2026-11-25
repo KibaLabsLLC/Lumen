@@ -1,0 +1,20 @@
+// Copyright 2019 The Chromium Authors
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "base/android/jni_android.h"
+#include "content/browser/browser_main_loop.h"
+
+// Must come after all headers that specialize FromJniType() / ToJniType().
+
+namespace content {
+
+static void JNI_UiThreadSchedulerTestUtils_PostBrowserMainLoopStartupTasks(
+    JNIEnv* env,
+    bool enabled) {
+  BrowserMainLoop::EnableStartupTasks(enabled);
+}
+
+}  // namespace content
+
+DEFINE_JNI(UiThreadSchedulerTestUtils)

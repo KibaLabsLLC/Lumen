@@ -1,0 +1,114 @@
+# Copyright 2023 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//third_party/protobuf/proto_library.gni")
+
+assert(is_chromeos, "Non-ChromeOS builds cannot depend on //ash")
+
+source_set("fresnel_prefs") {
+  public_deps = [ "//components/prefs" ]
+
+  deps = [ "//base" ]
+
+  sources = [
+  ]
+}
+
+proto_library("fresnel_service_proto") {
+  sources = [ "//chromeos/ash/components/report/proto/fresnel_service.proto" ]
+
+  extra_configs =
+      [ "//third_party/private_membership:private_membership_config" ]
+
+  import_dirs = [
+    "//third_party/private_membership/src",
+    "//third_party/shell-encryption/src",
+    ".",
+  ]
+
+  proto_in_dir = "//"
+
+  deps = [ "//third_party/private_membership:private_membership_proto" ]
+}
+
+source_set("utils") {
+  deps = [
+    ":fresnel_prefs",
+    ":fresnel_service_proto",
+    "//base",
+    "//chromeos/ash/components/dbus/private_computing:private_computing_proto",
+    "//chromeos/ash/components/policy/weekly_time",
+    "//chromeos/ash/components/system",
+    "//components/prefs",
+    "//components/version_info",
+    "//crypto",
+    "//google_apis",
+    "//services/network/public/cpp",
+    "//third_party/icu",
+    "//third_party/private_membership",
+    "//url",
+  ]
+
+  sources = [
+  ]
+}
+
+component("report") {
+  output_name = "ash_report"
+  defines = [ "IS_CHROMEOS_ASH_COMPONENTS_REPORT_IMPL" ]
+
+  deps = [
+    ":fresnel_prefs",
+    ":fresnel_service_proto",
+    ":utils",
+    "//ash/constants",
+    "//base",
+    "//chromeos/ash/components/dbus/private_computing",
+    "//chromeos/ash/components/dbus/session_manager",
+    "//chromeos/ash/components/dbus/system_clock",
+    "//chromeos/ash/components/network",
+    "//chromeos/ash/components/system",
+    "//components/policy/core/common:common_constants",
+    "//components/prefs",
+    "//components/version_info",
+    "//services/network/public/cpp",
+    "//third_party/private_membership",
+  ]
+
+  sources = [
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+
+  sources = [
+  ]
+
+  deps = [
+    ":fresnel_prefs",
+    ":fresnel_service_proto",
+    ":report",
+    ":utils",
+    "//ash/constants",
+    "//base",
+    "//base/test:test_support",
+    "//chromeos/ash/components/dbus/private_computing",
+    "//chromeos/ash/components/dbus/session_manager",
+    "//chromeos/ash/components/dbus/system_clock",
+    "//chromeos/ash/components/network",
+    "//chromeos/ash/components/network:test_support",
+    "//chromeos/ash/components/system",
+    "//components/prefs:test_support",
+    "//components/version_info:channel",
+    "//services/network:test_support",
+    "//testing/gtest",
+    "//third_party/icu",
+    "//third_party/private_membership",
+  ]
+
+  data = [
+    # TODO(crbug.com/40248354): Script should binarypb from textpb.
+  ]
+}

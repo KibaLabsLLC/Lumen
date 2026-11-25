@@ -1,0 +1,58 @@
+# Copyright 2019 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//third_party/protobuf/proto_library.gni")
+
+assert(is_chromeos, "Non-Chrome-OS builds cannot depend on //chromeos")
+
+component("power") {
+  defines = [ "IS_DBUS_POWER_IMPL" ]
+
+  deps = [
+    ":power_manager_proto",
+    "//ash/constants",
+    "//base",
+    "//chromeos/dbus/common",
+    "//components/device_event_log",
+    "//dbus",
+  ]
+
+  sources = [
+    "fake_power_manager_client.cc",
+    "fake_power_manager_client.h",
+    "native_timer.cc",
+    "native_timer.h",
+    "power_manager_client.cc",
+    "power_manager_client.h",
+    "power_policy_controller.cc",
+    "power_policy_controller.h",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  public_deps = [ ":power" ]
+  deps = [
+    ":power_manager_proto",
+    "//base",
+    "//base/test:test_support",
+    "//dbus:test_support",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+
+  sources = [
+    "fake_power_manager_client_unittest.cc",
+    "native_timer_unittest.cc",
+    "power_manager_client_unittest.cc",
+    "power_policy_controller_unittest.cc",
+  ]
+}
+
+proto_library("power_manager_proto") {
+  sources = [
+  ]
+
+  proto_out_dir = "chromeos/dbus/power_manager"
+}

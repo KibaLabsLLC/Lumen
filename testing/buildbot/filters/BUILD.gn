@@ -1,0 +1,358 @@
+# Copyright 2016 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# This BUILD.gn file groups together filter files for particular test suites -
+# for example filters applicable to content_browsertests are exposed as
+# the //testing/buildbot/filters:content_browsertests target.
+
+# Note that all filter files (for a given test suite) are unconditionally listed
+# together, even if some filter files are applicable only to some platforms.
+# This should help avoid unpleasant surprises when a bot config is switched in
+# testing/buildbot/chromium.fyi.json without corresponding dependency changes
+# here - see https://crbug.com/661447.
+
+# To refresh, a command similar to the one below might be run in bash:
+# $ for i in $(ls -1 testing/buildbot/filters/*.browser_tests.*filter ); \
+#   do echo "    \"//$i\","; done | sort
+
+source_set("android_browsertests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("cc_unittests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("base_unittests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("blink_platform_unittests") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+bundle_data("blink_platform_unittests_filters_bundle_data") {
+  testonly = true
+  sources = [ "//testing/buildbot/filters/ios.blink_platform_unittests.filter" ]
+  outputs = [ "{{bundle_resources_dir}}/" +
+              "{{source_root_relative_dir}}/{{source_file_part}}" ]
+}
+
+source_set("blink_unittests_filters") {
+  testonly = true
+
+  data = [ "//testing/buildbot/filters/trees_in_viz.blink_unittests.filter" ]
+}
+
+source_set("blink_web_tests_filter") {
+  testonly = true
+
+  data = [ "//testing/buildbot/filters/cft.blink_web_tests.filter" ]
+}
+
+source_set("browser_tests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("chrome_public_test_apk_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("chrome_public_unit_test_apk_filters") {
+  testonly = true
+
+  data = [ "//testing/buildbot/filters/android.emulator_15_tablet.chrome_public_unit_test_apk.filter" ]
+}
+
+source_set("chromeos_filters") {
+  data = [
+  ]
+}
+
+source_set("components_unittests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+bundle_data("compositor_unittests_filters_bundle_data") {
+  testonly = true
+  sources = [ "//testing/buildbot/filters/ios.compositor_unittests.filter" ]
+  outputs = [ "{{bundle_resources_dir}}/" +
+              "{{source_root_relative_dir}}/{{source_file_part}}" ]
+}
+
+bundle_data("components_browsertests_use_blink_filters_bundle_data") {
+  testonly = true
+  sources = [
+  ]
+  outputs = [ "{{bundle_resources_dir}}/" +
+              "{{source_root_relative_dir}}/{{source_file_part}}" ]
+}
+
+bundle_data("components_unittests_use_blink_filters_bundle_data") {
+  testonly = true
+  sources =
+      [ "//testing/buildbot/filters/ios.use_blink.components_unittests.filter" ]
+  outputs = [ "{{bundle_resources_dir}}/" +
+              "{{source_root_relative_dir}}/{{source_file_part}}" ]
+}
+
+bundle_data("content_unittests_filters_bundle_data") {
+  testonly = true
+  sources = [
+  ]
+  outputs = [ "{{bundle_resources_dir}}/" +
+              "{{source_root_relative_dir}}/{{source_file_part}}" ]
+}
+
+bundle_data("gpu_unittests_filters_bundle_data") {
+  testonly = true
+  sources = [ "//testing/buildbot/filters/ios.gpu_unittests.filter" ]
+  outputs = [ "{{bundle_resources_dir}}/" +
+              "{{source_root_relative_dir}}/{{source_file_part}}" ]
+}
+
+bundle_data("media_unittests_filters_bundle_data") {
+  testonly = true
+  sources = [ "//testing/buildbot/filters/ios.media_unittests.filter" ]
+  outputs = [ "{{bundle_resources_dir}}/" +
+              "{{source_root_relative_dir}}/{{source_file_part}}" ]
+}
+
+source_set("content_browsertests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+bundle_data("content_browsertests_filter_bundle_data") {
+  testonly = true
+  sources = [ "//testing/buildbot/filters/ios.content_browsertests.filter" ]
+  outputs = [ "{{bundle_resources_dir}}/" +
+              "{{source_root_relative_dir}}/{{source_file_part}}" ]
+}
+
+source_set("content_junit_tests_filters") {
+  testonly = true
+
+  data = []
+}
+
+source_set("content_shell_test_apk_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("content_unittests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("crashpad_tests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("device_unittests_filters") {
+  testonly = true
+
+  data = []
+}
+
+source_set("sync_integration_tests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("compositor_unittests_filters") {
+  testonly = true
+
+  data =
+      [ "//testing/buildbot/filters/fuchsia.debug.compositor_unittests.filter" ]
+}
+
+source_set("snapshot_unittests_filters") {
+  testonly = true
+
+  data =
+      [ "//testing/buildbot/filters/fuchsia.debug.snapshot_unittests.filter" ]
+}
+
+source_set("views_unittests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("services_unittests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("ui_base_unittests_filters") {
+  testonly = true
+
+  data = [ "//testing/buildbot/filters/fuchsia.ui_base_unittests.filter" ]
+}
+
+source_set("views_examples_unittests_filters") {
+  testonly = true
+
+  data =
+      [ "//testing/buildbot/filters/fuchsia.views_examples_unittests.filter" ]
+}
+
+source_set("extensions_unittests_filters") {
+  testonly = true
+
+  data =
+      [ "//testing/buildbot/filters/fuchsia.lsan.extensions_unittests.filter" ]
+}
+
+source_set("gin_unittests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("skia_unittests_filters") {
+  testonly = true
+
+  data = []
+}
+
+source_set("gl_tests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("gl_unittests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("interactive_ui_tests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("linux_ozone_views_unittests_filters") {
+  data = [
+  ]
+}
+
+source_set("linux_trusty_rel_browser_tests_filters") {
+  data = [ "//testing/buildbot/filters/linux_trusty_rel.browser_tests.filter" ]
+}
+
+source_set("media_unittests_filters") {
+  data = [
+  ]
+}
+
+source_set("net_unittests_filters") {
+  data = [
+  ]
+}
+
+source_set("ozone_unittests_filters") {
+  data = [ "//testing/buildbot/filters/chromeos.ozone_unittests.filter" ]
+}
+
+source_set("unit_tests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("viz_unittests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("webview_cts_tests_filters") {
+  testonly = true
+
+  data = []
+}
+
+source_set("webview_instrumentation_test_apk_filters") {
+  testonly = true
+
+  data = [ "//testing/buildbot/filters/android.webview_instrumentation_test_apk_bfcache_mutations.filter" ]
+}
+
+source_set("gwp_asan_unittests_filters") {
+  testonly = true
+
+  data = [
+  ]
+}
+
+source_set("sandbox_linux_unittests_filters") {
+  testonly = true
+
+  data = [ "//testing/buildbot/filters/fuchsia.starview.sandbox_linux_unittests.filter" ]
+}
+
+source_set("mojo_unittests_filters") {
+  testonly = true
+
+  data = [ "//testing/buildbot/filters/fuchsia.starview.mojo_unittests.filter" ]
+}
+
+source_set("ipc_tests_filters") {
+  testonly = true
+
+  data = [ "//testing/buildbot/filters/fuchsia.starview.ipc_tests.filter" ]
+}
+
+source_set("leveldb_unittests_filters") {
+  testonly = true
+
+  data =
+      [ "//testing/buildbot/filters/fuchsia.starview.leveldb_unittests.filter" ]
+}

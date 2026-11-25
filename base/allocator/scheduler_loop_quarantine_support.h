@@ -1,0 +1,18 @@
+// Copyright 2025 The Chromium Authors
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef BASE_ALLOCATOR_SCHEDULER_LOOP_QUARANTINE_SUPPORT_H_
+#define BASE_ALLOCATOR_SCHEDULER_LOOP_QUARANTINE_SUPPORT_H_
+
+
+namespace base::allocator {
+
+using partition_alloc::QuarantineTaskType;
+using partition_alloc::SchedulerLoopQuarantineScanPolicyUpdater;
+using partition_alloc::ScopedSchedulerLoopQuarantineExclusion;
+using partition_alloc::ScopedSchedulerLoopQuarantineTaskScope;
+
+}  // namespace base::allocator
+
+#endif  // BASE_ALLOCATOR_SCHEDULER_LOOP_QUARANTINE_SUPPORT_H_

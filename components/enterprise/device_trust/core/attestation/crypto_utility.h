@@ -1,0 +1,28 @@
+// Copyright 2021 The Chromium Authors
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef COMPONENTS_ENTERPRISE_DEVICE_TRUST_CORE_ATTESTATION_CRYPTO_UTILITY_H_
+#define COMPONENTS_ENTERPRISE_DEVICE_TRUST_CORE_ATTESTATION_CRYPTO_UTILITY_H_
+
+#include "base/containers/span.h"
+
+namespace enterprise_connectors {
+
+namespace CryptoUtility {
+
+// Wraps |key| with |wrapping_key| using RSA-PKCS1-OAEP. On success populates
+// output.wrapped_key and output.wrapping_key_id fields (other fields are
+// ignored).
+bool WrapKeyOAEP(base::span<const uint8_t> key,
+                 RSA* wrapping_key,
+                 const std::string& wrapping_key_id,
+                 EncryptedData* output);
+
+bssl::UniquePtr<RSA> GetRSA(const std::string& public_key_modulus_hex);
+
+}  // namespace CryptoUtility
+
+}  // namespace enterprise_connectors
+
+#endif  // COMPONENTS_ENTERPRISE_DEVICE_TRUST_CORE_ATTESTATION_CRYPTO_UTILITY_H_
