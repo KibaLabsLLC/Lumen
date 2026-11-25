@@ -1,100 +1,32 @@
-# Chromium Code of Conduct
+# KibaOS Code of Conduct
 
-Google and the Chromium team are committed to preserving and fostering a
-diverse, welcoming community. Below is our community code of conduct, which
-applies to our repos and organizations, issue trackers, mailing lists,
-blog content, and any other Chromium-supported communication group, as
-well as any private communication initiated in the context of these
-spaces. This code of conduct must be followed by everyone contributing to
-the Chromium project, regardless of affiliation or position.
+Like the technical community as a whole, the KibaOS team and community is made up of a mixture of professionals and volunteers from all over the world, working on every aspect of the mission - including mentorship, teaching, and connecting people.
 
-Simply put, community discussions should be
+Diversity is one of our huge strengths, but it can also lead to communication issues and unhappiness. To that end, we have a few ground rules that we ask people to adhere to. This code applies equally to founders, mentors and those seeking help and guidance.
 
- * respectful and kind;
- * about Chromium;
- * about features and code, not the individuals involved.
+This isn’t an exhaustive list of things that you can’t do. Rather, take it in the spirit in which it’s intended - a guide to make it easier to enrich all of us and the technical communities in which we participate.
 
-## Be respectful and constructive.
+This code of conduct applies to all spaces managed by the KibaOS project or Kiba Labs, LLC. This includes IRC, the mailing lists, the issue tracker, DSF events, and any other forums created by the project team which the community uses for communication. In addition, violations of this code outside these spaces may affect a person's ability to participate within them.
 
-Treat everyone with respect. Build on each other's ideas. Each of us has the
-right to enjoy our experience and participate without fear of harassment,
-discrimination, or condescension, whether blatant or subtle. Remember that
-Chromium is a geographically distributed team and that you may not be
-communicating with someone in their primary language. We all get frustrated
-when working on hard problems, but we cannot allow that frustration to turn
-into personal attacks.
+If you believe someone is violating the code of conduct, we ask that you report it by emailing [corporate@kibaos.com](mailto:corporate@kibaos.com). For more details please see our 
 
-It is especially important that we are respectful of each other's time.
+- **Be friendly and patient.**
+- **Be welcoming.** We strive to be a community that welcomes and supports people of all backgrounds and identities. This includes, but is not limited to members of any race, ethnicity, culture, national origin, colour, immigration status, social and economic class, educational level, sex, sexual orientation, gender identity and expression, age, size, family status, political belief, religion, and mental and physical ability.
+- **Be considerate.** Your work will be used by other people, and you in turn will depend on the work of others. Any decision you take will affect users and colleagues, and you should take those consequences into account when making decisions. Remember that we're a world-wide community, so you might not be communicating in someone else's primary language.
+- **Be respectful.** Not all of us will agree all the time, but disagreement is no excuse for poor behavior and poor manners. We might all experience some frustration now and then, but we cannot allow that frustration to turn into a personal attack. It’s important to remember that a community where people feel uncomfortable or threatened is not a productive one. Members of the KibaOS community should be respectful when dealing with other members as well as with people outside the KibaOS community.
+- **Be careful in the words that you choose.** We are a community of professionals, and we conduct ourselves professionally. Be kind to others. Do not insult or put down other participants. Harassment and other exclusionary behavior aren't acceptable. This includes, but is not limited to: 
+ - Violent threats or language directed against another person.
+ - Discriminatory jokes and language.
+ - Posting sexually explicit or violent material.
+ - Posting (or threatening to post) other people's personally identifying information ("doxing").
+ - Personal insults, especially those using racist or sexist terms.
+ - Unwelcome sexual attention.
+ - Advocating for, or encouraging, any of the above behavior.
+ - Repeated harassment of others. In general, if someone asks you to stop, then stop.
+- **When we disagree, try to understand why.** Disagreements, both social and technical, happen all the time and KibaOS is no exception. It is important that we resolve disagreements and differing views constructively. Remember that we’re different. The strength of KibaOS comes from its varied community, people from a wide range of backgrounds. Different people have different perspectives on issues. Being unable to understand why someone holds a viewpoint doesn’t mean that they’re wrong. Don’t forget that it is human to err and blaming each other doesn’t get us anywhere. Instead, focus on helping to resolve issues and learning from mistakes.
 
-As a general rule, while it is acceptable to use AI for Chromium development
-(code authoring, bug finding, etc), you should not "delegate" discussing
-something with another human to an AI. If you file an AI-generated bug or
-upload an AI-authored CL and a human replies on it, you should reply to their
-comment yourself, not have your AI do so. Remember that at all times you are
-responsible for actions taken under your account in Chromium spaces, and if
-an agent using your account is disrespectful or unkind, the consequences of
-that as outlined below will apply to your account.
+Original text courtesy of the [Speak Up! project](http://web.archive.org/web/20141109123859/http://speakup.io/coc.html).
 
-## Speak up if you see or hear something.
+## Questions?
 
-You are empowered to politely engage when you feel that you or others are
-disrespected. The person making you feel uncomfortable may not be aware of what
-they are doing - politely bringing their behavior to their attention is
-encouraged.
-
-If you are uncomfortable speaking up, or feel that your concerns are not being
-duly considered, you can email community@chromium.org to request involvement
-from a community manager. All concerns shared with community managers will be
-kept confidential, but you may also submit an anonymous report [here](https://docs.google.com/a/google.com/forms/d/e/1FAIpQLSe-LDjW9eIJ-TpI2poZxnGtU-SvUWkFZc8x0aiKGY1s7NKPdA/viewform?c=0&w=1).
-Please note that without a way to contact you, an anonymous report may be
-difficult to act on. You may also create a throwaway account to report. In
-cases where a public response is deemed necessary, the identities of victims
-and reporters will remain confidential unless those individuals instruct us
-otherwise.
-
-While all reports will be taken seriously, the Chromium community managers may
-not act on complaints that they feel are not violations of this code of
-conduct.
-
-## We will not tolerate harassment of any kind, including but not limited to:
-
- * Harassing comments
- * Intimidation
- * Encouraging a person to engage in self-harm.
- * Sustained disruption or derailing of threads, channels, lists, etc.
- * Offensive or violent comments, jokes or otherwise
- * Inappropriate sexual content
- * Unwelcome sexual or otherwise aggressive attention
- * Continued one-on-one communication after requests to cease
- * Distribution or threat of distribution of people's personally identifying
-   information, AKA “doxing”
-
-## Consequences for failing to comply with this policy
-
-Consequences for failing to comply with this policy may include, at the sole
-discretion of the Chromium community managers:
-
- * a request for an apology;
- * a private or public warning or reprimand;
- * a temporary ban from the mailing list, blog, Chromium repository or
-   organization, or other Chromium-supported communication group, including
-   loss of committer status;
- * a permanent ban from any of the above, or from all current and future
-   Chromium-supported or Google-supported communities, including loss of
-   committer status.
-
-Participants warned to stop any harassing behavior are expected to comply
-immediately; failure to do so will result in an escalation of consequences.
-
-Bans or other consequences under this policy can be appealed by email to
-community@chromium.org.
-
-## Acknowledgements
-
-This Code of Conduct is based on the Geek Feminism Code of Conduct, the Django
-Code of Conduct and the Geek Feminism Wiki "Effective codes of conduct" guide.
-
-## License
-
-This Code of Conduct is available for reuse under the Creative Commons Zero
-(CC0) license.
+If you have questions, please see . If that doesn't answer your questions, feel free to [contact us](mailto:corporate@kibaos.com).
