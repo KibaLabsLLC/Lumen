@@ -6,7 +6,19 @@ executable("chrome") {
   ]
   deps = [
     "//ash",
-    "//ui/aura",
+    "//ash/public/cpp",
     "//base",
+    "//chromeos/ash/components/audio",
+    "//chromeos/ash/services/coral/public/mojom",
+    "//chromeos/ash/services/nearby/public/mojom",
+    "//components/account_id",
+    "//components/user_education/common",
+    "//mojo/public/cpp/bindings",
+    "//services/metrics/public/cpp:metrics_cpp",
+    "//ui/aura",
+    "//ui/base",
+    "//ui/gfx",
+    "//ui/views",
+    "//url",
   ]
 }
