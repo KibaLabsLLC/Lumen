@@ -1,0 +1,15 @@
+// Copyright 2026 The Chromium Authors
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef THIRD_PARTY_TFLITE_SHIMS_THIRD_PARTY_TFLITE_SRC_TENSORFLOW_COMPILER_MLIR_QUANTIZATION_STABLEHLO_QUANTIZATION_CONFIG_PB_H_
+#define THIRD_PARTY_TFLITE_SHIMS_THIRD_PARTY_TFLITE_SRC_TENSORFLOW_COMPILER_MLIR_QUANTIZATION_STABLEHLO_QUANTIZATION_CONFIG_PB_H_
+
+#include "build/buildflag.h"
+
+#if BUILDFLAG(USE_LITERT_TFLITE)
+#else
+#include_next "tensorflow/compiler/mlir/quantization/stablehlo/quantization_config.pb.h"
+#endif
+
+#endif  // THIRD_PARTY_TFLITE_SHIMS_THIRD_PARTY_TFLITE_SRC_TENSORFLOW_COMPILER_MLIR_QUANTIZATION_STABLEHLO_QUANTIZATION_CONFIG_PB_H_

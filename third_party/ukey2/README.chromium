@@ -1,0 +1,13 @@
+Name: UKey2
+Short Name: Ukey2
+URL: https://github.com/google/ukey2
+Version: N/A
+Revision: 10fc737aa901e873a3367e7e26b88eb01cd55d69
+Date: 2026-01-20
+Update Mechanism: Manual
+License: Apache-2.0
+License File: LICENSE
+Security Critical: yes
+Shipped: yes
+Description:
+Ukey2 library

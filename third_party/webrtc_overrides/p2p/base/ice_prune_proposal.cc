@@ -1,0 +1,33 @@
+#include "third_party/webrtc_overrides/p2p/base/ice_prune_proposal.h"
+
+#include <string>
+
+#include "base/containers/span.h"
+#include "third_party/webrtc_overrides/p2p/base/ice_connection.h"
+#include "third_party/webrtc_overrides/p2p/base/ice_proposal.h"
+
+namespace blink {
+
+IcePruneProposal::IcePruneProposal(
+    base::span<const webrtc::Connection*> connections_to_prune,
+    bool reply_expected)
+    : IceProposal(reply_expected) {
+  for (const webrtc::Connection* conn : connections_to_prune) {
+    if (conn) {
+      connections_to_prune_.emplace_back(conn);
+    }
+  }
+}
+
+std::string IcePruneProposal::ToString() const {
+  webrtc::StringBuilder ss;
+  ss << "PruneProposal[";
+  int ctr = 1;
+  for (auto conn : connections_to_prune_) {
+    ss << "(" << ctr++ << ":" << conn.ToString() << ")";
+  }
+  ss << "]";
+  return ss.Release();
+}
+
+}  // namespace blink

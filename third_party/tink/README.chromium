@@ -1,0 +1,22 @@
+Name: Tink C++
+Short Name: tink-cc
+URL: https://github.com/tink-crypto/tink-cc
+Version: N/A
+Date: 2026-11-24
+Revision: e926aa03e1c8f837d833d176a1f4a4a9774d01d4
+Update Mechanism: Autoroll
+License: Apache-2.0
+License File: LICENSE
+Security Critical: yes
+Shipped: yes
+CPEPrefix: unknown
+
+Description:
+Tink is a multi-language, cross-platform, open-source cryptographic library
+that provides cryptographic APIs that are secure, easy to use correctly, and
+hard to misuse. In Chromium, it is used for standardized keyset serialization
+and cryptographic agility (such as key rotation and algorithm transitions) on
+top of BoringSSL.
+
+Local Modifications:
+None
