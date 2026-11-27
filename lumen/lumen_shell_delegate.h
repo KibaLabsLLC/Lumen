@@ -1,4 +1,4 @@
-// Copyright 2025 The Lumen Authors
+// Copyright 2025 The KibaOS Authors
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -14,6 +14,10 @@
 #include "base/memory/raw_ptr.h"
 #include "mojo/public/cpp/bindings/pending_receiver.h"
 #include "url/gurl.h"
+
+// KibaOS: LumenShellDelegate wires ash::Shell to the KibaOS platform layer.
+// Sub-delegate implementations live in this file; path and environment helpers
+// are in lumen/kibaos_paths.h and lumen/kibaos_environment.h.
 
 class AccountId;
 class PrefService;

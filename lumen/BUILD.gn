@@ -1,6 +1,25 @@
-executable("chrome") {
+# KibaOS path and environment glue library.
+source_set("kibaos_glue") {
   sources = [
-    "main.cc",
+    "kibaos_environment.cc",
+    "kibaos_environment.h",
+    "kibaos_paths.cc",
+    "kibaos_paths.h",
+    "kibaos_shell_glue.cc",
+    "kibaos_shell_glue.h",
+  ]
+  deps = [
+    ":lumen_shell_delegate",
+    "//base",
+    "//base:i18n",
+    "//components/version_info",
+  ]
+}
+
+# LumenShellDelegate as a standalone target so kibaos_glue can depend on it
+# without a circular dep through the executable.
+source_set("lumen_shell_delegate") {
+  sources = [
     "lumen_shell_delegate.cc",
     "lumen_shell_delegate.h",
   ]
@@ -20,5 +39,15 @@ executable("chrome") {
     "//ui/gfx",
     "//ui/views",
     "//url",
+  ]
+}
+
+executable("chrome") {
+  sources = [ "main.cc" ]
+  deps = [
+    ":kibaos_glue",
+    ":lumen_shell_delegate",
+    "//base",
+    "//components/version_info",
   ]
 }
