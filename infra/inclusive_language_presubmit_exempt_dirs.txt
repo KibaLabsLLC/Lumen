@@ -28,7 +28,6 @@ build/config/android
 build/config/fuchsia
 build/fuchsia/starview
 build/fuchsia/test
-build/rust/std/rules
 build/skia_gold_common
 build/toolchain/win/rc
 cc/input

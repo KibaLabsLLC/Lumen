@@ -4382,18 +4382,6 @@ hooks = [
                '--with-fuchsia={checkout_fuchsia}'],
   },
   {
-    # Build the rust toolchain from tip-of-tree, against tip-of-tree LLVM.
-    # Note: On Win, this should run after win_toolchain, as it may use it.
-    'name': 'rust_tot',
-    'pattern': '.',
-    'condition': 'rust_force_head_revision',
-    'action': ['vpython3', 'src/tools/rust/build_rust.py',
-               '--rust-force-head-revision',
-               '--llvm-force-head-revision',
-               '--entire-toolchain',
-               '--skip-test'],
-  },
-  {
     # Update LASTCHANGE.
     'name': 'lastchange',
     'pattern': '.',
