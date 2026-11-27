@@ -12,13 +12,8 @@
 #include "base/logging.h"
 #include "base/message_loop/message_pump_type.h"
 #include "base/task/single_thread_task_executor.h"
+#include "lumen/ash_shell_init.h"
 #include "lumen/kibaos_shell_glue.h"
-
-// ash::Shell::CreateInstance and DeleteInstance are declared here; the actual
-// symbols are provided by //ash.
-namespace ash {
-class Shell;
-}
 
 int main(int argc, char** argv) {
   // Required by base:: utilities (registers atexit handlers, etc.)
@@ -41,12 +36,19 @@ int main(int argc, char** argv) {
   base::SingleThreadTaskExecutor main_task_executor(
       base::MessagePumpType::UI);
 
-  // Hand the shell delegate to Ash.
-  // ash::Shell::CreateInstance(glue.TakeShellDelegate(), ...);
-  // <Ash initialisation goes here once AshShellInit is wired up.>
+  // Create Ash and hand the shell delegate over.
+  kibaos::AshShellInit ash_shell_init;
+  if (!ash_shell_init.Init(&glue)) {
+    LOG(ERROR) << "KibaOS AshShellInit::Init() failed – aborting.";
+    return 1;
+  }
 
-  LOG(INFO) << "KibaOS Lumen initialised. Shell delegate transferred to Ash.";
+  // Run the Ash shell until it is asked to quit.
+  const int exit_code = ash_shell_init.Run();
 
-  // ash::Shell::DeleteInstance();
-  return 0;
+  // Explicit shutdown before returning so destructors run in a well-defined
+  // order.
+  ash_shell_init.Shutdown();
+
+  return exit_code;
 }

@@ -42,9 +42,38 @@ source_set("lumen_shell_delegate") {
   ]
 }
 
+# AshShellInit wires the KibaOS glue layer to ash::Shell. It is currently
+# testonly because Lumen does not yet have a production compositor/display
+# transport, so it reuses Ash/Chromium test support utilities for the
+# in-process compositor and fake display delegate.
+# TODO(b/123456789): Remove testonly once a production graphics transport is
+# wired up.
+source_set("ash_shell_init") {
+  testonly = true
+  sources = [
+    "ash_shell_init.cc",
+    "ash_shell_init.h",
+  ]
+  deps = [
+    ":kibaos_glue",
+    ":lumen_shell_delegate",
+    "//ash",
+    "//ash/keyboard/ui:test_support",
+    "//base",
+    "//ui/compositor:test_support",
+    "//ui/display/manager:test_support",
+  ]
+}
+
+# The Lumen executable target. Marked testonly while AshShellInit depends on
+# test compositor support.
+# TODO(b/123456789): Remove testonly once a production graphics transport is
+# wired up.
 executable("chrome") {
+  testonly = true
   sources = [ "main.cc" ]
   deps = [
+    ":ash_shell_init",
     ":kibaos_glue",
     ":lumen_shell_delegate",
     "//base",
