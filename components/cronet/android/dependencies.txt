@@ -26,7 +26,6 @@
 //build/rust/crubit
 //build/rust/gni_impl
 //build/rust/std
-//build/rust/std/rules
 //buildtools/third_party/libc++
 //buildtools/third_party/libc++abi
 //buildtools/third_party/libunwind

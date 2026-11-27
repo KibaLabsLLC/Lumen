@@ -312,12 +312,8 @@ template("cargo_crate") {
       # this dependency in `no_std` mode. This is desirable for two reasons:
       # 1. It gives users of `cargo_crate` an indirect way to control presence of
       #    this dependency.
-      # 2. More importantly, it avoid cyclic dependencies like the one below:
-      #       //build/rust/allocator:allocator ->
-      #       ...
-      #       //build/rust/std:std ->
-      #       //build/rust/std/rules:addr2line (or another stdlib crate) ->
-      #       //build/rust/allocator:allocator
+      # 2. More importantly, it avoids cyclic dependencies through the standard
+      #    library when allocator is used.
       no_allocator_crate = false
       if (defined(invoker.no_std) && invoker.no_std) {
         no_allocator_crate = true

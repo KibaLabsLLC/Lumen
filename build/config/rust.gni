@@ -168,7 +168,6 @@ if (enable_rust) {
       rustc_revision = _version_lines[0]
     }
 
-    # The same as written in `config.toml.template`.
     rust_channel = "dev"
   } else {
     toolchain_has_rust = custom_toolchain_supports_platform
@@ -438,11 +437,9 @@ if (toolchain_for_rust_host_build_tools) {
   rust_macro_toolchain = "${host_toolchain}_for_rust_host_build_tools"
 }
 
-# When this is true, a prebuilt Rust stdlib will be used. This has implications
-# such as that the panic strategy (unwind, abort) must match how the stdlib is
-# compiled, which is typically as unwind.
-rust_prebuilt_stdlib =
-    !use_chromium_rust_toolchain || toolchain_for_rust_host_build_tools
+# Use the prebuilt Rust stdlib that ships with the toolchain instead of
+# compiling it from source.
+rust_prebuilt_stdlib = true
 
 # `rust_sysroot` is the toolchain root (and the default sysroot of rustc),
 # but the locally built stdlib uses a different sysroot.

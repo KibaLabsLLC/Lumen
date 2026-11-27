@@ -100,16 +100,6 @@ config("forbid_unsafe") {
   ]
 }
 
-config("panic_immediate_abort") {
-  visibility = [ "//build/rust/std/rules:*" ]
-  if (is_official_build) {
-    rustflags = [
-      "-Zunstable-options",
-      "-Cpanic=immediate-abort",
-    ]
-  }
-}
-
 config("is_gtest_unittests") {
   rustflags = [
     "--cfg",
