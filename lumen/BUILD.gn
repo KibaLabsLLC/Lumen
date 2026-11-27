@@ -61,7 +61,7 @@ source_set("ash_shell_init") {
     "//ash/keyboard/ui:test_support",
     "//base",
     "//ui/compositor:test_support",
-    "//ui/display/manager:test_support",
+    "//ui/display:test_support",
   ]
 }
 
