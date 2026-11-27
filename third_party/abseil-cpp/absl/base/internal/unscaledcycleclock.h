@@ -38,6 +38,8 @@
 
 #include <cstdint>
 
+#include "absl/base/config.h"
+#include "absl/base/internal/unscaledcycleclock_config.h"
 
 #if defined(__APPLE__)
 #include <TargetConditionals.h>

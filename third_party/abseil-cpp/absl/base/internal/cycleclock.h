@@ -45,6 +45,11 @@
 #include <atomic>
 #include <cstdint>
 
+#include "absl/base/attributes.h"
+#include "absl/base/config.h"
+#include "absl/base/internal/cycleclock_config.h"
+#include "absl/base/internal/unscaledcycleclock.h"
+#include "absl/base/internal/unscaledcycleclock_config.h"
 
 namespace absl {
 ABSL_NAMESPACE_BEGIN

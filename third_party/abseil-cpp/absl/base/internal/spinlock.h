@@ -34,6 +34,16 @@
 #include <mutex>
 #include <type_traits>
 
+#include "absl/base/attributes.h"
+#include "absl/base/config.h"
+#include "absl/base/const_init.h"
+#include "absl/base/internal/low_level_scheduling.h"
+#include "absl/base/internal/raw_logging.h"
+#include "absl/base/internal/scheduling_mode.h"
+#include "absl/base/internal/tsan_mutex_interface.h"
+#include "absl/base/macros.h"
+#include "absl/base/nullability.h"
+#include "absl/base/thread_annotations.h"
 
 namespace tcmalloc {
 namespace tcmalloc_internal {

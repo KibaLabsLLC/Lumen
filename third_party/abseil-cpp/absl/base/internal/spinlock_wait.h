@@ -22,6 +22,8 @@
 
 #include <atomic>
 
+#include "absl/base/config.h"
+#include "absl/base/internal/scheduling_mode.h"
 
 namespace absl {
 ABSL_NAMESPACE_BEGIN

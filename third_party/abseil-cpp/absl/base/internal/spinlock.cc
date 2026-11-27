@@ -13,8 +13,21 @@
 // limitations under the License.
 
 
+#include "absl/base/internal/spinlock.h"
+
 #include <atomic>
 #include <cstdint>
+
+#include "absl/base/attributes.h"
+#include "absl/base/call_once.h"
+#include "absl/base/config.h"
+#include "absl/base/internal/atomic_hook.h"
+#include "absl/base/internal/cycleclock.h"
+#include "absl/base/internal/scheduling_mode.h"
+#include "absl/base/internal/spinlock_wait.h"
+#include "absl/base/internal/sysinfo.h" /* For NumCPUs() */
+#include "absl/base/internal/tsan_mutex_interface.h"
+#include "absl/base/nullability.h"
 
 
 // Description of lock-word:
