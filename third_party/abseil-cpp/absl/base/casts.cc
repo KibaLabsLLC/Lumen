@@ -13,9 +13,13 @@
 // limitations under the License.
 
 
+#include "absl/base/casts.h"
+
 #include <cstdlib>
 #include <string>
 
+#include "absl/base/config.h"
+#include "absl/base/internal/raw_logging.h"
 
 #ifdef ABSL_INTERNAL_HAS_CXA_DEMANGLE
 #include <cxxabi.h>
