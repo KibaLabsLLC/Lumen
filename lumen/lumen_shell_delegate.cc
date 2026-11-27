@@ -1,10 +1,13 @@
-// Copyright 2025 The Lumen Authors
+// Copyright 2025 The KibaOS Authors
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include "lumen/lumen_shell_delegate.h"
 
 #include <utility>
+
+#include "lumen/kibaos_environment.h"
+#include "lumen/kibaos_paths.h"
 
 #include "ash/api/tasks/tasks_client.h"
 #include "ash/api/tasks/tasks_delegate.h"
@@ -90,13 +93,14 @@ class LumenCaptureModeDelegate : public CaptureModeDelegate {
   void OnServiceRemoteReset() override {}
 
   bool GetDriveFsMountPointPath(base::FilePath* path) const override {
-    return false;
+    return kibaos::GetDriveFsMountPoint(path);
   }
   base::FilePath GetAndroidFilesPath() const override {
-    return base::FilePath();
+    return kibaos::GetAndroidFilesPath();
   }
   base::FilePath GetLinuxFilesPath() const override {
-    return base::FilePath();
+    // Returns the KibaOS Linux container (Crostini) shared-files path.
+    return kibaos::GetLinuxContainerFilesPath();
   }
   base::FilePath GetOneDriveMountPointPath() const override {
     return base::FilePath();
@@ -679,19 +683,21 @@ bool LumenShellDelegate::IsSessionRestoreInProgress() const {
 }
 
 void LumenShellDelegate::SetUpEnvironmentForLockedFullscreen(
-    const WindowState& window_state) {}
+    const WindowState& window_state) {
+  kibaos::SetUpLockedFullscreenEnvironment();
+}
 
 bool LumenShellDelegate::IsLoggingRedirectDisabled() const {
-  return false;
+  return kibaos::IsLoggingRedirectDisabled();
 }
 
 base::FilePath LumenShellDelegate::GetPrimaryUserDownloadsFolder() const {
-  return base::FilePath();
+  return kibaos::GetPrimaryUserDownloadsPath();
 }
 
 base::FilePath LumenShellDelegate::CrackFileSystemUrl(
     const GURL& file_system_url) const {
-  return base::FilePath();
+  return kibaos::CrackFileSystemUrl(file_system_url.spec());
 }
 
 void LumenShellDelegate::OpenFeedbackDialog(
@@ -711,14 +717,14 @@ bool LumenShellDelegate::SendSpecializedFeatureFeedback(
 void LumenShellDelegate::OpenProfileManager() {}
 
 version_info::Channel LumenShellDelegate::GetChannel() {
-  return version_info::Channel::UNKNOWN;
+  return kibaos::GetChannel();
 }
 
 void LumenShellDelegate::ForceSkipWarningUserOnClose(
     const std::vector<raw_ptr<aura::Window, DanglingUntriaged>>& windows) {}
 
 std::string LumenShellDelegate::GetVersionString() {
-  return "0.0.0";
+  return kibaos::GetVersionString();
 }
 
 void LumenShellDelegate::OpenMultitaskingSettings() {}
