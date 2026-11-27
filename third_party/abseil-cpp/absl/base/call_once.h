@@ -33,6 +33,15 @@
 #include <type_traits>
 #include <utility>
 
+#include "absl/base/attributes.h"
+#include "absl/base/config.h"
+#include "absl/base/internal/low_level_scheduling.h"
+#include "absl/base/internal/raw_logging.h"
+#include "absl/base/internal/scheduling_mode.h"
+#include "absl/base/internal/spinlock_wait.h"
+#include "absl/base/nullability.h"
+#include "absl/base/optimization.h"
+#include "absl/base/port.h"
 
 namespace absl {
 ABSL_NAMESPACE_BEGIN

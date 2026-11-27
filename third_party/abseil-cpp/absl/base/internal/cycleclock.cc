@@ -21,8 +21,15 @@
 //    https://setisvn.ssl.berkeley.edu/svn/lib/fftw-3.0.1/kernel/cycle.h
 
 
+#include "absl/base/internal/cycleclock.h"
+
 #include <atomic>
 #include <chrono>  // NOLINT(build/c++11)
+
+#include "absl/base/attributes.h"
+#include "absl/base/config.h"
+#include "absl/base/internal/unscaledcycleclock.h"
+#include "absl/base/internal/unscaledcycleclock_config.h"
 
 
 namespace absl {

@@ -21,6 +21,11 @@
 #include <atomic>
 #include <cstdint>
 
+#include "absl/base/config.h"
+#include "absl/base/internal/raw_logging.h"
+#include "absl/base/internal/scheduling_mode.h"
+#include "absl/base/internal/thread_identity.h"
+#include "absl/base/macros.h"
 
 // The following two declarations exist so SchedulingGuard may friend them with
 // the appropriate language linkage.  These callbacks allow libc internals, such
