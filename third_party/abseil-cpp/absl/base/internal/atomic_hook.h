@@ -20,6 +20,8 @@
 #include <cstdint>
 #include <utility>
 
+#include "absl/base/attributes.h"
+#include "absl/base/config.h"
 
 #if defined(_MSC_VER) && !defined(__clang__)
 #define ABSL_HAVE_WORKING_CONSTEXPR_STATIC_INIT 0

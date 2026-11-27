@@ -32,6 +32,11 @@
 #include <cassert>
 #include <cstddef>
 
+#include "absl/base/attributes.h"
+#include "absl/base/config.h"
+#include "absl/base/optimization.h"
+#include "absl/base/options.h"
+#include "absl/base/port.h"
 
 // ABSL_ARRAYSIZE()
 //

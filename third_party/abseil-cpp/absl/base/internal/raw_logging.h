@@ -22,6 +22,13 @@
 #include <cstddef>
 #include <string>
 
+#include "absl/base/attributes.h"
+#include "absl/base/config.h"
+#include "absl/base/internal/atomic_hook.h"
+#include "absl/base/log_severity.h"
+#include "absl/base/macros.h"
+#include "absl/base/optimization.h"
+#include "absl/base/port.h"
 
 // This is similar to LOG(severity) << format..., but
 // * it is to be used ONLY by low-level modules that can't use normal LOG()

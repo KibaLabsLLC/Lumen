@@ -38,6 +38,8 @@
 #include <utility>
 #endif  // __cplusplus
 
+#include "absl/base/config.h"
+#include "absl/base/options.h"
 
 // ABSL_BLOCK_TAIL_CALL_OPTIMIZATION
 //

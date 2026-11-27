@@ -18,6 +18,8 @@
 #include <array>
 #include <ostream>
 
+#include "absl/base/attributes.h"
+#include "absl/base/config.h"
 
 namespace absl {
 ABSL_NAMESPACE_BEGIN
