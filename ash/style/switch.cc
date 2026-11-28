@@ -18,11 +18,11 @@ namespace ash {
 namespace {
 
 // Switch, track, and knob size.
-constexpr int kSwitchWidth = 48;
+constexpr int kSwitchWidth = 52;
 constexpr int kSwitchHeight = 32;
-constexpr int kSwitchInnerPadding = 8;
+constexpr int kSwitchInnerPadding = 2;
 constexpr int kTrackInnerPadding = 2;
-constexpr int kThumbRadius = 6;
+constexpr int kThumbRadius = 12;
 constexpr int kFocusPadding = 2;
 
 }  // namespace

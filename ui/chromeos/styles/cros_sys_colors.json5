@@ -208,7 +208,7 @@
     /* Bases */
     /* KibaOS window headers are near-white glass tinted by the seed blue. */
     header: {
-      light: 'blend(rgba($cros.ref.primary40.rgb, 0.06), $cros.ref.neutral100)',
+      light: 'blend(rgba($cros.ref.primary40.rgb, 0.08), $cros.ref.neutral100)',
       dark:  '$cros.ref.secondary12',
     },
     'header-unfocused': {
@@ -224,8 +224,8 @@
       dark:  '$cros.ref.neutral8',
     },
     'base-highlight': {
-      light: 'blend(rgba($cros.ref.primary70.rgb, 0.24), $cros.ref.neutral100)',
-      dark: 'blend(rgba($cros.ref.primary70.rgb, 0.28), $cros.ref.neutral15)',
+      light: 'blend(rgba($cros.ref.primary40.rgb, 0.14), $cros.ref.neutral100)',
+      dark: 'blend(rgba($cros.ref.primary80.rgb, 0.24), $cros.ref.neutral15)',
     },
     'on-base-highlight': {
       light: 'rgba($cros.ref.primary60.rgb, 0.30)',
@@ -243,8 +243,8 @@
       dark: '$cros.ref.neutralvariant0',
     },
     'system-base-elevated': {
-      light: 'rgba($cros.sys.surface3.rgb, 0.9)',
-      dark: 'rgba($cros.sys.surface3.rgb, 0.9)',
+      light: 'rgba($cros.sys.surface3.rgb, 0.92)',
+      dark: 'rgba($cros.sys.surface3.rgb, 0.92)',
     },
     'system-base-elevated-opaque': {
       light: '$cros.sys.surface3',
@@ -307,7 +307,8 @@
       dark: 'rgba($cros.ref.neutral50.rgb, 0.4)'
     },
     'input-field-on-base': {
-      light: '$cros.ref.neutral95',
+      light:
+          'blend(rgba($cros.ref.primary40.rgb, 0.06), $cros.ref.neutral99)',
       dark: 'rgba($cros.ref.neutral0.rgb, 0.6)'
     },
     'system-on-base': {

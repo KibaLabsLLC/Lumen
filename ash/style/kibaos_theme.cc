@@ -22,9 +22,9 @@ namespace {
 
 // The accent dots of the KibaOS color palette, left to right.
 constexpr std::array<SkColor, kAccentColorCount> kAccentColors = {
-    SkColorSetRGB(0x4F, 0x5B, 0xD5),  // Indigo
-    SkColorSetRGB(0x5B, 0x6B, 0xE8),  // Periwinkle
-    SkColorSetRGB(0x8E, 0x97, 0xF2),  // Lilac
+    SkColorSetRGB(0x2F, 0x6B, 0xEA),  // Royal blue
+    SkColorSetRGB(0x4D, 0x6F, 0xE8),  // Periwinkle
+    SkColorSetRGB(0x7A, 0x8B, 0xF0),  // Lilac
     SkColorSetRGB(0x2B, 0xB8, 0xB0),  // Teal
     SkColorSetRGB(0x29, 0xB6, 0xD8),  // Aqua
     SkColorSetRGB(0x39, 0xA9, 0xDC),  // Sky
@@ -44,8 +44,8 @@ constexpr SkColor kGlassSurfaceInactiveDark =
 
 // Dialogs are the most translucent KibaOS surface: they are painted over the
 // backdrop blur installed by ui/aura/kibaos_window_effects.h.
-constexpr SkColor kGlassDialogLight = SkColorSetARGB(0xE0, 0xFF, 0xFF, 0xFF);
-constexpr SkColor kGlassDialogDark = SkColorSetARGB(0xE0, 0x1E, 0x28, 0x3C);
+constexpr SkColor kGlassDialogLight = SkColorSetARGB(0xF2, 0xFF, 0xFF, 0xFF);
+constexpr SkColor kGlassDialogDark = SkColorSetARGB(0xF2, 0x1E, 0x28, 0x3C);
 
 // Menus and tooltips are more opaque so that labels stay readable.
 constexpr SkColor kMenuSurfaceLight = SkColorSetARGB(0xF7, 0xFB, 0xFC, 0xFF);
@@ -100,8 +100,13 @@ void AddKibaosColorMixer(ui::ColorProvider* provider,
   mixer[ui::kColorTooltipBackground] = {kTooltipBackground};
   mixer[ui::kColorTooltipForeground] = {kTooltipForeground};
 
-  // Prominent controls use the Kiba Blue seed directly.
+  // Prominent controls use the Kiba Blue seed directly. Off switches are the
+  // pale blue track of the design sheet with a white knob.
   mixer[ui::kColorToggleButtonTrackOn] = {kPrimary};
+  mixer[ui::kColorToggleButtonTrackOff] = {
+      dark ? SkColorSetRGB(0x33, 0x3D, 0x52) : SkColorSetRGB(0xE3, 0xEA, 0xF6)};
+  mixer[ui::kColorToggleButtonThumbOn] = {SK_ColorWHITE};
+  mixer[ui::kColorToggleButtonThumbOff] = {SK_ColorWHITE};
   mixer[ui::kColorRadioButtonForegroundChecked] = {kPrimary};
   mixer[kColorAshFolderItemCountBackgroundColor] = {kPrimary};
   mixer[kColorAshMultiSelectTextColor] = {kPrimary};

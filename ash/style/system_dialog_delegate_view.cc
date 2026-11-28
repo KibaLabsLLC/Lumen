@@ -53,12 +53,12 @@ constexpr ui::ColorId kTitleColorId = cros_tokens::kCrosSysOnSurface;
 constexpr gfx::Size kMinimumDialogSize = gfx::Size(296, 144);
 constexpr gfx::Size kMaximumDialogSize = gfx::Size(512, 600);
 constexpr int kRoundedCornerRadius = kibaos::kPanelCornerRadius;
-constexpr gfx::Insets kBorderInsets = gfx::Insets::TLBR(32, 32, 28, 32);
+constexpr gfx::Insets kBorderInsets = gfx::Insets::TLBR(28, 28, 24, 28);
 constexpr int kIconSize = 32;
 constexpr int kIconBottomPadding = 20;
 constexpr int kTitleBottomPadding = 16;
 constexpr int kDefaultContentPadding = 32;
-constexpr int kButtonContainerTopPadding = 32;
+constexpr int kButtonContainerTopPadding = 28;
 constexpr int kButtonSpacing = 8;
 constexpr int kMinimumAdditionalButtonPadding = 80;
 
@@ -78,7 +78,7 @@ constexpr int kDialogHostPaddingLarge = 80;
 constexpr int kDialogHostPaddingSmall = 32;
 
 // The default fonts of the title and description.
-constexpr TypographyToken kTitleFont = TypographyToken::kCrosDisplay7;
+constexpr TypographyToken kTitleFont = TypographyToken::kCrosDisplay6;
 constexpr TypographyToken kBodyFont = TypographyToken::kCrosBody1;
 
 ui::ColorId GetDialogBackgroundColorId() {

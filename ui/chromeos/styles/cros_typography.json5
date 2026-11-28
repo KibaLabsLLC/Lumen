@@ -13,21 +13,23 @@
   },
   typography: {
     font_families: {
-      font_family_kiba_sans: "'Kiba Sans', 'Noto Sans', sans-serif",
-      font_family_kiba_sans_text: "'Kiba Sans Text', 'Kiba Sans', 'Noto Sans', sans-serif",
+      font_family_kiba_sans:
+          "'Google Sans', 'Kiba Sans', 'Noto Sans', sans-serif",
+      font_family_kiba_sans_text:
+          "'Google Sans Text', 'Kiba Sans Text', 'Google Sans', 'Kiba Sans', 'Noto Sans', sans-serif",
     },
     font_faces: {},
     typefaces: {
       headline_1: {
         font_family: '$font_family_kiba_sans',
         font_size: 15,
-        font_weight: 500,
+        font_weight: 600,
         line_height: 22,
       },
       headline_2: {
         font_family: '$font_family_kiba_sans_text',
         font_size: 15,
-        font_weight: 500,
+        font_weight: 600,
         line_height: 22,
       },
       body_0: {
@@ -81,20 +83,20 @@
       display_6: {
         font_family: '$font_family_kiba_sans',
         font_size: 22,
-        font_weight: 500,
+        font_weight: 600,
         line_height: 28,
       },
       display_7: {
         font_family: '$font_family_kiba_sans',
         font_size: 18,
-        font_weight: 500,
+        font_weight: 600,
         line_height: 24,
       },
       annotation_1: {
         font_family: '$font_family_kiba_sans_text',
         font_size: 12,
         font_weight: 400,
-        line_height: 18,
+        line_height: 16,
       },
       annotation_2: {
         font_family: '$font_family_kiba_sans',
@@ -117,13 +119,13 @@
       title_1: {
         font_family: '$font_family_kiba_sans',
         font_size: 16,
-        font_weight: 500,
+        font_weight: 600,
         line_height: 24,
       },
       title_2: {
         font_family: '$font_family_kiba_sans_text',
         font_size: 16,
-        font_weight: 500,
+        font_weight: 600,
         line_height: 24,
       },
       label: {

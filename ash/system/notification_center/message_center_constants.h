@@ -27,7 +27,7 @@ inline constexpr auto kGroupedNotificationContainerCollapsedInsets =
 inline constexpr auto kGroupedNotificationContainerExpandedInsets =
     gfx::Insets::TLBR(2, 0, 8, 0);
 
-inline constexpr int kMessagePopupCornerRadius = 16;
+inline constexpr int kMessagePopupCornerRadius = 20;
 
 inline constexpr int kMessageCenterNotificationInnerCornerRadius = 4;
 inline constexpr int kMessageCenterScrollViewCornerRadius = 16;

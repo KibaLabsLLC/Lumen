@@ -26,11 +26,11 @@ namespace ash::kibaos {
 // frames, shields, artwork) that cannot resolve a color id.
 
 // Brand colors.
-ASH_EXPORT inline constexpr SkColor kPrimary = SkColorSetRGB(0x0D, 0x5B, 0xD4);
+ASH_EXPORT inline constexpr SkColor kPrimary = SkColorSetRGB(0x0B, 0x5B, 0xE6);
 ASH_EXPORT inline constexpr SkColor kPrimaryHover =
-    SkColorSetRGB(0x1A, 0x6B, 0xF0);
+    SkColorSetRGB(0x1E, 0x6B, 0xF2);
 ASH_EXPORT inline constexpr SkColor kPrimaryPressed =
-    SkColorSetRGB(0x0A, 0x4B, 0xB0);
+    SkColorSetRGB(0x08, 0x47, 0xB8);
 ASH_EXPORT inline constexpr SkColor kOnPrimary = SK_ColorWHITE;
 
 // The navy swatches of the KibaOS color palette.
