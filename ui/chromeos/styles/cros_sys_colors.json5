@@ -206,12 +206,13 @@
     },
 
     /* Bases */
+    /* KibaOS window headers are near-white glass tinted by the seed blue. */
     header: {
-      light: '$cros.ref.secondary90',
+      light: 'blend(rgba($cros.ref.primary40.rgb, 0.06), $cros.ref.neutral100)',
       dark:  '$cros.ref.secondary12',
     },
     'header-unfocused': {
-      light: 'blend(rgba($cros.ref.secondary90.rgb, 0.28), $cros.ref.neutralvariant90)',
+      light: 'blend(rgba($cros.ref.primary40.rgb, 0.03), $cros.ref.neutral95)',
       dark: 'blend(rgba($cros.ref.secondary12.rgb, 0.6), $cros.ref.neutral25)',
     },
     'app-base-shaded': {

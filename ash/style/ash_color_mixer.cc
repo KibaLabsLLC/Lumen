@@ -7,6 +7,7 @@
 #include "ash/style/ash_color_id.h"
 #include "ash/style/dark_light_mode_controller_impl.h"
 #include "ash/style/harmonized_colors.h"
+#include "ash/style/kibaos_theme.h"
 #include "ash/style/sparkle_colors.h"
 #include "ash/style/style_util.h"
 #include "ash/system/tray/tray_constants.h"
@@ -572,6 +573,9 @@ void AddAshColorMixer(ui::ColorProvider* provider,
   mixer[kColorAshDialogBackgroundColor] =
       use_dark_color ? ui::ColorTransform(SkColorSetRGB(0x32, 0x33, 0x36))
                      : ui::ColorTransform(SK_ColorWHITE);
+  // Opaque by default; `AddKibaosColorMixer()` turns this into dialog glass.
+  mixer[kColorAshKibaosDialogBackgroundColor] = {
+      kColorAshDialogBackgroundColor};
 
   mixer[kColorAshButtonIconDisabledColor] =
       ui::SetAlpha(kColorAshButtonIconColor, kDisabledColorOpacity);
@@ -671,6 +675,10 @@ void AddAshColorMixer(ui::ColorProvider* provider,
     mixer[ui::kColorFrameActive] = {cros_tokens::kCrosSysHeader};
     mixer[ui::kColorFrameInactive] = {cros_tokens::kCrosSysHeaderUnfocused};
   }
+
+  // KibaOS surface and glass colors, layered last so they win over the stock
+  // Ash recipes above.
+  kibaos::AddKibaosColorMixer(provider, key);
 }
 
 }  // namespace ash

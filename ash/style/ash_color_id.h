@@ -139,7 +139,9 @@ namespace ash {
   /* Color for the 6+ scrollable list view on the login screen */ \
   E_CPONLY(kColorAshLoginScrollableUserListBackground) \
   /* Color for the resize shadow */ \
-  E_CPONLY(kColorAshResizeShadowColor)
+  E_CPONLY(kColorAshResizeShadowColor) \
+  /* KibaOS glass background of the Ash system dialogs. */ \
+  E_CPONLY(kColorAshKibaosDialogBackgroundColor)
 
 #include "ui/color/color_id_macros.inc"
 

@@ -7,8 +7,12 @@
 #include <memory>
 
 #include "ash/public/cpp/ash_view_ids.h"
+#include "ash/style/ash_color_id.h"
+#include "ash/style/kibaos_theme.h"
 #include "ash/style/typography.h"
 #include "base/functional/bind.h"
+#include "chromeos/constants/chromeos_features.h"
+#include "ui/aura/kibaos_window_effects.h"
 #include "ui/aura/window.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/metadata/metadata_impl_macros.h"
@@ -33,8 +37,14 @@ namespace ash {
 
 namespace {
 
-// The default color IDs of the dialog.
-constexpr ui::ColorId kBackgroundColorId = cros_tokens::kCrosSysBaseElevated;
+// The default color IDs of the dialog. A glass dialog paints a translucent
+// background over the backdrop blur installed by
+// ui/aura/kibaos_window_effects.h; without system blur the dialog stays opaque
+// so that its text keeps its contrast.
+constexpr ui::ColorId kGlassBackgroundColorId =
+    kColorAshKibaosDialogBackgroundColor;
+constexpr ui::ColorId kOpaqueBackgroundColorId =
+    cros_tokens::kCrosSysBaseElevated;
 constexpr ui::ColorId kBodyColorId = cros_tokens::kCrosSysOnSurfaceVariant;
 constexpr ui::ColorId kIconColorId = cros_tokens::kCrosSysPrimary;
 constexpr ui::ColorId kTitleColorId = cros_tokens::kCrosSysOnSurface;
@@ -42,7 +52,7 @@ constexpr ui::ColorId kTitleColorId = cros_tokens::kCrosSysOnSurface;
 // The default layout parameters of the dialog.
 constexpr gfx::Size kMinimumDialogSize = gfx::Size(296, 144);
 constexpr gfx::Size kMaximumDialogSize = gfx::Size(512, 600);
-constexpr int kRoundedCornerRadius = 20;
+constexpr int kRoundedCornerRadius = kibaos::kPanelCornerRadius;
 constexpr gfx::Insets kBorderInsets = gfx::Insets::TLBR(32, 32, 28, 32);
 constexpr int kIconSize = 32;
 constexpr int kIconBottomPadding = 20;
@@ -70,6 +80,11 @@ constexpr int kDialogHostPaddingSmall = 32;
 // The default fonts of the title and description.
 constexpr TypographyToken kTitleFont = TypographyToken::kCrosDisplay7;
 constexpr TypographyToken kBodyFont = TypographyToken::kCrosBody1;
+
+ui::ColorId GetDialogBackgroundColorId() {
+  return chromeos::features::IsSystemBlurEnabled() ? kGlassBackgroundColorId
+                                                   : kOpaqueBackgroundColorId;
+}
 
 // Sets margins and flex layout specs to the view.
 void SetViewLayoutSpecs(
@@ -210,8 +225,8 @@ END_METADATA
 SystemDialogDelegateView::SystemDialogDelegateView() {
   // Set border, background, and decoration.
   SetBorder(views::CreateEmptyBorder(kBorderInsets));
-  SetBackground(views::CreateRoundedRectBackground(kBackgroundColorId,
-                                                   kRoundedCornerRadius));
+  SetBackground(views::CreateRoundedRectBackground(
+      GetDialogBackgroundColorId(), kRoundedCornerRadius));
 
   decoration_ = SystemDecoration::CreateForView(
       this, SystemDecoration::ShadowType::kElevation12,
@@ -387,6 +402,20 @@ gfx::Size SystemDialogDelegateView::GetMaximumSize() const {
 
 void SystemDialogDelegateView::OnWidgetInitialized() {
   UpdateDialogSize();
+
+  // Ash dialogs are KibaOS glass panels: round the dialog window, make it
+  // translucent and blur the content behind it. The metrics come from the
+  // KibaOS theme so the dialog matches the rest of the system surfaces. On
+  // devices without system blur the dialog keeps its opaque surface.
+  if (auto* widget = GetWidget();
+      widget && chromeos::features::IsSystemBlurEnabled()) {
+    aura::kibaos::SurfaceStyle style;
+    style.corner_radius = kibaos::kPanelCornerRadius;
+    style.backdrop_blur_sigma = kibaos::kBackdropBlurSigma;
+    style.backdrop_blur_quality = kibaos::kBackdropBlurQuality;
+    style.surface_alpha = kibaos::kSurfaceAlpha;
+    aura::kibaos::ApplySurfaceStyle(widget->GetNativeWindow(), style);
+  }
 }
 
 void SystemDialogDelegateView::OnWorkAreaChanged() {

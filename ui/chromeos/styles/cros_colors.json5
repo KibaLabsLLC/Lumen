@@ -27,47 +27,47 @@
      * Core colors.
      * =======================================================================*/
     color_primary: {
-      light: "$google_grey_900",
-      dark: "$google_grey_200",
+      light: "$kiba_grey_900",
+      dark: "$kiba_grey_200",
       generate_per_mode: true,
       generate_inverted: true,
     },
     color_secondary: {
-      light: "$google_grey_700",
-      dark: "$google_grey_400",
+      light: "$kiba_grey_700",
+      dark: "$kiba_grey_400",
       generate_per_mode: true,
     },
     color_disabled: {
-      light: "$google_grey_600",
-      dark: "$google_grey_500",
+      light: "$kiba_grey_600",
+      dark: "$kiba_grey_500",
       generate_per_mode: true,
     },
     color_prominent: {
-      light: "$google_blue_600",
-      dark: "$google_blue_300",
-      debug: "$google_red_600",
+      light: "$kiba_blue_600",
+      dark: "$kiba_blue_300",
+      debug: "$kiba_red_600",
       generate_per_mode: true,
       generate_inverted: true,
     },
     color_alert: {
-      light: "$google_red_600",
-      dark: "$google_red_300",
+      light: "$kiba_red_600",
+      dark: "$kiba_red_300",
       generate_inverted: true,
     },
     color_warning: {
-      light: "$google_yellow_900",
-      dark: "$google_yellow_300",
+      light: "$kiba_yellow_900",
+      dark: "$kiba_yellow_300",
       generate_per_mode: true,
       generate_inverted: true,
     },
     color_positive: {
-      light: "$google_green_700",
-      dark: "$google_green_300",
+      light: "$kiba_green_700",
+      dark: "$kiba_green_300",
     },
     color_selection: {
-      light: "$google_blue_700",
-      dark: "$google_blue_200",
-      debug: "$google_red_700",
+      light: "$kiba_blue_700",
+      dark: "$kiba_blue_200",
+      debug: "$kiba_red_700",
       generate_per_mode: true,
     },
 
@@ -76,36 +76,36 @@
      */
     bg_color: {
       light: "$white",
-      dark: "$google_grey_900",
+      dark: "$kiba_grey_900",
       generate_per_mode: true,
     },
     bg_color_elevation_1: {
       light: "$white",
-      dark: "blend(rgba($white.rgb, 0.04), $google_grey_900)",
+      dark: "blend(rgba($white.rgb, 0.04), $kiba_grey_900)",
     },
     bg_color_elevation_2: {
       light: "$white",
-      dark: "blend(rgba($white.rgb, 0.06), $google_grey_900)",
+      dark: "blend(rgba($white.rgb, 0.06), $kiba_grey_900)",
       generate_inverted: true,
     },
     bg_color_elevation_3: {
       light: "$white",
-      dark: "blend(rgba($white.rgb, 0.08), $google_grey_900)",
+      dark: "blend(rgba($white.rgb, 0.08), $kiba_grey_900)",
     },
     bg_color_elevation_4: {
       light: "$white",
-      dark: "blend(rgba($white.rgb, 0.1), $google_grey_900)",
+      dark: "blend(rgba($white.rgb, 0.1), $kiba_grey_900)",
     },
     bg_color_elevation_5: {
       light: "$white",
-      dark: "blend(rgba($white.rgb, 0.12), $google_grey_900)",
+      dark: "blend(rgba($white.rgb, 0.12), $kiba_grey_900)",
     },
     bg_color_dropped_elevation_1: {
-      light: "$google_grey_50",
-      dark: "blend(rgba($black.rgb, 0.2), $google_grey_900)",
+      light: "$kiba_grey_50",
+      dark: "blend(rgba($black.rgb, 0.2), $kiba_grey_900)",
     },
     bg_color_dropped_elevation_2: {
-      light: "$google_grey_200",
+      light: "$kiba_grey_200",
       dark: "$black",
     },
 
@@ -115,13 +115,13 @@
     text_color_primary: {
       light: "$color_primary_light",
       dark: "$color_primary_dark",
-      debug: "$google_green_400",
+      debug: "$kiba_green_400",
       generate_inverted: true,
     },
     text_color_secondary: {
       light: "$color_secondary_light",
       dark: "$color_secondary_dark",
-      debug: "$google_green_400",
+      debug: "$kiba_green_400",
       generate_per_mode: true,
     },
     text_color_disabled: "$color_disabled",
@@ -131,8 +131,8 @@
     text_color_warning: "$color_warning",
     text_color_alert: "$color_alert",
     text_highlight_color: {
-      light: "rgba($google_blue_600.rgb, 0.3)",
-      dark: "rgba($google_blue_400.rgb, 0.3)",
+      light: "rgba($kiba_blue_600.rgb, 0.3)",
+      dark: "rgba($kiba_blue_400.rgb, 0.3)",
     },
 
     /*
@@ -157,44 +157,44 @@
     icon_color_warning: "$color_warning",
     icon_color_alert: "$color_alert",
     icon_color_red: {
-      light: "$google_red_600",
-      dark: "$google_red_300",
+      light: "$kiba_red_600",
+      dark: "$kiba_red_300",
     },
     icon_color_blue: {
-      light: "$google_blue_600",
-      dark: "$google_blue_300",
+      light: "$kiba_blue_600",
+      dark: "$kiba_blue_300",
     },
     icon_color_green: {
-      light: "$google_green_600",
-      dark: "$google_green_300",
+      light: "$kiba_green_600",
+      dark: "$kiba_green_300",
     },
     icon_color_yellow: {
-      light: "$google_yellow_600",
-      dark: "$google_yellow_300",
+      light: "$kiba_yellow_600",
+      dark: "$kiba_yellow_300",
     },
 
     /*
      * App shield colors.
      */
     app_shield_color: {
-      light: "rgb($google_grey_300.rgb)",
+      light: "rgb($kiba_grey_300.rgb)",
       dark: "rgb($black.rgb)",
     },
     app_shield_80: {
-      light: "rgba($google_grey_300.rgb, 0.8)",
+      light: "rgba($kiba_grey_300.rgb, 0.8)",
       dark: "rgba($black.rgb, 0.8)",
     },
     app_shield_60: {
-      light: "rgba($google_grey_300.rgb, 0.6)",
+      light: "rgba($kiba_grey_300.rgb, 0.6)",
       dark: "rgba($black.rgb, 0.6)",
     },
     app_shield_40: {
-      light: "rgba($google_grey_300.rgb, 0.4)",
+      light: "rgba($kiba_grey_300.rgb, 0.4)",
       dark: "rgba($black.rgb, 0.4)",
       generate_per_mode: true,
     },
     app_shield_20: {
-      light: "rgba($google_grey_300.rgb, 0.2)",
+      light: "rgba($kiba_grey_300.rgb, 0.2)",
       dark: "rgba($black.rgb, 0.2)",
     },
 
@@ -213,25 +213,25 @@
       dark: "rgba($white.rgb, 0.14)",
     },
     shadow_color_key: {
-      light: "rgba($google_grey_800.rgb, 0.3)",
+      light: "rgba($kiba_grey_800.rgb, 0.3)",
       dark: "rgba($black.rgb, 0.3)",
     },
     shadow_color_ambient: {
-      light: "rgba($google_grey_800.rgb, 0.15)",
+      light: "rgba($kiba_grey_800.rgb, 0.15)",
       dark: "rgba($black.rgb, 0.15)",
     },
     link_color: "$color_prominent",
     highlight_color: {
-      light: "$google_blue_50",
-      dark: "rgba($google_blue_300.rgb, 0.3)",
-      debug: "rgba($google_red_300.rgb, 0.3)",
+      light: "$kiba_blue_50",
+      dark: "rgba($kiba_blue_300.rgb, 0.3)",
+      debug: "rgba($kiba_red_300.rgb, 0.3)",
     },
     highlight_color_error: {
-      light: "$google_red_50",
+      light: "$kiba_red_50",
       dark: "rgba($color_alert.rgb, 0.3)",
     },
     highlight_color_hover: {
-      light: "rgba($google_grey_700.rgb, 0.2)",
+      light: "rgba($kiba_grey_700.rgb, 0.2)",
       dark: "rgba($white.rgb, 0.2)",
       generate_per_mode: true,
     },
@@ -240,16 +240,16 @@
       dark: "rgba($white.rgb, $ripple_opacity)",
     },
     highlight_color_green: {
-      light: "rgb($google_green_50.rgb)",
-      dark: "rgba($google_green_300.rgb, 0.3)",
+      light: "rgb($kiba_green_50.rgb)",
+      dark: "rgba($kiba_green_300.rgb, 0.3)",
     },
     highlight_color_red: {
-      light: "rgb($google_red_50.rgb)",
-      dark: "rgba($google_red_600.rgb, 0.3)",
+      light: "rgb($kiba_red_50.rgb)",
+      dark: "rgba($kiba_red_600.rgb, 0.3)",
     },
     highlight_color_yellow: {
-      light: "rgb($google_yellow_50.rgb)",
-      dark: "rgba($google_yellow_600.rgb, 0.3)",
+      light: "rgb($kiba_yellow_50.rgb)",
+      dark: "rgba($kiba_yellow_600.rgb, 0.3)",
     },
     ripple_color: {
       light: "rgba($black.rgb, $ripple_opacity)",
@@ -265,7 +265,7 @@
      * Component colors.
      * =======================================================================*/
     toolbar_search_bg_color: {
-      light: "$google_grey_100",
+      light: "$kiba_grey_100",
       dark: "rgba($white.rgb, 0.1)",
     },
 
@@ -274,14 +274,14 @@
 
     radio_button_color: "$color_prominent",
     radio_button_ripple_color: "rgba($radio_button_color.rgb, .2)",
-    radio_button_color_unchecked: "$google_grey_700",
-    radio_button_ripple_color_unchecked: "rgba($google_grey_600.rgb, .15)",
+    radio_button_color_unchecked: "$kiba_grey_700",
+    radio_button_ripple_color_unchecked: "rgba($kiba_grey_600.rgb, .15)",
 
     /* button-primary */
     button_background_color_primary: "$color_prominent",
     button_label_color_primary: {
       light: "$white",
-      dark: "$google_grey_900",
+      dark: "$kiba_grey_900",
     },
     button_ripple_color_primary: { light: "$white", dark: "$black" },
     /* button-primary:hover */
@@ -293,79 +293,79 @@
       "blend($button_background_color_primary_hover, $button_background_color_primary)",
     /* button-primary:active */
     button_active_shadow_color_ambient_primary: {
-      light: "rgba($google_blue_500.rgb, 0.15)",
-      dark: "rgba($google_blue_400.rgb, 0.15)"
+      light: "rgba($kiba_blue_500.rgb, 0.15)",
+      dark: "rgba($kiba_blue_400.rgb, 0.15)"
     },
     button_active_shadow_color_key_primary: {
-      light: "rgba($google_blue_500.rgb, 0.3)",
-      dark: "rgba($google_blue_400.rgb, 0.3)"
+      light: "rgba($kiba_blue_500.rgb, 0.3)",
+      dark: "rgba($kiba_blue_400.rgb, 0.3)"
     },
     /* button-primary[disabled] */
     button_background_color_primary_disabled: {
-      light: "$google_grey_100",
-      dark: "$google_grey_800",
+      light: "$kiba_grey_100",
+      dark: "$kiba_grey_800",
     },
     button_label_color_primary_disabled: {
-      light: "$google_grey_600",
-      dark: "$google_grey_500",
+      light: "$kiba_grey_600",
+      dark: "$kiba_grey_500",
     },
 
     /* button-secondary */
     button_label_color_secondary: "$color_prominent",
     button_stroke_color_secondary: {
-      light: "$google_grey_300",
-      dark: "$google_grey_700",
+      light: "$kiba_grey_300",
+      dark: "$kiba_grey_700",
     },
     button_ripple_color_secondary: "$color_prominent",
     /* button-secondary:hover */
     button_stroke_color_secondary_hover: {
-      light: "$google_blue_100",
-      dark: "rgba($google_blue_300.rgb, 0.32)"
+      light: "$kiba_blue_100",
+      dark: "rgba($kiba_blue_300.rgb, 0.32)"
     },
     button_background_color_secondary_hover: {
-      light: "rgba($google_blue_500.rgb, 0.04)",
-      dark: "rgba($google_blue_300.rgb, 0.08)",
+      light: "rgba($kiba_blue_500.rgb, 0.04)",
+      dark: "rgba($kiba_blue_300.rgb, 0.08)",
     },
     /* button-secondary:active */
     button_active_shadow_color_ambient_secondary: {
-      light: "rgba($google_grey_500.rgb, 0.15)",
-      dark: "rgba($google_grey_600.rgb, 0.15)"
+      light: "rgba($kiba_grey_500.rgb, 0.15)",
+      dark: "rgba($kiba_grey_600.rgb, 0.15)"
     },
     button_active_shadow_color_key_secondary: {
-      light: "rgba($google_grey_500.rgb, 0.3)",
-      dark: "rgba($google_grey_600.rgb, 0.3)"
+      light: "rgba($kiba_grey_500.rgb, 0.3)",
+      dark: "rgba($kiba_grey_600.rgb, 0.3)"
     },
     /* button-secondary[disabled] */
     button_label_color_secondary_disabled: {
-      light: "$google_grey_600",
-      dark: "$google_grey_500",
+      light: "$kiba_grey_600",
+      dark: "$kiba_grey_500",
     },
     button_stroke_color_secondary_disabled: {
-      light: "$google_grey_100",
-      dark: "$google_grey_800",
+      light: "$kiba_grey_100",
+      dark: "$kiba_grey_800",
     },
     /* button-icon */
     button_icon_color_primary: {
       light: "$white",
-      dark: "$google_grey_900",
+      dark: "$kiba_grey_900",
     },
     button_icon_color_primary_disabled: {
-      light: "$google_grey_600",
-      dark: "$google_grey_500",
+      light: "$kiba_grey_600",
+      dark: "$kiba_grey_500",
     },
     button_icon_color_secondary: {
-      light: "$google_blue_600",
-      dark: "$google_blue_300",
+      light: "$kiba_blue_600",
+      dark: "$kiba_blue_300",
     },
     button_icon_color_secondary_disabled: {
-      light: "$google_grey_200",
-      dark: "$google_grey_900",
+      light: "$kiba_grey_200",
+      dark: "$kiba_grey_900",
     },
 
     /* icon-button */
     icon_button_background_color: {
-      light: "blend(rgba($white.rgb, 0.32), rgba($google_grey_200.rgb, 0.8))",
-      dark: "blend(rgba($black.rgb, 0.16), rgba($google_grey_800.rgb, 0.8))",
+      light: "blend(rgba($white.rgb, 0.32), rgba($kiba_grey_200.rgb, 0.8))",
+      dark: "blend(rgba($black.rgb, 0.16), rgba($kiba_grey_800.rgb, 0.8))",
     },
     /* when icon button is pressed, we layer the $ripple_color on top of the
     hover color (which is also $ripple_color) */
@@ -373,16 +373,16 @@
 
     /* menu */
     menu_label_color: {
-      light: "$google_grey_900",
-      dark: "$google_grey_200",
+      light: "$kiba_grey_900",
+      dark: "$kiba_grey_200",
     },
     menu_icon_color: {
-      light: "$google_grey_900",
-      dark: "$google_grey_200",
+      light: "$kiba_grey_900",
+      dark: "$kiba_grey_200",
     },
     menu_shortcut_color: {
-      light: "$google_grey_700",
-      dark: "$google_grey_500",
+      light: "$kiba_grey_700",
+      dark: "$kiba_grey_500",
     },
     menu_item_background_hover: "$ripple_color",
 
@@ -393,8 +393,8 @@
 
     /* scroll bar */
     app_scrollbar_color_hover: {
-      light: "$google_grey_600",
-      dark: "$google_grey_400",
+      light: "$kiba_grey_600",
+      dark: "$kiba_grey_400",
     },
     app_scrollbar_color:
       "rgba($app_scrollbar_color_hover.rgb, $disabled_opacity)",
@@ -405,7 +405,7 @@
     slider_label_background_color: "$color_prominent",
     slider_label_text_color: {
       light: "$white",
-      dark: "$google_grey_900",
+      dark: "$kiba_grey_900",
     },
     slider_track_color_active: "rgba($slider_color_active.rgb, $second_tone_opacity)",
     slider_track_color_inactive: "rgba($slider_color_inactive.rgb, $second_tone_opacity)",
@@ -414,27 +414,27 @@
     switch_knob_color_active: "$color_prominent",
     switch_knob_color_inactive: {
       light: "$white",
-      dark: "$google_grey_400",
+      dark: "$kiba_grey_400",
     },
     switch_track_color_active: "$slider_track_color_active",
     switch_track_color_inactive: "$slider_track_color_inactive",
 
     /* tab */
     tab_label_color_active: {
-      light: "$google_blue_600",
-      dark: "$google_blue_300",
+      light: "$kiba_blue_600",
+      dark: "$kiba_blue_300",
     },
     tab_label_color_inactive: {
-      light: "$google_grey_600",
-      dark: "$google_grey_500",
+      light: "$kiba_grey_600",
+      dark: "$kiba_grey_500",
     },
     tab_icon_color_active: {
-      light: "$google_blue_600",
-      dark: "$google_blue_300",
+      light: "$kiba_blue_600",
+      dark: "$kiba_blue_300",
     },
     tab_icon_color_inactive: {
-      light: "$google_grey_600",
-      dark: "$google_grey_500",
+      light: "$kiba_grey_600",
+      dark: "$kiba_grey_500",
     },
     tab_slider_track_color: {
       light: "rgba($black.rgb, 0.06)",
@@ -443,11 +443,11 @@
 
     /* textfield */
     textfield_background_color: {
-      light: "$google_grey_100",
+      light: "$kiba_grey_100",
       dark: "rgba($black.rgb, 0.3)",
     },
     textfield_label_color: {
-      light: "$google_grey_700",
+      light: "$kiba_grey_700",
       dark: "rgba($white.rgb, 0.6)",
     },
     textfield_input_color: "$color_primary",
@@ -456,41 +456,41 @@
     textfield_label_color_focus: "$color_prominent",
     /* textfield[error] */
     textfield_label_color_error: {
-      light: "$google_red_600",
-      dark: "$google_red_300",
+      light: "$kiba_red_600",
+      dark: "$kiba_red_300",
     },
     textfield_underline_color_error: "$color_alert",
     textfield_cursor_color_error: "$color_alert",
     /* textfield[disabled] */
     textfield_background_color_disabled: {
-      light: "rgba($google_grey_100.rgb, 0.38)",
+      light: "rgba($kiba_grey_100.rgb, 0.38)",
       dark: "rgba($black.rgb, 0.11)",
     },
     textfield_label_color_disabled: {
-      light: "rgba($google_grey_700.rgb, 0.38)",
+      light: "rgba($kiba_grey_700.rgb, 0.38)",
       dark: "rgba($black.rgb, 0.23)",
     },
     textfield_input_color_disabled: {
-      light: "rgba($google_grey_900.rgb, 0.38)",
+      light: "rgba($kiba_grey_900.rgb, 0.38)",
       dark: "rgba($white.rgb, 0.33)",
     },
 
     /* tooltip */
     tooltip_background_color: {
-      light:"rgba($google_grey_900.rgb, 0.8)",
+      light:"rgba($kiba_grey_900.rgb, 0.8)",
       dark:"rgba($white.rgb, 0.8)",
     },
     tooltip_icon_color: "$color_primary_inverted",
     tooltip_label_color: {
-      light:"$google_grey_100",
-      dark:"$google_grey_900",
+      light:"$kiba_grey_100",
+      dark:"$kiba_grey_900",
     },
     tooltip_link_color: "$color_prominent_inverted",
 
     /* shortcut */
     shortcut_background_color: {
-      light:"$google_grey_200",
-      dark:"$google_grey_900",
+      light:"$kiba_grey_200",
+      dark:"$kiba_grey_900",
     },
     shortcut_background_gradient_color: {
       light:"rgba($white.rgb, 0)",
@@ -499,8 +499,8 @@
 
     /* dialog */
     dialog_title_background_color: {
-      light:"$google_grey_100",
-      dark:"$google_grey_900",
+      light:"$kiba_grey_100",
+      dark:"$kiba_grey_900",
     },
     /* TODO(crbug.com/1284178) waiting for UX input to see how to combine
     this variable together with `dialog_title_background_color` */
@@ -527,24 +527,24 @@
 
     /* color palette swatch */
     swatch_border: {
-      light: "rgba($google_grey_900.rgb, 0.5)",
+      light: "rgba($kiba_grey_900.rgb, 0.5)",
       dark: "rgba($white.rgb, 0.38)",
     },
 
     /* Taken from go/ea-asset-palette. */
     illustration_color_1: {
-      light: "$google_blue_500",
-      dark: "$google_blue_400",
+      light: "$kiba_blue_500",
+      dark: "$kiba_blue_400",
     },
     illustration_color_2: {
-      light: "$google_green_500",
-      dark: "$google_green_400",
+      light: "$kiba_green_500",
+      dark: "$kiba_green_400",
     },
     illustration_color_3: {
-      light: "$google_yellow_500",
-      dark: "$google_yellow_400",
+      light: "$kiba_yellow_500",
+      dark: "$kiba_yellow_400",
     },
-    illustration_color_4: "$google_red_500",
+    illustration_color_4: "$kiba_red_500",
     illustration_color_5: {
       light: "#ee5ffa", /* magenta_400 */
       dark: "#f882ff", /* magenta_300 */
@@ -555,29 +555,29 @@
     },
     illustration_base_color: {
       light: "$white",
-      dark: "$google_grey_900",
+      dark: "$kiba_grey_900",
     },
     illustration_secondary_color: {
-      light: "$google_grey_200",
-      dark: "blend(rgba($google_grey_200.rgb, 0.3), $illustration_base_color)",
+      light: "$kiba_grey_200",
+      dark: "blend(rgba($kiba_grey_200.rgb, 0.3), $illustration_base_color)",
     },
     illustration_color_1_shade_1: {
-      light: "$google_blue_300",
-      dark: "blend(rgba($google_blue_600.rgb, 0.3), $illustration_base_color)",
+      light: "$kiba_blue_300",
+      dark: "blend(rgba($kiba_blue_600.rgb, 0.3), $illustration_base_color)",
     },
     illustration_color_1_shade_2: {
-      light: "$google_blue_100",
-      dark: "blend(rgba($google_blue_300.rgb, 0.3), $illustration_base_color)",
+      light: "$kiba_blue_100",
+      dark: "blend(rgba($kiba_blue_300.rgb, 0.3), $illustration_base_color)",
     },
     /* Elevated variants of dark mode colors for illustrations. These are only
        used in dark mode, and so do not need a light mode variant. */
     illustration_elevation_color_1_shade_1: {
       light: "$illustration_color_1_shade_1",
-      dark: "blend(rgba($google_blue_600.rgb, 0.4), $illustration_elevation_base_color)",
+      dark: "blend(rgba($kiba_blue_600.rgb, 0.4), $illustration_elevation_base_color)",
     },
     illustration_elevation_color_1_shade_2: {
       light: "$illustration_color_1_shade_2",
-      dark: "blend(rgba($google_blue_300.rgb, 0.4), $illustration_elevation_base_color)",
+      dark: "blend(rgba($kiba_blue_300.rgb, 0.4), $illustration_elevation_base_color)",
     },
     illustration_elevation_base_color: {
       light: "$illustration_base_color",
@@ -585,17 +585,17 @@
     },
     illustration_elevation_secondary_color: {
       light: "$illustration_secondary_color",
-      dark: "$google_grey_700",
+      dark: "$kiba_grey_700",
     },
     /* Preview colors for color correction settings. */
-    color_preview_red: "$google_red_600",
-    color_preview_orange: "$google_orange_600",
-    color_preview_yellow: "$google_yellow_600",
-    color_preview_green: "$google_green_600",
-    color_preview_cyan: "$google_cyan_600",
-    color_preview_blue: "$google_blue_600",
-    color_preview_purple: "$google_purple_600",
-    color_preview_grey: "$google_grey_600",
+    color_preview_red: "$kiba_red_600",
+    color_preview_orange: "$kiba_orange_600",
+    color_preview_yellow: "$kiba_yellow_600",
+    color_preview_green: "$kiba_green_600",
+    color_preview_cyan: "$kiba_cyan_600",
+    color_preview_blue: "$kiba_blue_600",
+    color_preview_purple: "$kiba_purple_600",
+    color_preview_grey: "$kiba_grey_600",
   },
   opacities: {
     disabled_opacity: 0.38,

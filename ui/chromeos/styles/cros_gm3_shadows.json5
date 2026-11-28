@@ -3,17 +3,18 @@
  * found in the LICENSE file. */
 
 /*
- * Chrome OS shadows.
+ * KibaOS GM3 elevation shadows for app surfaces.
  *
- *
+ * The blur grows much faster than the offset so elevated cards and panels stay
+ * soft-edged, matching the KibaOS spec sheet.
  */
  {
   token_namespace: 'cros.sys',
   untyped_css: {
     shadows: {
-      app_elevation_1_shadow: '0px 0px 4px 0px var(--cros-sys-shadow_key), 0px 4px 4px 0px var(--cros-sys-shadow_ambient)',
-      app_elevation_3_shadow: '0px 0px 12px 0px var(--cros-sys-shadow_key), 0px 12px 12px 0px var(--cros-sys-shadow_ambient)',
-      app_elevation_5_shadow: '0px 0px 24px 0px var(--cros-sys-shadow_key), 0px 24px 24px 0px var(--cros-sys-shadow_ambient)',
+      app_elevation_1_shadow: '0px 0px 4px 0px var(--cros-sys-shadow_key), 0px 4px 10px 0px var(--cros-sys-shadow_ambient)',
+      app_elevation_3_shadow: '0px 0px 12px 0px var(--cros-sys-shadow_key), 0px 12px 24px 0px var(--cros-sys-shadow_ambient)',
+      app_elevation_5_shadow: '0px 0px 24px 0px var(--cros-sys-shadow_key), 0px 24px 48px 0px var(--cros-sys-shadow_ambient)',
     }
   }
  }

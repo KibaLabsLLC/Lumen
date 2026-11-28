@@ -1499,6 +1499,8 @@ component("ash") {
     "style/error_message_toast.h",
     "style/harmonized_colors.cc",
     "style/harmonized_colors.h",
+    "style/kibaos_theme.cc",
+    "style/kibaos_theme.h",
     "style/icon_button.cc",
     "style/icon_button.h",
     "style/keyboard_shortcut_view.cc",

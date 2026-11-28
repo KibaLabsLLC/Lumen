@@ -9,13 +9,15 @@
 
 namespace chromeos {
 
-// Radius of the window corner radius when the window is restored.
+// Radius of the window corner radius when the window is restored. KibaOS uses
+// one 24 px radius for every floating window surface.
 // See `chromeos::GetWindowRoundedCorners()` for the context.
-inline constexpr int kRoundedWindowCornerRadius = 12;
+inline constexpr int kRoundedWindowCornerRadius = 24;
 inline constexpr int kRoundedWindowSmallCornerRadius = 2;
 
-// Rounded corner radius for Pip window.
-inline constexpr int kPipRoundedCornerRadius = 12;
+// Rounded corner radius for Pip window. Picture-in-picture windows are smaller
+// than app windows, so they use a scaled-down KibaOS radius.
+inline constexpr int kPipRoundedCornerRadius = 16;
 
 // In the window corners, the resize areas don't actually expand bigger, but the
 // 16 px at the end of each edge triggers diagonal resizing.

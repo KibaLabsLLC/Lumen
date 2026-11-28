@@ -164,14 +164,12 @@ SnapDirection GetSnapDirectionForWindow(aura::Window* window, bool left_top) {
 }
 
 gfx::RoundedCornersF GetWindowRoundedCorners() {
-  const int corner_radius = features::IsRoundedWindowsEnabled()
-                                ? kRoundedWindowCornerRadius
-                                : kRoundedWindowSmallCornerRadius;
-
-  const bool rounded_bottom_corners = features::IsRoundedWindowsEnabled();
-  return gfx::RoundedCornersF(corner_radius, corner_radius,
-                              rounded_bottom_corners ? corner_radius : 0,
-                              rounded_bottom_corners ? corner_radius : 0);
+  // KibaOS rounds every window with the same 24 px radius on all four corners;
+  // the corner radius is part of the compositor model rather than a feature
+  // that can be switched off.
+  const int corner_radius = kRoundedWindowCornerRadius;
+  return gfx::RoundedCornersF(corner_radius, corner_radius, corner_radius,
+                              corner_radius);
 }
 
 bool CanPropertyEffectWindowRoundedCorners(const void* class_property_key) {
