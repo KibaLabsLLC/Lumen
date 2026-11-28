@@ -345,50 +345,8 @@ inline constexpr char kFilesManagerSWAId[] = "fkiggjmkendpmbegkagpmagjepfkpmeb";
 // The extension id of the Calculator application.
 inline constexpr char kCalculatorAppId[] = "joodangkbfjnajiiifokapkpmhfnpleo";
 
-// The extension id of the demo Calendar application.
-inline constexpr char kCalendarDemoAppId[] = "fpgfohogebplgnamlafljlcidjedbdeb";
-
 // The extension id of the Camera application.
 inline constexpr char kCameraAppId[] = "njfbnohfdkmbmnjapinfcopialeghnmh";
-
-// The extension id of the GMail application.
-inline constexpr char kGmailAppId[] = "pjkljhegncpnkpknbcohdijeoejaedia";
-
-// The extension id of the demo Google Docs application.
-inline constexpr char kGoogleDocsDemoAppId[] =
-    "chdaoodbokekbiiphekbfjdmiodccljl";
-
-// The extension id of the Google Docs PWA.
-inline constexpr char kGoogleDocsPwaAppId[] =
-    "cepkndkdlbllfhpfhledabdcdbidehkd";
-
-// The extension id of the Google Drive application.
-inline constexpr char kGoogleDriveAppId[] = "apdfllckaahabafndbhieahigkjlhalf";
-
-// The extension id of the Google Meet PWA.
-inline constexpr char kGoogleMeetPwaAppId[] =
-    "dkainijpcknoofiakgccliajhbmlbhji";
-
-// The extension id of the demo Google Sheets application.
-inline constexpr char kGoogleSheetsDemoAppId[] =
-    "nifkmgcdokhkjghdlgflonppnefddien";
-
-// The extension id of the Google Sheets PWA.
-inline constexpr char kGoogleSheetsPwaAppId[] =
-    "hcgjdbbnhkmopplfiibmdgghhdhbiidh";
-
-// The extension id of the demo Google Slides application.
-inline constexpr char kGoogleSlidesDemoAppId[] =
-    "hdmobeajeoanbanmdlabnbnlopepchip";
-
-// The extension id of the Google Keep application.
-inline constexpr char kGoogleKeepAppId[] = "hmjkmjkepdijhoojdojkdfohbdgmmhki";
-
-// The extension id of the Youtube application.
-inline constexpr char kYoutubeAppId[] = "blpcfgokakmgnkcojhhkbfbldkacnbeo";
-
-// The extension id of the Youtube PWA.
-inline constexpr char kYoutubePwaAppId[] = "agimnkijcaahngcdmfeangaknmldooml";
 
 // The extension id of the Spotify PWA.
 inline constexpr char kSpotifyAppId[] = "pjibgclleladliembfgfagdaldikeohf";
@@ -411,24 +369,8 @@ inline constexpr char kZoomAppId[] = "ddamjdmghnhnicfnliimfobemngigiom";
 // The extension id of the Sumo PWA.
 inline constexpr char kSumoAppId[] = "genadphlobhbpdnafiphnppelkagmghm";
 
-// The extension id of Gemini App if installed manually.
-inline constexpr char kGeminiAppId[] = "caidcmannjgahlnbpmidmiecjcoiiigg";
-
-// The extension id of Gemini App if added by policy.
-inline constexpr char kGeminiAppByPolicyId[] =
-    "gdfaincndogidkdcdkhapmbffkckdkhn";
-
 // The extension id of the Adobe Spark PWA.
 inline constexpr char kAdobeSparkAppId[] = "magefboookdoiehjohjmbjmkepngibhm";
-
-// The extension id of the Google Docs application.
-inline constexpr char kGoogleDocsAppId[] = "aohghmighlieiainnegkcijnfilokake";
-
-// The extension id of the Google Sheets application.
-inline constexpr char kGoogleSheetsAppId[] = "felcaaldnbdncclmgdcncolpebgiejap";
-
-// The extension id of the Google Slides application.
-inline constexpr char kGoogleSlidesAppId[] = "aapocclcgogkmnckokdopfmhonfmgoek";
 
 // The extension id of the in-app payments support application.
 inline constexpr char kInAppPaymentsSupportAppId[] =
@@ -519,14 +461,6 @@ EXTENSIONS_EXPORT bool IsDemoModeChromeApp(std::string_view extension_id);
 
 // True if the id matches any of the QuickOffice extension ids.
 EXTENSIONS_EXPORT bool IsQuickOfficeExtension(std::string_view extension_id);
-
-// Returns if the app is managed by extension default apps. This is a hardcoded
-// list of default apps for Windows/Linux/MacOS platforms that should be
-// migrated from extension to web app.
-// TODO(crbug.com/40796281): remove after deault app migration is done.
-// This function is copied from
-// chrome/browser/web_applications/extension_status_utils.h.
-EXTENSIONS_EXPORT bool IsPreinstalledAppId(std::string_view app_id);
 
 // Error message when enterprise policy blocks scripting of webpage.
 inline constexpr char kPolicyBlockedScripting[] =

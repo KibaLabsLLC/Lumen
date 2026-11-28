@@ -997,16 +997,6 @@ void MostVisitedSites::SaveTilesAndNotify(
 }
 
 // static
-bool MostVisitedSites::IsNtpTileFromPreinstalledApp(GURL url) {
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-  return url.is_valid() && url.SchemeIs(extensions::kExtensionScheme) &&
-         extension_misc::IsPreinstalledAppId(url.GetHost());
-#else
-  return false;
-#endif
-}
-
-// static
 bool MostVisitedSites::HasEnterpriseShortcuts(const PrefService& prefs) {
 #if BUILDFLAG(IS_LINUX) || BUILDFLAG(IS_WIN) || BUILDFLAG(IS_MAC) || \
     BUILDFLAG(IS_CHROMEOS)
@@ -1055,8 +1045,7 @@ bool MostVisitedSites::WasNtpAppMigratedToWebApp(PrefService* prefs, GURL url) {
 NTPTilesVector MostVisitedSites::RemoveInvalidPreinstallApps(
     NTPTilesVector new_tiles) {
   std::erase_if(new_tiles, [this](const NTPTile& ntp_tile) {
-    return MostVisitedSites::IsNtpTileFromPreinstalledApp(ntp_tile.url) &&
-           MostVisitedSites::WasNtpAppMigratedToWebApp(prefs_, ntp_tile.url);
+    return MostVisitedSites::WasNtpAppMigratedToWebApp(prefs_, ntp_tile.url);
   });
   return new_tiles;
 }

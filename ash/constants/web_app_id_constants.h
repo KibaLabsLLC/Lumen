@@ -10,6 +10,10 @@ namespace ash {
 // The URLs used to generate the app IDs MUST match the start_url field of the
 // manifest served by the PWA.
 // Please maintain the alphabetical order when adding new app IDs.
+//
+// KibaOS ships only first-party system apps; the Google web apps that upstream
+// Chromium pins (Gmail, Google Drive, Google Docs, YouTube, ...) are not part
+// of the OS and have no app IDs here.
 
 // Generated as: web_app::GenerateAppId(/*manifest_id=*/"/", GURL(
 //     "https://new.express.adobe.com/"))
@@ -44,80 +48,6 @@ inline constexpr char kDiagnosticsAppId[] = "keejpcfcpecjhmepmpcfgjemkmlicpam";
 inline constexpr char kFirmwareUpdateAppId[] =
     "nedcdcceagjbkiaecmdbpafcmlhkiifa";
 
-// Generated as: web_app::GenerateAppIdFromManifestId(
-//     web_app::GenerateManifestIdFromStartUrlOnly(GURL(
-//         "https://gemini.google.com/")));
-inline constexpr char kGeminiAppId[] = "caidcmannjgahlnbpmidmiecjcoiiigg";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://mail.google.com/mail/?usp=installed_webapp"))
-inline constexpr char kGmailAppId[] = "fmgjjmmmlfnkbppncabfkddbjimcfncm";
-inline constexpr char kGmailManifestId[] =
-    "https://mail.google.com/mail/?usp=installed_webapp";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://calendar.google.com/calendar/r"))
-inline constexpr char kGoogleCalendarAppId[] =
-    "kjbdgfilnfhdoflbpgamdcdgpehopbep";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://mail.google.com/chat/"))
-inline constexpr char kOldGoogleChatAppId[] =
-    "mdpkiolbdkhdjpekfbkbmhigcaggjagi";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://chat.google.com/"))
-inline constexpr char kGoogleChatAppId[] = "pommaclcbfghclhalboakcipcmmndhcj";
-
-// Generated as: web_app::GenerateAppIdFromManifestId(webapps::ManifestId(
-//     "https://classroom.google.com/?lfhs=2"))
-inline constexpr char kGoogleClassroomAppId[] =
-    "kjcjfjccmpngedeildfijeanhihmolck";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://docs.google.com/document/?usp=installed_webapp"))
-inline constexpr char kGoogleDocsAppId[] = "mpnpojknpmmopombnjdcgaaiekajbnjb";
-inline constexpr char kGoogleDocsManifestId[] =
-    "https://docs.google.com/document/?usp=installed_webapp";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://drive.google.com/?lfhs=2"))
-inline constexpr char kGoogleDriveAppId[] = "aghbiahbpaijignceidepookljebhfak";
-inline constexpr char kGoogleDriveManifestId[] =
-    "https://drive.google.com/?lfhs=2";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://keep.google.com/?usp=installed_webapp"))
-inline constexpr char kGoogleKeepAppId[] = "eilembjdkfgodjkcjnpgpaenohkicgjd";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://www.google.com/maps?force=tt&source=ttpwa"))
-inline constexpr char kGoogleMapsAppId[] = "mnhkaebcjjhencmpkapnbdaogjamfbcj";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://meet.google.com/landing?lfhs=2"))
-inline constexpr char kGoogleMeetAppId[] = "kjgfgldnnfoeklkmfkjfagphfepbbdan";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://play.google.com/store/movies?usp=installed_webapp"))
-inline constexpr char kGoogleMoviesAppId[] = "aiihaadhfoadjgjcegeomiajkajbjlcn";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://news.google.com/?lfhs=2"))
-inline constexpr char kGoogleNewsAppId[] = "kfgapjallbhpciobgmlhlhokknljkgho";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://docs.google.com/spreadsheets/?usp=installed_webapp"))
-inline constexpr char kGoogleSheetsAppId[] = "fhihpiojkbmbpdjeoajapmgkhlnakfjf";
-inline constexpr char kGoogleSheetsManifestId[] =
-    "https://docs.google.com/spreadsheets/?usp=installed_webapp";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://docs.google.com/presentation/?usp=installed_webapp"))
-inline constexpr char kGoogleSlidesAppId[] = "kefjledonklijopmnomlcbpllchaibag";
-inline constexpr char kGoogleSlidesManifestId[] =
-    "https://docs.google.com/presentation/?usp=installed_webapp";
-
 // Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
 //     "chrome://graduation/"))
 inline constexpr char kGraduationAppId[] = "dcmgllglecpogfcjmdkdncendnjphdcd";
@@ -127,21 +57,8 @@ inline constexpr char kGraduationAppId[] = "dcmgllglecpogfcjmdkdncendnjphdcd";
 inline constexpr char kHelpAppId[] = "nbljnnecbjbmifnoehiemkgefbnpoeak";
 
 // Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://notebooklm.google.com/"))
-inline constexpr char kNotebookLmAppId[] = "gjcmcplpgihbecacndmmbaenpfgimlec";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
 //     "chrome://media-app/"))
 inline constexpr char kMediaAppId[] = "jhdjimmaggjajfjphpljagpgkidjilnj";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://messages.google.com/web/"))
-inline constexpr char kMessagesAppId[] = "hpfldicfbfomlpcikngkocigghgafkph";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://messages-web.sandbox.google.com/web/"))
-inline constexpr char kMessagesDogfoodDeprecatedAppId[] =
-    "gkgiochgbaoelfjibmnaomdepldjceib";
 
 // Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
 //     "https://www.microsoft365.com/?from=Homescreen"))
@@ -163,10 +80,6 @@ inline constexpr char kOsSettingsAppId[] = "odknhmnlageboeamepcngndbggdpaobj";
 //     "chrome://personalization/"))
 inline constexpr char kPersonalizationAppId[] =
     "glenkcidjgckcomnliblmkokolehpckn";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://books.google.com/ebooks/app"))
-inline constexpr char kPlayBooksAppId[] = "jglfhlbohpgcbefmhdmpancnijacbbji";
 
 // Generated as:web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
 //      "chrome://print-management/"))
@@ -214,30 +127,12 @@ inline constexpr char kShimlessRMAAppId[] = "ijolhdommgkkhpenofmpkkhlepahelcm";
 //     "https://www.showtime.com/"))
 inline constexpr char kShowtimeAppId[] = "eoccpgmpiempcflglfokeengliildkag";
 
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://docs.google.com/videos/?usp=installed_webapp"))
-inline constexpr char kVidsAppId[] = "cfkjhppcnjbkjoclfcjjkphpicbpoaeg";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://www.youtube.com/?feature=ytca"))
-inline constexpr char kYoutubeAppId[] = "agimnkijcaahngcdmfeangaknmldooml";
-inline constexpr char kYoutubeManifestId[] =
-    "https://www.youtube.com/?feature=ytca";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://music.youtube.com/?source=pwa"))
-inline constexpr char kYoutubeMusicAppId[] = "cinhimbnkkaeohfgghhklpknlkffjgod";
-
-// Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
-//     "https://tv.youtube.com/"))
-inline constexpr char kYoutubeTVAppId[] = "kiemjbkkegajmpbobdfngbmjccjhnofh";
-
 #if !defined(OFFICIAL_BUILD)
 // Generated as: web_app::GenerateAppId(/*manifest_id=*/std::nullopt, GURL(
 //     "chrome://sample-system-web-app"))
 inline constexpr char kSampleSystemWebAppId[] =
     "jalmdcokfklmaoadompgacjlcomfckcf";
-#endif  // !defined(OFFICIAL_BUILD)
+#endif  // !OFFICIAL_BUILD
 
 // Generated as: web_app::GenerateAppId(/*manifest_id=*/"", GURL(
 //     "chrome://password-manager/?source=pwa"))

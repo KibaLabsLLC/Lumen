@@ -215,8 +215,7 @@ void CustomLinksManagerImpl::RemoveCustomLinksForPreinstalledApps() {
   if (!prefs_->GetBoolean(prefs::kCustomLinksForPreinstalledAppsRemoved)) {
     bool default_app_links_deleted = false;
     for (const Link& link : current_links_) {
-      if (MostVisitedSites::IsNtpTileFromPreinstalledApp(link.url) &&
-          MostVisitedSites::WasNtpAppMigratedToWebApp(prefs_, link.url)) {
+      if (MostVisitedSites::WasNtpAppMigratedToWebApp(prefs_, link.url)) {
         DeleteLink(link.url);
         default_app_links_deleted = true;
       }

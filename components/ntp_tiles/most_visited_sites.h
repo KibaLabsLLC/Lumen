@@ -353,9 +353,6 @@ class MostVisitedSites :
   // Verifies if NTPTile App was migrated to a WebApp.
   static bool WasNtpAppMigratedToWebApp(PrefService* prefs, GURL url);
 
-  // Verifies if NTPTile App comes from a PreInstalledApp.
-  static bool IsNtpTileFromPreinstalledApp(GURL url);
-
   // Read-only helpers for code outside //components/ntp_tiles that needs to
   // react to custom links or enterprise shortcuts without owning a
   // MostVisitedSites. Unlike CustomLinksManager and EnterpriseShortcutsManager,

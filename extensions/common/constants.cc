@@ -100,19 +100,4 @@ bool IsQuickOfficeExtension(std::string_view extension_id) {
   return kQuickOfficeIds.contains(extension_id);
 }
 
-// TODO(crbug.com/40796281): remove after default app migration is done.
-bool IsPreinstalledAppId(std::string_view app_id) {
-  constexpr auto kPreinstalledApps = base::MakeFixedFlatSet<std::string_view>({
-      // clang-format off
-      kGmailAppId,
-      kGoogleDocsAppId,
-      kGoogleDriveAppId,
-      kGoogleSheetsAppId,
-      kGoogleSlidesAppId,
-      kYoutubeAppId,
-      // clang-format on
-  });
-  return kPreinstalledApps.contains(app_id);
-}
-
 }  // namespace extension_misc

@@ -132,45 +132,14 @@ DemoModeApp GetAppFromAppId(std::string_view app_id) {
   if (app_id == extension_misc::kCalculatorAppId) {
     return DemoModeApp::kCalculator;
   }
-  if (app_id == extension_misc::kCalendarDemoAppId) {
-    return DemoModeApp::kCalendar;
-  }
   if (app_id == extension_misc::kCameraAppId) {
     return DemoModeApp::kCamera;
-  }
-  if (app_id == extension_misc::kGoogleDocsDemoAppId) {
-    return DemoModeApp::kGoogleDocsChromeApp;
-  }
-  if (app_id == extension_misc::kGoogleDocsPwaAppId ||
-      app_id == ash::kGoogleDocsAppId) {
-    return DemoModeApp::kGoogleDocsPwa;
-  }
-  if (app_id == extension_misc::kGoogleMeetPwaAppId) {
-    return DemoModeApp::kGoogleMeetPwa;
-  }
-  if (app_id == extension_misc::kGoogleSheetsDemoAppId) {
-    return DemoModeApp::kGoogleSheetsChromeApp;
-  }
-  if (app_id == extension_misc::kGoogleSheetsPwaAppId) {
-    return DemoModeApp::kGoogleSheetsPwa;
-  }
-  if (app_id == extension_misc::kGoogleSlidesDemoAppId) {
-    return DemoModeApp::kGoogleSlidesChromeApp;
   }
   if (app_id == kHelpAppId) {
     return DemoModeApp::kGetHelp;
   }
-  if (app_id == extension_misc::kGoogleKeepAppId) {
-    return DemoModeApp::kGoogleKeepChromeApp;
-  }
   if (app_id == extensions::kWebStoreAppId) {
     return DemoModeApp::kWebStore;
-  }
-  if (app_id == extension_misc::kYoutubeAppId) {
-    return DemoModeApp::kYouTube;
-  }
-  if (app_id == extension_misc::kYoutubePwaAppId) {
-    return DemoModeApp::kYoutubePwa;
   }
   if (app_id == extension_misc::kSpotifyAppId) {
     return DemoModeApp::kSpotify;
@@ -192,10 +161,6 @@ DemoModeApp GetAppFromAppId(std::string_view app_id) {
   }
   if (app_id == extension_misc::kAdobeSparkAppId) {
     return DemoModeApp::kAdobeSpark;
-  }
-  if (app_id == extension_misc::kGeminiAppId ||
-      app_id == extension_misc::kGeminiAppByPolicyId) {
-    return DemoModeApp::kGemini;
   }
 
   return DemoModeApp::kOtherChromeApp;

@@ -253,7 +253,7 @@ TEST_F(DemoSessionMetricsRecorderTest, AppTypes) {
   std::unique_ptr<aura::Window> chrome_app_window =
       CreateChromeAppWindow(extension_misc::kCalculatorAppId);
   std::unique_ptr<aura::Window> hosted_app_browser_window =
-      CreateHostedAppBrowserWindow(extension_misc::kYoutubeAppId);
+      CreateHostedAppBrowserWindow(extension_misc::kSpotifyAppId);
   std::unique_ptr<aura::Window> arc_window = CreateArcWindow(kGooglePhotosPkg);
 
   wm::ActivateWindow(browser_window.get());
@@ -277,7 +277,7 @@ TEST_F(DemoSessionMetricsRecorderTest, AppTypes) {
   FireTimer();
   SendUserActivity();
   histogram_tester_->ExpectBucketCount(
-      "DemoMode.ActiveApp", DemoSessionMetricsRecorder::DemoModeApp::kYouTube,
+      "DemoMode.ActiveApp", DemoSessionMetricsRecorder::DemoModeApp::kSpotify,
       3);
 
   wm::ActivateWindow(arc_window.get());
@@ -448,7 +448,7 @@ TEST_F(DemoSessionMetricsRecorderTest, ActivateWindowWhenIdle) {
   std::unique_ptr<aura::Window> chrome_app_window =
       CreateChromeAppWindow(extension_misc::kCalculatorAppId);
   std::unique_ptr<aura::Window> chrome_app_window2 =
-      CreateChromeAppWindow(extension_misc::kGoogleKeepAppId);
+      CreateChromeAppWindow(extension_misc::kCameraAppId);
 
   wm::ActivateWindow(chrome_app_window.get());
 
@@ -498,7 +498,7 @@ TEST_F(DemoSessionMetricsRecorderTest, RepeatedUserActivity) {
 // Verify remaining samples are recorded on exit.
 TEST_F(DemoSessionMetricsRecorderTest, RecordOnExit) {
   std::unique_ptr<aura::Window> chrome_app_window =
-      CreateChromeAppWindow(extension_misc::kGoogleKeepAppId);
+      CreateChromeAppWindow(extension_misc::kCameraAppId);
   std::unique_ptr<aura::Window> arc_window = CreateArcWindow(kGooglePhotosPkg);
 
   wm::ActivateWindow(chrome_app_window.get());
@@ -511,8 +511,8 @@ TEST_F(DemoSessionMetricsRecorderTest, RecordOnExit) {
   DeleteMetricsRecorder();
 
   histogram_tester_->ExpectBucketCount(
-      "DemoMode.ActiveApp",
-      DemoSessionMetricsRecorder::DemoModeApp::kGoogleKeepChromeApp, 2);
+      "DemoMode.ActiveApp", DemoSessionMetricsRecorder::DemoModeApp::kCamera,
+      2);
   histogram_tester_->ExpectBucketCount(
       "DemoMode.ActiveApp",
       DemoSessionMetricsRecorder::DemoModeApp::kGooglePhotos, 4);

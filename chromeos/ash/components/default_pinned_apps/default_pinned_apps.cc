@@ -6,64 +6,41 @@
 
 #include "ash/constants/ash_switches.h"
 #include "ash/constants/web_app_id_constants.h"
-#include "ash/webui/mall/app_id.h"
 #include "chromeos/ash/components/file_manager/app_id.h"
-#include "chromeos/ash/experiences/arc/app/arc_app_constants.h"
-#include "chromeos/constants/chromeos_features.h"
 #include "content/public/browser/browser_context.h"
 
 namespace {
 
-std::vector<StaticAppId> GetDefaultPinnedApps(
-    content::BrowserContext* browser_context) {
-  std::vector<StaticAppId> app_ids;
-
-#if BUILDFLAG(GOOGLE_CHROME_BRANDING)
-  app_ids.push_back(ash::kGeminiAppId);
-  app_ids.push_back(ash::kNotebookLmAppId);
-#endif  // BUILDFLAG(GOOGLE_CHROME_BRANDING)
-
-  // Pin Mall after AI offerings.
-  app_ids.push_back(ash::kMallSystemAppId);
-
-  app_ids.insert(app_ids.end(), {
-                                    ash::kGmailAppId,
-                                    ash::kGoogleCalendarAppId,
-                                    file_manager::kFileManagerSwaAppId,
-                                    ash::kMessagesAppId,
-                                    ash::kGoogleMeetAppId,
-                                    arc::kPlayStoreAppId,
-                                    ash::kYoutubeAppId,
-                                    arc::kGooglePhotosAppId,
-                                });
-
-  return app_ids;
+// KibaOS pins only apps that ship with the OS. The default shelf is the four
+// KibaOS dock items (Files, Settings, Terminal and Gallery) followed by the
+// image and capture apps.
+std::vector<StaticAppId> GetKibaOSDefaultPinnedApps() {
+  return {
+      file_manager::kFileManagerSwaAppId,
+      ash::kOsSettingsAppId,
+      ash::kCroshAppId,
+      ash::kMediaAppId,
+      ash::kCameraAppId,
+      ash::kHelpAppId,
+  };
 }
 
-std::vector<StaticAppId> GetTabletFormFactorDefaultPinnedApps(
-    content::BrowserContext* browser_context) {
-  std::vector<StaticAppId> app_ids{
-      arc::kGmailAppId,
-
-      arc::kGoogleCalendarAppId,
-
-      arc::kPlayStoreAppId,
-
-      arc::kYoutubeAppId,
-
-      arc::kGooglePhotosAppId,
+std::vector<StaticAppId> GetKibaOSTabletDefaultPinnedApps() {
+  return {
+      file_manager::kFileManagerSwaAppId,
+      ash::kOsSettingsAppId,
+      ash::kMediaAppId,
+      ash::kCameraAppId,
   };
-
-  return app_ids;
 }
 
 }  // namespace
 
 std::vector<StaticAppId> GetDefaultPinnedAppsForFormFactor(
-    content::BrowserContext* browser_context) {
+    content::BrowserContext* /*browser_context*/) {
   if (ash::switches::IsTabletFormFactor()) {
-    return GetTabletFormFactorDefaultPinnedApps(browser_context);
+    return GetKibaOSTabletDefaultPinnedApps();
   }
 
-  return GetDefaultPinnedApps(browser_context);
+  return GetKibaOSDefaultPinnedApps();
 }
