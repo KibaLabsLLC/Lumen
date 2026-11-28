@@ -50,17 +50,6 @@ class ASH_EXPORT SearchBoxView : public SearchBoxViewBase,
   METADATA_HEADER(SearchBoxView, SearchBoxViewBase)
 
  public:
-  static constexpr std::string_view kGeminiSearchBoxIconHistogramName =
-      "Apps.AppList.GeminiSearchBoxIcon";
-
-  // LINT.IfChange(SearchBoxIconEvent)
-  enum class SearchBoxIconEvent {
-    kImpression = 0,
-    kClick = 1,
-    kMaxValue = kClick,
-  };
-  // LINT.ThenChange(/tools/metrics/histograms/metadata/apps/enums.xml:SearchBoxIconEvent)
-
   enum class PlaceholderTextType {
     kShortcuts = 0,
     kTabs = 1,
@@ -204,9 +193,6 @@ class ASH_EXPORT SearchBoxView : public SearchBoxViewBase,
   // Called when the close button within the search box gets pressed.
   void CloseButtonPressed();
 
-  // Called when Gemini button within the search box gets pressed.
-  void GeminiButtonPressed();
-
   // Called when the sunfish launcher button within the search box gets pressed.
   void SunfishButtonPressed();
 
@@ -252,7 +238,6 @@ class ASH_EXPORT SearchBoxView : public SearchBoxViewBase,
 
   // Overridden from SearchBoxModelObserver:
   void SearchEngineChanged() override;
-  void ShowGeminiButtonChanged() override;
   // Updates the visibility and the icon of the Sunfish-session button.
   void SunfishButtonVisibilityChanged() override;
 

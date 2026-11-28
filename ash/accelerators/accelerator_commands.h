@@ -335,9 +335,6 @@ ASH_EXPORT void ToggleDoNotDisturb();
 // triggered Quick Insert.
 ASH_EXPORT void ToggleQuickInsert(base::TimeTicks accelerator_timestamp);
 
-// Toggles Gemini.
-ASH_EXPORT void ToggleGeminiApp();
-
 // Enables Select to Speak if the feature is currently disabled. Does nothing if
 // the feature is currently enabled.
 ASH_EXPORT void EnableSelectToSpeak();

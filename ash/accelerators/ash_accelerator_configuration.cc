@@ -153,8 +153,6 @@ std::vector<ash::AcceleratorData> GetDefaultAccelerators() {
     AppendAcceleratorData(accelerators, ash::kDeveloperAcceleratorData);
   }
 
-  AppendAcceleratorData(accelerators, ash::kGeminiAcceleratorData);
-
   AppendAcceleratorData(accelerators,
                         ash::kToggleCameraAllowedAcceleratorData);
 

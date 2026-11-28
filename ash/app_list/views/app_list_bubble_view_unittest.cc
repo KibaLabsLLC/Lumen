@@ -174,26 +174,6 @@ class AppListBubbleViewTest : public AshTestBase {
     return view ? view->GetClassName() : "none";
   }
 
-  void SimulateGeminiAppInstalled() {
-    auto kTestAccountId =
-        Shell::Get()->session_controller()->GetActiveAccountId();
-
-    apps::AppRegistryCacheWrapper::Get().AddAppRegistryCache(kTestAccountId,
-                                                             &cache);
-
-    std::unique_ptr<apps::App> app =
-        std::make_unique<apps::App>(apps::AppType::kChromeApp, kGeminiAppId);
-    app->name = "Gemini App";
-
-    std::vector<apps::AppPtr> apps;
-    apps.push_back(std::move(app));
-
-    cache.OnAppsForTesting(std::move(apps), apps::AppType::kChromeApp,
-                           /*should_notify_initialized=*/false);
-  }
-
- private:
-  apps::AppRegistryCache cache;
 };
 
 TEST_F(AppListBubbleViewTest, LayerConfiguration) {
@@ -775,21 +755,6 @@ TEST_F(AppListBubbleViewTest, DownArrowMovesFocusToApps) {
   EXPECT_FALSE(app_item->HasFocus());
 }
 
-class AppListBubbleViewSunfishDisabledTest : public AppListBubbleViewTest {
- public:
-  AppListBubbleViewSunfishDisabledTest() {
-    feature_list_.InitWithFeatures(
-        /*enabled_features=*/{}, /*disabled_features=*/{
-            features::kSunfishFeature,
-            features::kScannerUpdate,
-            features::kScannerDogfood,
-        });
-  }
-
- private:
-  base::test::ScopedFeatureList feature_list_;
-};
-
 class AppListBubbleViewSunfishEnabledTest : public AppListBubbleViewTest {
  public:
   AppListBubbleViewSunfishEnabledTest() {
@@ -806,110 +771,6 @@ class AppListBubbleViewSunfishEnabledTest : public AppListBubbleViewTest {
  private:
   base::test::ScopedFeatureList feature_list_;
 };
-
-// Exercises ButtonFocusSkipper with the Gemini button.
-TEST_F(AppListBubbleViewSunfishDisabledTest, DownAndUpArrowSkipsGeminiButton) {
-  SimulateGeminiAppInstalled();
-
-  // Add an app, but no "Continue" suggestions.
-  AddAppItems(1);
-  ShowAppList();
-
-  auto* apps_grid_view = GetAppsGridView();
-  AppListItemView* app_item = apps_grid_view->GetItemViewAt(0);
-  SearchBoxView* search_box_view = GetSearchBoxView();
-
-  // Enable animations.
-  gfx::ScopedAnimationDurationScaleMode duration(
-      gfx::ScopedAnimationDurationScaleMode::NON_ZERO_DURATION);
-
-  // Wait for the animation to finish.
-  ui::Layer* layer = GetAppsGridView()->layer();
-  ui::LayerAnimationStoppedWaiter().Wait(layer);
-
-  EXPECT_TRUE(search_box_view->search_box()->HasFocus());
-  ASSERT_TRUE(search_box_view->gemini_button());
-  ASSERT_TRUE(search_box_view->gemini_button()->GetVisible());
-
-  // Pressing down arrow moves focus into apps.
-  PressAndReleaseKey(ui::VKEY_DOWN);
-  EXPECT_FALSE(search_box_view->search_box()->HasFocus());
-  EXPECT_FALSE(search_box_view->gemini_button()->HasFocus());
-  EXPECT_TRUE(app_item->HasFocus());
-
-  // Pressing up arrow moves focus back to search box.
-  PressAndReleaseKey(ui::VKEY_UP);
-  EXPECT_TRUE(search_box_view->search_box()->HasFocus());
-  EXPECT_FALSE(search_box_view->gemini_button()->HasFocus());
-  EXPECT_FALSE(app_item->HasFocus());
-
-  // Tab key moves focus to Gemini button.
-  PressAndReleaseKey(ui::VKEY_TAB);
-  EXPECT_FALSE(search_box_view->search_box()->HasFocus());
-  EXPECT_TRUE(search_box_view->gemini_button()->HasFocus());
-
-  // Shift-tab moves focus back to search box.
-  PressAndReleaseKey(ui::VKEY_TAB, ui::EF_SHIFT_DOWN);
-  EXPECT_TRUE(search_box_view->search_box()->HasFocus());
-  EXPECT_FALSE(search_box_view->gemini_button()->HasFocus());
-}
-
-// Exercises ButtonFocusSkipper with both Sunfish and Gemini buttons.
-TEST_F(AppListBubbleViewSunfishEnabledTest,
-       DownAndUpArrowSkipsSunfishAndGeminiButton) {
-  SimulateGeminiAppInstalled();
-
-  // Add an app, but no "Continue" suggestions.
-  AddAppItems(1);
-  ShowAppList();
-
-  auto* apps_grid_view = GetAppListTestHelper()->GetScrollableAppsGridView();
-  AppListItemView* app_item = apps_grid_view->GetItemViewAt(0);
-  SearchBoxView* search_box_view = GetSearchBoxView();
-  EXPECT_TRUE(search_box_view->search_box()->HasFocus());
-  ASSERT_TRUE(search_box_view->sunfish_button());
-  ASSERT_TRUE(search_box_view->sunfish_button()->GetVisible());
-  ASSERT_TRUE(search_box_view->gemini_button());
-  ASSERT_TRUE(search_box_view->gemini_button()->GetVisible());
-
-  // Pressing down arrow moves focus into apps.
-  PressAndReleaseKey(ui::VKEY_DOWN);
-  EXPECT_FALSE(search_box_view->search_box()->HasFocus());
-  EXPECT_FALSE(search_box_view->sunfish_button()->HasFocus());
-  EXPECT_FALSE(search_box_view->gemini_button()->HasFocus());
-  EXPECT_TRUE(app_item->HasFocus());
-
-  // Pressing up arrow moves focus back to search box.
-  PressAndReleaseKey(ui::VKEY_UP);
-  EXPECT_TRUE(search_box_view->search_box()->HasFocus());
-  EXPECT_FALSE(search_box_view->sunfish_button()->HasFocus());
-  EXPECT_FALSE(search_box_view->gemini_button()->HasFocus());
-  EXPECT_FALSE(app_item->HasFocus());
-
-  // Tab key moves focus to Sunfish button.
-  PressAndReleaseKey(ui::VKEY_TAB);
-  EXPECT_FALSE(search_box_view->search_box()->HasFocus());
-  EXPECT_TRUE(search_box_view->sunfish_button()->HasFocus());
-  EXPECT_FALSE(search_box_view->gemini_button()->HasFocus());
-
-  // Tab key moves focus to Gemini button.
-  PressAndReleaseKey(ui::VKEY_TAB);
-  EXPECT_FALSE(search_box_view->search_box()->HasFocus());
-  EXPECT_FALSE(search_box_view->sunfish_button()->HasFocus());
-  EXPECT_TRUE(search_box_view->gemini_button()->HasFocus());
-
-  // Shift-tab moves focus back to Sunfish button.
-  PressAndReleaseKey(ui::VKEY_TAB, ui::EF_SHIFT_DOWN);
-  EXPECT_FALSE(search_box_view->search_box()->HasFocus());
-  EXPECT_TRUE(search_box_view->sunfish_button()->HasFocus());
-  EXPECT_FALSE(search_box_view->gemini_button()->HasFocus());
-
-  // Shift-tab moves focus back to search box.
-  PressAndReleaseKey(ui::VKEY_TAB, ui::EF_SHIFT_DOWN);
-  EXPECT_TRUE(search_box_view->search_box()->HasFocus());
-  EXPECT_FALSE(search_box_view->sunfish_button()->HasFocus());
-  EXPECT_FALSE(search_box_view->gemini_button()->HasFocus());
-}
 
 // Exercises ButtonFocusSkipper with only the Sunfish button.
 TEST_F(AppListBubbleViewSunfishEnabledTest, DownAndUpArrowSkipsSunfishButton) {

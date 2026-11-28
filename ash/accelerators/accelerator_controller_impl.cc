@@ -988,7 +988,6 @@ bool AcceleratorControllerImpl::CanPerformAction(
     case AcceleratorAction::kShowTaskManager:
     case AcceleratorAction::kSuspend:
     case AcceleratorAction::kToggleFullscreen:
-    case AcceleratorAction::kToggleGeminiApp:
     case AcceleratorAction::kToggleHighContrast:
     case AcceleratorAction::kToggleMaximized:
     case AcceleratorAction::kToggleSpokenFeedback:
@@ -1584,9 +1583,6 @@ void AcceleratorControllerImpl::PerformAction(
       break;
     case AcceleratorAction::kResizePipWindow:
       accelerators::ResizePipWindow();
-      break;
-    case AcceleratorAction::kToggleGeminiApp:
-      accelerators::ToggleGeminiApp();
       break;
   }
 

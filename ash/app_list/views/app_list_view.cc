@@ -249,10 +249,9 @@ void AppListView::InitContents() {
                                       /*is_app_list_bubble=*/false);
   search_box_view->InitializeForFullscreenLauncher();
 
-  // Skip the Gemini and Sunfish buttons on arrow up/down in app list.
+  // Skip the Sunfish button on arrow up/down in app list.
   button_focus_skipper_ = std::make_unique<ButtonFocusSkipper>(this);
   button_focus_skipper_->AddButton(search_box_view->sunfish_button());
-  button_focus_skipper_->AddButton(search_box_view->gemini_button());
 
   // Assign |app_list_main_view_| and |search_box_view_| here since they are
   // accessed during Init().

@@ -199,20 +199,6 @@ class AppListControllerImplTest : public AshTestBase {
     }
   }
 
-  void AddGeminiApp() {
-    std::unique_ptr<apps::App> app = std::make_unique<apps::App>(
-        apps::AppType::kSystemWeb, std::string(kGeminiAppId));
-    app->name = "Gemini";
-    std::vector<apps::AppPtr> apps;
-    apps.push_back(std::move(app));
-    apps::AppRegistryCache* cache =
-        apps::AppRegistryCacheWrapper::Get().GetAppRegistryCache(
-            Shell::Get()->session_controller()->GetActiveAccountId());
-    ASSERT_TRUE(cache);
-    cache->OnAppsForTesting(std::move(apps), apps::AppType::kSystemWeb,
-                            /*should_notify_initialized=*/false);
-  }
-
   bool IsAppListBoundsAnimationRunning() {
     AppListView* app_list_view = GetAppListTestHelper()->GetAppListView();
     ui::Layer* widget_layer =
@@ -229,61 +215,6 @@ class AppListControllerImplTest : public AshTestBase {
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
 };
-
-TEST_F(AppListControllerImplTest, GeminiSearchBoxIconVisibility) {
-  ShowAppListNow(AppListViewState::kFullscreenAllApps);
-  EXPECT_FALSE(
-      GetAppListView()->search_box_view()->gemini_button()->GetVisible());
-
-  AddGeminiApp();
-  EXPECT_TRUE(
-      GetAppListView()->search_box_view()->gemini_button()->GetVisible());
-}
-
-TEST_F(AppListControllerImplTest, GeminiSearchBoxIconActivate) {
-  AddGeminiApp();
-  ShowAppListNow(AppListViewState::kFullscreenAllApps);
-
-  TestAppListClient* app_list_client = GetTestAppListClient();
-  ASSERT_TRUE(app_list_client);
-  ASSERT_EQ(0, app_list_client->activate_item_count());
-
-  GetEventGenerator()->MoveMouseTo(GetAppListView()
-                                       ->search_box_view()
-                                       ->gemini_button()
-                                       ->GetBoundsInScreen()
-                                       .CenterPoint());
-  GetEventGenerator()->ClickLeftButton();
-
-  EXPECT_EQ(1, app_list_client->activate_item_count());
-  EXPECT_EQ(kGeminiAppId, app_list_client->activate_item_last_id());
-}
-
-TEST_F(AppListControllerImplTest, GeminiSearchBoxIconHistogram) {
-  base::HistogramTester histogram_tester;
-
-  ShowAppListNow(AppListViewState::kFullscreenAllApps);
-  histogram_tester.ExpectBucketCount(
-      SearchBoxView::kGeminiSearchBoxIconHistogramName,
-      SearchBoxView::SearchBoxIconEvent::kImpression, 0);
-
-  AddGeminiApp();
-  views::test::RunScheduledLayout(GetAppListView());
-  histogram_tester.ExpectBucketCount(
-      SearchBoxView::kGeminiSearchBoxIconHistogramName,
-      SearchBoxView::SearchBoxIconEvent::kImpression, 1);
-
-  views::View* gemini_icon_button =
-      GetAppListView()->search_box_view()->gemini_button();
-  ASSERT_TRUE(gemini_icon_button->GetVisible());
-  GetEventGenerator()->MoveMouseTo(
-      gemini_icon_button->GetBoundsInScreen().CenterPoint());
-  GetEventGenerator()->ClickLeftButton();
-
-  histogram_tester.ExpectBucketCount(
-      SearchBoxView::kGeminiSearchBoxIconHistogramName,
-      SearchBoxView::SearchBoxIconEvent::kClick, 1);
-}
 
 // Tests that the AppList hides when shelf alignment changes. This necessary
 // because the AppList is shown with certain assumptions based on shelf

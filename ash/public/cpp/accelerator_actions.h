@@ -172,7 +172,6 @@ enum AcceleratorAction {
   kTilingWindowResizeDown,
   kToggleMouseKeys,
   kResizePipWindow,
-  kToggleGeminiApp,
   kToggleDoNotDisturb,
   kToggleCameraAllowed,
   kStartSunfishSession,

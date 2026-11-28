@@ -160,7 +160,6 @@ constexpr static auto kAcceleratorActionToName = base::MakeFixedFlatMap<
     {AcceleratorAction::kTilingWindowResizeDown, "TilingWindowResizeDown"},
     {AcceleratorAction::kToggleMouseKeys, "ToggleMouseKeys"},
     {AcceleratorAction::kResizePipWindow, "ResizePipWindow"},
-    {AcceleratorAction::kToggleGeminiApp, "ToggleGeminiApp"},
     {AcceleratorAction::kToggleDoNotDisturb, "ToggleDoNotDisturb"},
     {AcceleratorAction::kToggleCameraAllowed, "ToggleCameraAllowed"},
     {AcceleratorAction::kStartSunfishSession, "StartSunfishSession"},

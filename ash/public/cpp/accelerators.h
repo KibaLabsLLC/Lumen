@@ -434,13 +434,6 @@ ASH_PUBLIC_EXPORT inline constexpr auto kTilingWindowResizeAcceleratorData =
          AcceleratorAction::kTilingWindowResizeDown},
     });
 
-ASH_PUBLIC_EXPORT inline constexpr AcceleratorData kGeminiAcceleratorData[] = {
-    {true, ui::VKEY_F23, ui::EF_COMMAND_DOWN | ui::EF_SHIFT_DOWN,
-     AcceleratorAction::kToggleGeminiApp, /*accelerator_locked=*/true},
-};
-ASH_PUBLIC_EXPORT inline constexpr size_t kGeminiAcceleratorDataLength =
-    std::size(kGeminiAcceleratorData);
-
 ASH_PUBLIC_EXPORT inline constexpr AcceleratorData
     kToggleDoNotDisturbAcceleratorData[] = {
         {true, ui::VKEY_DO_NOT_DISTURB, ui::EF_NONE,

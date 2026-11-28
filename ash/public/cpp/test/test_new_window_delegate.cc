@@ -40,6 +40,5 @@ void TestNewWindowDelegate::OpenFeedbackPage(
 void TestNewWindowDelegate::OpenPersonalizationHub() {}
 void TestNewWindowDelegate::OpenCaptivePortalSignin(const GURL& url) {}
 void TestNewWindowDelegate::OpenFile(const base::FilePath& file_path) {}
-void TestNewWindowDelegate::ToggleGeminiApp() {}
 
 }  // namespace ash

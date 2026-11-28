@@ -136,9 +136,6 @@ class ASH_PUBLIC_EXPORT AppListClient {
   // Whether the app list was reordered locally.
   virtual bool HasReordered() = 0;
 
-  // Returns a Gemini icon. Gemini icon resource exists in //chrome.
-  virtual gfx::Image GetGeminiIcon() = 0;
-
  protected:
   virtual ~AppListClient() = default;
 };

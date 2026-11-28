@@ -279,22 +279,6 @@ TEST_P(AppListViewPixelRTLTest, GradientZone) {
       GetPrimaryShelf()->navigation_widget()));
 }
 
-TEST_P(AppListViewPixelRTLTest, GeminiButton) {
-  AppListItem* app_list_item =
-      GetAppListTestHelper()->model()->CreateAndAddItem(kGeminiAppId);
-  GetAppListTestHelper()->model()->SetItemName(app_list_item, "Gemini");
-
-  ShowAppList();
-  UseFixedPlaceholderTextAndHideCursor(
-      GetAppListTestHelper()->GetSearchBoxView());
-
-  EXPECT_TRUE(GetPixelDiffer()->CompareUiComponentsOnPrimaryScreen(
-      GenerateScreenshotName("bubble_launcher_gemini_button"),
-      /*revision_number=*/pixel_test_helper()->IsSystemBlurEnabled() ? 8 : 4,
-      GetAppListTestHelper()->GetBubbleView(),
-      GetPrimaryShelf()->navigation_widget()));
-}
-
 class AppListViewTabletPixelTest
     : public AshTestBase,
       public testing::WithParamInterface<
@@ -390,17 +374,6 @@ TEST_P(AppListViewTabletPixelTest, SearchBoxViewActive) {
       GenerateScreenshotName("search_box_view_active"),
       /*revision_number=*/pixel_test_helper()->IsSystemBlurEnabled() ? 13 : 3,
       search_box_view));
-}
-
-TEST_P(AppListViewTabletPixelTest, GeminiButton) {
-  AppListItem* app_list_item =
-      GetAppListTestHelper()->model()->CreateAndAddItem(kGeminiAppId);
-  GetAppListTestHelper()->model()->SetItemName(app_list_item, "Gemini");
-
-  EXPECT_TRUE(GetPixelDiffer()->CompareUiComponentsOnPrimaryScreen(
-      GenerateScreenshotName("tablet_launcher_gemini_button"),
-      /*revision_number=*/pixel_test_helper()->IsSystemBlurEnabled() ? 6 : 4,
-      GetAppListTestHelper()->GetAppsContainerView()));
 }
 
 }  // namespace ash

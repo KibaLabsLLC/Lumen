@@ -308,7 +308,6 @@ inline constexpr uint32_t kAcceleratorLayouts[] = {
     AcceleratorAction::kToggleResizeLockMenu,
     AcceleratorAction::kShowTaskManager,
     AcceleratorAction::kOpenCrosh,
-    AcceleratorAction::kToggleGeminiApp,
 
     // Device
     // Device > Media

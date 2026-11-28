@@ -483,16 +483,6 @@ views::ImageButton* SearchBoxViewBase::CreateSunfishButton(
   return sunfish_button_;
 }
 
-views::ImageButton* SearchBoxViewBase::CreateGeminiButton(
-    const base::RepeatingClosure& button_callback) {
-  CHECK(end_button_container_);
-  CHECK(!gemini_button_);
-
-  gemini_button_ = end_button_container_->AddChildView(
-      std::make_unique<SearchBoxImageButton>(button_callback));
-  return gemini_button_;
-}
-
 views::ImageButton* SearchBoxViewBase::CreateFilterButton(
     const base::RepeatingClosure& button_callback) {
   MaybeCreateFilterAndCloseButtonContainer();
@@ -515,10 +505,6 @@ gfx::Rect SearchBoxViewBase::GetViewBoundsForSearchBoxContentsBounds(
   gfx::Rect view_bounds = rect;
   view_bounds.Inset(-GetInsets());
   return view_bounds;
-}
-
-views::ImageButton* SearchBoxViewBase::gemini_button() {
-  return gemini_button_;
 }
 
 views::ImageButton* SearchBoxViewBase::sunfish_button() {
@@ -634,9 +620,6 @@ void SearchBoxViewBase::OnEnabledChanged() {
   if (sunfish_button_) {
     sunfish_button_->SetEnabled(enabled);
   }
-  if (gemini_button_) {
-    gemini_button_->SetEnabled(enabled);
-  }
   if (filter_button_) {
     filter_button_->SetEnabled(enabled);
   }
@@ -718,8 +701,7 @@ void SearchBoxViewBase::UpdateButtonsVisibility() {
   }
 
   if (end_button_container_ && !end_button_container_->children().empty()) {
-    const bool any_edge_button_shown =
-        show_gemini_button_ || show_sunfish_button_;
+    const bool any_edge_button_shown = show_sunfish_button_;
     const bool should_show_edge_buttons =
         any_edge_button_shown && !should_show_close_button;
 
@@ -800,14 +782,6 @@ bool SearchBoxViewBase::HandleGestureEvent(
 
 void SearchBoxViewBase::SetSearchIconImage(gfx::ImageSkia image) {
   search_icon_->SetSearchIconImage(image);
-}
-
-void SearchBoxViewBase::SetShowGeminiButton(bool show) {
-  CHECK(gemini_button_);
-  show_gemini_button_ = show;
-  gemini_button_->SetVisible(show);
-
-  UpdateButtonsVisibility();
 }
 
 void SearchBoxViewBase::SetShowSunfishButton(bool show) {

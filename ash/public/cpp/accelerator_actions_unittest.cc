@@ -18,13 +18,13 @@ namespace ash {
 namespace {
 
 // The total number of accelerator actions.
-constexpr size_t kAcceleratorActionsTotalNum = 172;
+constexpr size_t kAcceleratorActionsTotalNum = 171;
 // The toal number of debug accelerators, these will not be used for hashing.
 constexpr size_t kDebugAcceleratorActionsNum = 29;
 // The hash of accelerator actions. Please update this when adding a new
 // accelerator action.
 constexpr char kAcceleratorActionsHash[] =
-    "5376c379e20a43cf689c1d23bc111305426d078d0a24343e2fd4f63787c61ebc";
+    "1042ef3043645eb65525abb050956a588f932dd0f70e3d129bb33c4957ea28ab";
 
 struct TestParams {
   bool use_debug_shortcuts = false;

@@ -292,8 +292,6 @@ EnumTraits<mojom_accelerator_action, ash::AcceleratorAction>::ToMojom(
       return mojom_accelerator_action::kMinimizeTopWindowOnBack;
     case ash::AcceleratorAction::kResizePipWindow:
       return mojom_accelerator_action::kResizePipWindow;
-    case ash::AcceleratorAction::kToggleGeminiApp:
-      return mojom_accelerator_action::kToggleGeminiApp;
     case ash::kToggleDoNotDisturb:
       return mojom_accelerator_action::kToggleDoNotDisturb;
     case ash::AcceleratorAction::kToggleCameraAllowed:
@@ -646,8 +644,6 @@ EnumTraits<mojom_accelerator_action, ash::AcceleratorAction>::FromMojom(
       return ash::AcceleratorAction::kMinimizeTopWindowOnBack;
     case mojom_accelerator_action::kResizePipWindow:
       return ash::AcceleratorAction::kResizePipWindow;
-    case mojom_accelerator_action::kToggleGeminiApp:
-      return ash::AcceleratorAction::kToggleGeminiApp;
     case mojom_accelerator_action::kToggleDoNotDisturb:
       return ash::AcceleratorAction::kToggleDoNotDisturb;
     case mojom_accelerator_action::kToggleCameraAllowed:

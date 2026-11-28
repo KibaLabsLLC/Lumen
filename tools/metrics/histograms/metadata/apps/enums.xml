@@ -739,15 +739,6 @@ chromium-metrics-reviews@google.com.
   <int value="2" label="Write error"/>
 </enum>
 
-<!-- LINT.IfChange(SearchBoxIconEvent) -->
-
-<enum name="SearchBoxIconEvent">
-  <int value="0" label="Impression"/>
-  <int value="1" label="Click"/>
-</enum>
-
-<!-- LINT.ThenChange(/ash/app_list/views/search_box_view.h:SearchBoxIconEvent)-->
-
 <enum name="SearchBoxTextMatch">
   <int value="0" label="No Match"/>
   <int value="1" label="Prefix Match"/>

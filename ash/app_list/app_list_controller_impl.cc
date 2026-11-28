@@ -36,7 +36,6 @@
 #include "ash/capture_mode/sunfish_scanner_feature_watcher.h"
 #include "ash/constants/ash_pref_names.h"
 #include "ash/constants/ash_switches.h"
-#include "ash/constants/web_app_id_constants.h"
 #include "ash/keyboard/ui/keyboard_ui_controller.h"
 #include "ash/public/cpp/app_list/app_list_client.h"
 #include "ash/public/cpp/app_list/app_list_controller_observer.h"
@@ -1212,9 +1211,8 @@ void AppListControllerImpl::ActivateItem(const std::string& id,
       // Metrics for discovery chip already recorded at RecordApplaunched().
       break;
     case AppListLaunchedFrom::kLaunchedFromSearchBoxIcon:
-      // Metrics for launching an app from an icon in search box is recorded via
-      // `Apps.AppList.GeminiSearchBoxIcon`. This is currently used only for a
-      // Gemini icon.
+      // Deprecated: the search box icon that produced this launch source was
+      // removed. The enum value is kept for histogram continuity.
       break;
     case AppListLaunchedFrom::kLaunchedFromSearchBox:
     case AppListLaunchedFrom::kLaunchedFromContinueTask:
@@ -1597,22 +1595,6 @@ SearchModel* AppListControllerImpl::GetSearchModel() {
 void AppListControllerImpl::UpdateSearchBoxUiVisibilities() {
   OnSunfishScannerFeatureStatesChanged(
       *sunfish_scanner_feature_observation_.GetSource());
-
-  // Hide Gemini button first until we are sure that Gemini app list item
-  // exists.
-  HideGeminiButton();
-
-  if (!client_) {
-    return;
-  }
-
-  // Gemini app icon is loaded via `client_` for a dependency reason. This must
-  // be after `client_` non-nullptr check.
-  gemini_app_waiter_.emplace(
-      Shell::Get()->session_controller()->GetActiveAccountId(),
-      base::BindOnce(&AppListControllerImpl::ShowGeminiButton,
-                     base::Unretained(this)),
-      kGeminiAppId);
 }
 
 int64_t AppListControllerImpl::GetDisplayIdToShowAppListOn() {
@@ -1864,21 +1846,6 @@ int AppListControllerImpl::GetFullscreenLauncherContainerId() const {
       app_list_page_ != AppListState::kStateEmbeddedAssistant;
   return should_show_behind_apps ? kShellWindowId_HomeScreenContainer
                                  : kShellWindowId_AppListContainer;
-}
-
-void AppListControllerImpl::ShowGeminiButton(std::string app_name) {
-  CHECK(client_);
-
-  GetSearchModel()->search_box()->SetGeminiButtonVisibility(
-      SearchBoxModel::SearchBoxIconButton({
-          .display_name = app_name,
-          .icon = client_->GetGeminiIcon(),
-      }));
-}
-
-void AppListControllerImpl::HideGeminiButton() {
-  gemini_app_waiter_.reset();
-  GetSearchModel()->search_box()->SetGeminiButtonVisibility(std::nullopt);
 }
 
 int AppListControllerImpl::GetPreferredBubbleWidth(

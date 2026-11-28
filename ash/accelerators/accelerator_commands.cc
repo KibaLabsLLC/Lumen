@@ -1069,10 +1069,6 @@ void OpenHelp() {
   NewWindowDelegate::GetInstance()->OpenGetHelp();
 }
 
-void ToggleGeminiApp() {
-    NewWindowDelegate::GetInstance()->ToggleGeminiApp();
-}
-
 void PerformTilingWindowResize(AcceleratorAction action) {
   if (!features::IsTilingWindowResizeEnabled()) {
     return;

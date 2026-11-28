@@ -64,19 +64,13 @@ class SearchBoxViewBase : public views::View,
       const base::RepeatingClosure& button_callback);
 
   // Creates `end_button_container_`, a container view that hosts end buttons
-  // such as `gemini_button_` and `sunfish_button_`.
+  // such as `sunfish_button_`.
   void CreateEndButtonContainer();
 
   // Creates the sunfish launcher button at the right edge of the search box.
   // Note that it will only be shown if the close button is hidden, as the
   // buttons have the same expected position within the search box.
   views::ImageButton* CreateSunfishButton(
-      const base::RepeatingClosure& button_callback);
-
-  // Creates the search box Gemini button at the right edge of the search box in
-  // LTR layout. The Gemini button will initially be hidden. The visibility will
-  // be updated appropriately when `UpdateButtonsVisibility()` gets called.
-  views::ImageButton* CreateGeminiButton(
       const base::RepeatingClosure& button_callback);
 
   // Creates the search box category filter button at the right edge of the
@@ -96,7 +90,6 @@ class SearchBoxViewBase : public views::View,
       const gfx::Rect& rect) const;
 
   views::ImageButton* sunfish_button();
-  views::ImageButton* gemini_button();
   views::View* edge_button_container();
   views::ImageButton* close_button();
   views::ImageButton* filter_button();
@@ -210,7 +203,6 @@ class SearchBoxViewBase : public views::View,
 
   void SetSearchIconImage(gfx::ImageSkia image);
 
-  void SetShowGeminiButton(bool show);
   void SetShowSunfishButton(bool show);
 
   // Detects |kMousePressed| and |EventType::kGestureTap| events on the white
@@ -249,7 +241,6 @@ class SearchBoxViewBase : public views::View,
   raw_ptr<views::BoxLayoutView> main_container_;
   raw_ptr<views::BoxLayoutView> content_container_;
   raw_ptr<SearchIconImageView> search_icon_ = nullptr;
-  raw_ptr<SearchBoxImageButton> gemini_button_ = nullptr;
   raw_ptr<SearchBoxImageButton> sunfish_button_ = nullptr;
   raw_ptr<SearchBoxImageButton> close_button_ = nullptr;
   raw_ptr<SearchBoxImageButton> filter_button_ = nullptr;
@@ -277,8 +268,6 @@ class SearchBoxViewBase : public views::View,
 
   // Whether to show close button if the search box is active and empty.
   bool show_close_button_when_active_ = false;
-  // Whether to show Gemini button.
-  bool show_gemini_button_ = false;
   // Whether to show sunfish button.
   bool show_sunfish_button_ = false;
 

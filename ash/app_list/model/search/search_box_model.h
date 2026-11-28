@@ -5,14 +5,8 @@
 #ifndef ASH_APP_LIST_MODEL_SEARCH_SEARCH_BOX_MODEL_H_
 #define ASH_APP_LIST_MODEL_SEARCH_SEARCH_BOX_MODEL_H_
 
-#include <optional>
-#include <string>
-
 #include "ash/app_list/model/app_list_model_export.h"
-#include "ash/public/cpp/app_list/app_list_client.h"
 #include "base/observer_list.h"
-#include "ui/base/models/image_model.h"
-#include "ui/gfx/image/image.h"
 
 namespace ash {
 
@@ -29,25 +23,10 @@ class APP_LIST_MODEL_EXPORT SearchBoxModel {
     kShownWithSunfishIcon = 2,
   };
 
-  // Display text and icon for an icon button in search box. This is currently
-  // used only for Gemini button.
-  struct SearchBoxIconButton {
-    std::string display_name;
-    gfx::Image icon;
-  };
-
   SearchBoxModel();
   SearchBoxModel(const SearchBoxModel&) = delete;
   SearchBoxModel& operator=(const SearchBoxModel&) = delete;
   ~SearchBoxModel();
-
-  // Show gemini button with display name and icon specified in
-  // `search_box_icon_button`. Passing `std::nullopt` hides the button.
-  void SetGeminiButtonVisibility(
-      std::optional<SearchBoxIconButton> search_box_icon_button);
-  std::optional<SearchBoxIconButton> gemini_button() const {
-    return gemini_search_box_icon_button_;
-  }
 
   void SetSunfishButtonVisibility(SunfishButtonVisibility show);
   SunfishButtonVisibility sunfish_button_visibility() const {
@@ -62,7 +41,6 @@ class APP_LIST_MODEL_EXPORT SearchBoxModel {
 
  private:
   bool search_engine_is_google_ = false;
-  std::optional<SearchBoxIconButton> gemini_search_box_icon_button_;
   SunfishButtonVisibility sunfish_button_visibility_ =
       SunfishButtonVisibility::kHidden;
 

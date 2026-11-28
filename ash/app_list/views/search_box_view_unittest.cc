@@ -127,20 +127,6 @@ namespace {
 
 using test::AppListTestViewDelegate;
 
-void AddGeminiApp() {
-  std::unique_ptr<apps::App> app = std::make_unique<apps::App>(
-      apps::AppType::kSystemWeb, std::string(kGeminiAppId));
-  app->name = "Gemini";
-  std::vector<apps::AppPtr> apps;
-  apps.push_back(std::move(app));
-  apps::AppRegistryCache* cache =
-      apps::AppRegistryCacheWrapper::Get().GetAppRegistryCache(
-          Shell::Get()->session_controller()->GetActiveAccountId());
-  ASSERT_TRUE(cache);
-  cache->OnAppsForTesting(std::move(apps), apps::AppType::kSystemWeb,
-                          /*should_notify_initialized=*/false);
-}
-
 SearchModel* GetSearchModel() {
   return AppListModelProvider::Get()->search_model();
 }
@@ -1189,14 +1175,7 @@ class SearchBoxViewAnimationTest : public AshTestBase {
 // Test that the search box image buttons fade in and out correctly when the
 // search box is activated and deactivated.
 TEST_F(SearchBoxViewAnimationTest, SearchBoxImageButtonAnimations) {
-  AddGeminiApp();
-
   auto* search_box = GetAppListTestHelper()->GetSearchBoxView();
-
-  // Initially the Gemini button should be shown, and the close button
-  // hidden.
-  EXPECT_FALSE(search_box->filter_and_close_button_container()->GetVisible());
-  EXPECT_TRUE(search_box->edge_button_container()->GetVisible());
 
   // Set search box to active state.
   search_box->SetSearchBoxActive(true, ui::EventType::kMousePressed);
@@ -1288,79 +1267,6 @@ TEST_F(SearchBoxViewAutocompleteTest, AccessibleValue) {
                 IDS_APP_LIST_SEARCH_BOX_AUTOCOMPLETE,
                 std::u16string(view()->search_box()->GetText())),
             data2.GetString16Attribute(ax::mojom::StringAttribute::kValue));
-}
-
-class GeminiButtonTest : public AshTestBase,
-                         public testing::WithParamInterface<bool> {
- public:
-  void SetUp() override {
-    AshTestBase::SetUp();
-
-    if (IsTabletMode()) {
-      ash::TabletModeControllerTestApi().EnterTabletMode();
-    }
-  }
-
-  void TearDown() override {
-    if (IsTabletMode()) {
-      ash::TabletModeControllerTestApi().LeaveTabletMode();
-    }
-
-    AshTestBase::TearDown();
-  }
-
-  ~GeminiButtonTest() override = default;
-
-  static std::string GenerateParamName(
-      const testing::TestParamInfo<bool>& info) {
-    return info.param ? "Tablet" : "Clamshell";
-  }
-
- protected:
-  bool IsTabletMode() const { return GetParam(); }
-};
-
-INSTANTIATE_TEST_SUITE_P(All,
-                         GeminiButtonTest,
-                         testing::Bool(),
-                         &GeminiButtonTest::GenerateParamName);
-
-TEST_P(GeminiButtonTest, Visibility) {
-  AddGeminiApp();
-  GetAppListTestHelper()->ShowAppList();
-
-  views::ImageButton* gemini_button =
-      GetAppListTestHelper()->GetSearchBoxView()->gemini_button();
-  ASSERT_TRUE(gemini_button);
-  EXPECT_TRUE(gemini_button->GetVisible());
-}
-
-TEST_P(GeminiButtonTest, Activation) {
-  TestAppListClient* test_app_list_client = GetTestAppListClient();
-  ASSERT_EQ(0, test_app_list_client->activate_item_count());
-
-  AddGeminiApp();
-
-  GetAppListTestHelper()->ShowAppList();
-  views::test::RunScheduledLayout(
-      IsTabletMode() ? static_cast<views::View*>(GetAppListView())
-                     : static_cast<views::View*>(GetAppListBubbleView()));
-
-  views::ImageButton* gemini_button =
-      GetAppListTestHelper()->GetSearchBoxView()->gemini_button();
-  ASSERT_TRUE(gemini_button);
-  ASSERT_TRUE(gemini_button->GetVisible());
-
-  ui::test::EventGenerator* generator = GetEventGenerator();
-  if (IsTabletMode()) {
-    generator->GestureTapAt(gemini_button->GetBoundsInScreen().CenterPoint());
-  } else {
-    generator->MoveMouseTo(gemini_button->GetBoundsInScreen().CenterPoint());
-    generator->ClickLeftButton();
-  }
-
-  EXPECT_EQ(1, test_app_list_client->activate_item_count());
-  EXPECT_EQ(kGeminiAppId, test_app_list_client->activate_item_last_id());
 }
 
 class SunfishLauncherButtonTest : public AshTestBase,

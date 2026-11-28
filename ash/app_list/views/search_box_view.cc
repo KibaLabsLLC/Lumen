@@ -24,7 +24,6 @@
 #include "ash/capture_mode/capture_mode_constants.h"
 #include "ash/capture_mode/capture_mode_controller.h"
 #include "ash/capture_mode/sunfish_scanner_feature_watcher.h"
-#include "ash/constants/web_app_id_constants.h"
 #include "ash/keyboard/ui/keyboard_ui_controller.h"
 #include "ash/public/cpp/app_list/app_list_config.h"
 #include "ash/public/cpp/app_list/app_list_features.h"
@@ -526,11 +525,6 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
   sunfish_button->SetFlipCanvasOnPaintForRTLUI(false);
   // Update the visibility based on the search box model.
   SunfishButtonVisibilityChanged();
-
-  views::ImageButton* gemini_button = CreateGeminiButton(base::BindRepeating(
-      &SearchBoxView::GeminiButtonPressed, base::Unretained(this)));
-  gemini_button->SetFlipCanvasOnPaintForRTLUI(false);
-  ShowGeminiButtonChanged();
 
   GetViewAccessibility().SetRole(ax::mojom::Role::kTextField);
   UpdateAccessibleValue();
@@ -1124,15 +1118,6 @@ void SearchBoxView::CloseButtonPressed() {
   delegate_->CloseButtonPressed();
 }
 
-void SearchBoxView::GeminiButtonPressed() {
-  base::UmaHistogramEnumeration(kGeminiSearchBoxIconHistogramName,
-                                SearchBoxIconEvent::kClick);
-
-  view_delegate_->ActivateItem(kGeminiAppId, /*event_flags=*/0,
-                               AppListLaunchedFrom::kLaunchedFromSearchBoxIcon,
-                               /*is_app_above_the_fold=*/false);
-}
-
 void SearchBoxView::SunfishButtonPressed() {
   if (is_app_list_bubble_) {
     // Only hide the launcher bubble in clamshell mode.
@@ -1594,33 +1579,6 @@ void SearchBoxView::UpdateSearchBoxForSelectedResult(
 
 void SearchBoxView::SearchEngineChanged() {
   UpdateSearchIcon();
-}
-
-void SearchBoxView::ShowGeminiButtonChanged() {
-  const std::optional<SearchBoxModel::SearchBoxIconButton>
-      gemini_search_box_icon_button = AppListModelProvider::Get()
-                                          ->search_model()
-                                          ->search_box()
-                                          ->gemini_button();
-
-  if (gemini_search_box_icon_button) {
-    // Gemini icon includes margins. Use button size instead of search box
-    // icon size, which contains margins, to avoid having duplicated margins.
-    gemini_button()->SetImageModel(views::ImageButton::STATE_NORMAL,
-                                   ui::ImageModel::FromImage(gfx::ResizedImage(
-                                       gemini_search_box_icon_button->icon,
-                                       gemini_button()->GetPreferredSize())));
-
-    const std::string& name = gemini_search_box_icon_button->display_name;
-    CHECK(!name.empty());
-    gemini_button()->SetTooltipText(base::UTF8ToUTF16(name));
-    gemini_button()->GetViewAccessibility().SetName(name);
-
-    base::UmaHistogramEnumeration(kGeminiSearchBoxIconHistogramName,
-                                  SearchBoxIconEvent::kImpression);
-  }
-
-  SetShowGeminiButton(gemini_search_box_icon_button.has_value());
 }
 
 void SearchBoxView::SunfishButtonVisibilityChanged() {

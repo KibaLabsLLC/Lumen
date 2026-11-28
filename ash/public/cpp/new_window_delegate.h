@@ -133,9 +133,6 @@ class ASH_PUBLIC_EXPORT NewWindowDelegate {
   // Opens a file on the local file system (which may be DriveFS).
   virtual void OpenFile(const base::FilePath& file_path) = 0;
 
-  // Toggles Gemini.
-  virtual void ToggleGeminiApp() = 0;
-
  protected:
   NewWindowDelegate();
   NewWindowDelegate(const NewWindowDelegate&) = delete;

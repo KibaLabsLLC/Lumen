@@ -214,10 +214,9 @@ void AppListBubbleView::InitContentsView() {
       /*delegate=*/this, view_delegate_, /*is_app_list_bubble=*/true));
   search_box_view_->InitializeForBubbleLauncher();
 
-  // Skip the Sunfish and Gemini button on arrow up/down in app list.
+  // Skip the Sunfish button on arrow up/down in app list.
   button_focus_skipper_ = std::make_unique<ButtonFocusSkipper>(this);
   button_focus_skipper_->AddButton(search_box_view_->sunfish_button());
-  button_focus_skipper_->AddButton(search_box_view_->gemini_button());
 
   // The main view has a solid color layer, so the separator needs its own
   // layer to visibly paint.

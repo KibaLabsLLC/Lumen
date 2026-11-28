@@ -137,10 +137,4 @@ bool TestAppListClient::HasReordered() {
   return false;
 }
 
-gfx::Image TestAppListClient::GetGeminiIcon() {
-  // Use `kMahiSparkIcon` as a placeholder.
-  return gfx::Image(ui::ThemedVectorIcon(&chromeos::kMahiSparkIcon)
-                        .GetImageSkia(gfx::kPlaceholderColor));
-}
-
 }  // namespace ash

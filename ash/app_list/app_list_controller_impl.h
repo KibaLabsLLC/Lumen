@@ -13,7 +13,6 @@
 
 #include "ash/app_list/app_list_metrics.h"
 #include "ash/app_list/app_list_view_delegate.h"
-#include "ash/app_list/app_waiter.h"
 #include "ash/app_list/home_launcher_animation_info.h"
 #include "ash/app_list/model/search/search_model.h"
 #include "ash/app_list/quick_app_access_model.h"
@@ -409,11 +408,6 @@ class ASH_EXPORT AppListControllerImpl
   // Gets the container which should contain the fullscreen launcher.
   int GetFullscreenLauncherContainerId() const;
 
-  // Show Gemini button in the search box with `app_name` as a display name.
-  void ShowGeminiButton(std::string app_name);
-  // Hide Gemini button in the search box.
-  void HideGeminiButton();
-
   // Whether the home launcher is
   // * being shown (either through an animation or a drag)
   // * being hidden (either through an animation or a drag)
@@ -535,8 +529,6 @@ class ASH_EXPORT AppListControllerImpl
   // Responsible for recording smoothness related UMA stats for home screen
   // animations.
   std::optional<ui::ThroughputTracker> smoothness_tracker_;
-
-  std::optional<AppWaiter> gemini_app_waiter_;
 
   base::ScopedObservation<SplitViewController, SplitViewObserver>
       split_view_observation_{this};
